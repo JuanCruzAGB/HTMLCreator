@@ -1,67 +1,41 @@
 // ? JuanCruzAGB repository
-import Class from "../../JuanCruzAGB/js/Class.js";
-
-/** @var {object} defaultProps Default properties. */
-let defaultProps = {
-    id: 'div-1',
-    classes: [],
-};
+import Html from "../../JuanCruzAGB/js/Html.js";
 
 /**
  * * Div creates an excellent <div>.
  * @export
  * @class Div
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
- * @extends Class
+ * @extends Html
  */
-export class Div extends Class {
+export class Div extends Html {
     /**
      * * Creates an instance of Div.
      * @param {object} [props] Div properties:
      * @param {string} [props.id='div-1'] Div primary key.
      * @param {string[]} [props.classes] Div class names.
-     * @param {HTMLElement} [innerHTML=false] Div inner HTML Element.
+     * @param {HTMLElement|false} [innerHTML=false] Div inner HTML Element.
      * @memberof Div
      */
-    constructor(props = {
+    constructor (props = {
         id: 'div-1',
         classes: [],
-    }, innerHTML = false){
-        super({ ...defaultProps, ...props });
-        this.createHTML(innerHTML);
+    }, innerHTML = false) {
+        super({ ...Div.props, ...props });
+        this.createHTML(this.props.nodeName, innerHTML);
     }
 
     /**
-     * * Creates the <div> HTML Element.
-     * @param {HTMLElement} [innerHTML=false] Div inner HTML Element.
+     * @static
+     * @var {object} props Default properties.
      * @memberof Div
      */
-    createHTML(innerHTML = false){
-        this.setHTML(document.createElement('div'));
-        if (innerHTML) {
-            this.html.appendChild(innerHTML);
-        }
-        for (const className of this.getClassesProperty()) {
-            this.html.classList.add(className);
-        }
-    }
-
-    /**
-     * * Append an HTML Element.
-     * @param {HTMLElement} html New child.
-     * @memberof Div
-     */
-    appendChild(html){
-        this.html.appendChild(html);
-    }
-
-    /**
-     * * Insert an HTML Element before another.
-     * @param {HTMLElement} newHTML New child.
-     * @param {HTMLElement} oldHTML New child.
-     * @memberof Div
-     */
-    insertBefore(newHTML, oldHTML){
-        this.html.insertBefore(newHTML, oldHTML);
+    static props = {
+        id: 'div-1',
+        classes: [],
+        nodeName: 'DIV',
     }
 }
+
+// ? Default export
+export default Div;

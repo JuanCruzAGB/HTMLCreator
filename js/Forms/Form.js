@@ -1,305 +1,154 @@
+// ? JuanCruzAGB repository
+import Html from "../../../JuanCruzAGB/js/Html.js";
+
 // ? HTMLCreatorJS repository
-import { Input } from "./Input.js";
+import Input from "./Input.js";
 
 /**
  * * Form creates an excellent <form>.
  * @export
  * @class Form
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @extends Html
  */
-export class Form{
+export class Form extends Html {
     /**
      * * Creates an instance of Form.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.id] Form ID.
-     * @param {String} [properties.action] Form action.
-     * @param {String} [properties.method] Form method.
-     * @param {String} [properties.enctype] Form enctype.
-     * @param {String[]} [properties.classes] Form class names.
-     * @param {Object[]} [inputs] Form Inputs.
+     * @param {object} [props] Form properties:
+     * @param {string} [props.id='form-1'] Form primary key.
+     * @param {string} [props.action='#'] Form action.
+     * @param {string} [props.method='post'] Form method.
+     * @param {string|false} [props.enctype=false] Form enctype.
+     * @param {string[]} [props.classes] Form class names.
+     * @param {object} [state] Form state:
+     * @param {boolean} [state.submit=true] If the Form has to be submited.
+     * @param {object} [callback] Form submit callback:
+     * @param {function} [callback.function] Form submit callback function.
+     * @param {*} [callback.params] Form submit callback function params.
+     * @param {object[]} [inputs] Form Inputs.
      * @memberof Form
      */
-    constructor(properties = {
+    constructor (props = {
         id: 'form-1',
         action: '#',
         method: 'post',
         enctype: false,
         classes: [],
-    }, inputs = []){
-        this.setProperties(properties);
+    }, state = {
+        submit: true,
+    }, callback = {
+        function: function (params) { /* console.log('params') */ },
+        params: {}
+    }, inputs = []) {
+        super({ ...Form.props, ...props }, { ...Form.state, ...state });
+        this.setCallbacks({ default: { ...Form.callback, ...callback } })
         this.setInputs(inputs);
-        this.createHTML();
+        this.createHTML(this.props.nodeName);
+        this.setEventListener();
+        this.setHTMLAttributes();
+        this.setChilds();
     }
 
     /**
-     * * Set the Form properties.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.id] Form ID.
-     * @param {String} [properties.action] Form action.
-     * @param {String} [properties.method] Form method.
-     * @param {String} [properties.enctype] Form enctype.
-     * @param {String[]} [properties.classes] Form class names.
+     * * Set the HTML Element child nodes.
      * @memberof Form
      */
-    setProperties(properties = {
-        id: 'form-1',
-        action: '#',
-        method: 'post',
-        enctype: false,
-        classes: [],
-    }){
-        this.properties = {};
-        this.setIDProperty(properties);
-        this.setActionProperty(properties);
-        this.setMethodProperty(properties);
-        this.setEnctypeProperty(properties);
-        this.setClassesProperty(properties);
-    }
-
-    /**
-     * * Returns the Form properties or an specific property.
-     * @param {String} [name] Property name.
-     * @returns {Object|*}
-     * @memberof Form
-     */
-    getProperties(name = ''){
-        if (name && name != '') {
-            return this.properties[name];
-        } else {
-            return this.properties;
+    setChilds () {
+        for (const input of this.inputs) {
+            this.appendChild(input.html);
         }
     }
-
+    
     /**
-     * * Check if there is a property.
-     * @param {String} name Property name.
-     * @returns {Boolean}
+     * * Set the Form event listener.
      * @memberof Form
      */
-    hasProperty(name = ''){
-        if (this.properties.hasOwnProperty(name)) {
-            return true;
-        } else {
-            return false;
+    setEventListener () {
+        const instance = this;
+        this.html.addEventListener('submit', function(e) {
+            if (instance.state.submit) {
+                e.preventDefault();
+                instance.submit();
+            }
+        });
+    }
+
+    /**
+     * * Set the HTML Element attributes.
+     * @memberof Form
+     */
+    setHTMLAttributes () {
+        this.setAttribute('action', this.props.action);
+        this.setAttribute('method', this.props.method);
+        if (this.props.enctype) {
+            this.setAttribute('enctype', this.props.enctype);
         }
-    }
-
-    /**
-     * * Change a property value.
-     * @param {String} name Property name.
-     * @param {*} value Property value.
-     * @memberof Form
-     */
-    changeProperty(name = '', value = ''){
-        if (this.hasProperty(name)) {
-            this.properties[name] = value;
-        }
-        switch (name) {
-            case 'action':
-                this.html.action = this.getProperties('action');
-                break;
-            case 'method':
-                this.html.method = this.getProperties('method');
-                break;
-            case 'enctype':
-                if (this.getProperties('enctype')) {
-                    this.html.enctype = this.getProperties('enctype');
-                } else if (this.html.hasAttribute('enctype')) {
-                    this.html.removeAttribute('enctype');
-                }
-                break;
-        }
-    }
-
-    /**
-     * * Set the Form ID.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.id] Form ID.
-     * @memberof Form
-     */
-    setIDProperty(properties = {
-        id: 'form-1',
-    }){
-        if (properties.hasOwnProperty('id')) {
-            this.properties.id = properties.id;
-        } else {
-            this.properties.id = 'form-1';
-        }
-    }
-
-    /**
-     * * Returns the Form ID.
-     * @returns {String}
-     * @memberof Form
-     */
-    getIDProperty(){
-        return this.properties.id;
-    }
-
-    /**
-     * * Set the Form action.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.action] Form action.
-     * @memberof Form
-     */
-    setActionProperty(properties = {
-        action: '#',
-    }){
-        if (properties.hasOwnProperty('action')) {
-            this.properties.action = properties.action;
-        } else {
-            this.properties.action = '#';
-        }
-    }
-
-    /**
-     * * Returns the Form action.
-     * @returns {String}
-     * @memberof Form
-     */
-    getActionProperty(){
-        return this.properties.action;
-    }
-
-    /**
-     * * Set the Form method.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.method] Form method.
-     * @memberof Form
-     */
-    setMethodProperty(properties = {
-        method: 'post',
-    }){
-        if (properties.hasOwnProperty('method')) {
-            this.properties.method = properties.method;
-        } else {
-            this.properties.method = 'post';
-        }
-    }
-
-    /**
-     * * Returns the Form method.
-     * @returns {String}
-     * @memberof Form
-     */
-    getMethodProperty(){
-        return this.properties.method;
-    }
-
-    /**
-     * * Set the Form enctype.
-     * @param {Object} [properties] Form properties:
-     * @param {String} [properties.enctype] Form enctype.
-     * @memberof Form
-     */
-    setEnctypeProperty(properties = {
-        enctype: false,
-    }){
-        if (properties.hasOwnProperty('enctype')) {
-            this.properties.enctype = properties.enctype;
-        } else {
-            this.properties.enctype = false;
-        }
-    }
-
-    /**
-     * * Returns the Form enctype.
-     * @returns {String}
-     * @memberof Form
-     */
-    getEnctypeProperty(){
-        return this.properties.enctype;
-    }
-
-    /**
-     * * Set the Form class names.
-     * @param {Object} [properties] Form properties:
-     * @param {String[]} [properties.classes] Form class names.
-     * @memberof Form
-     */
-    setClassesProperty(properties = {
-        classes: [],
-    }){
-        if (properties.hasOwnProperty('classes')) {
-            this.properties.classes = properties.classes;
-        } else {
-            this.properties.classes = [];
-        }
-    }
-
-    /**
-     * * Returns the Form class names.
-     * @returns {Array}
-     * @memberof Form
-     */
-    getClassesProperty(){
-        return this.properties.classes;
     }
 
     /**
      * * Set the Form Inputs.
-     * @param {Object[]} [inputs] Form Inputs.
+     * @param {object[]} [inputs] Form Inputs.
      * @memberof Form
      */
-    setInputs(inputs = []){
-        this.inputs = [];
+    setInputs (inputs = []) {
+        if (!this.inputs) {
+            this.inputs = [];
+        }
         if (inputs.length) {
             for (const input of inputs) {
-                if (input.hasOwnProperty('states')) {
-                    this.inputs.push(new Input(input.properties, input.states));
-                } else {
-                    this.inputs.push(new Input(input.properties));
-                }
+                this.inputs.push(new Input((input.hasOwnProperty('props') ? input.state : {}), (input.hasOwnProperty('state') ? input.state : {}), (input.hasOwnProperty('callbacks') ? input.callbacks : {})));
             }
         }
     }
 
     /**
-     * * Returns the Form Inputs.
-     * @returns {Input[]}
+     * * Form submit callback.
+     * @param {*} [params={}] Click callback function optional params
      * @memberof Form
      */
-    getInputs(){
-        return this.inputs;
+    submit (params = {}) {
+        this.execute('default', {
+            form: this,
+            ...params
+        });
     }
 
     /**
-     * * Returns the <input> HTML Element.
-     * @returns {HTMLElement}
+     * @static
+     * @var {object} props Default properties.
      * @memberof Form
      */
-    getHTML(){
-        return this.html;
+    static props = {
+        id: 'form-1',
+        action: '#',
+        method: 'post',
+        enctype: false,
+        classes: [],
+        nodeName: 'FORM',
     }
 
     /**
-     * * Creates the <input> HTML Element.
+     * @static
+     * @var {object} state Default state.
      * @memberof Form
      */
-    createHTML(){
-        this.html = document.createElement('form');
-        this.html.id = this.getProperties('id');
-        this.html.action = this.getProperties('action');
-        this.html.method = this.getProperties('method');
-        if (this.getProperties('enctype')) {
-            this.html.enctype = this.getProperties('enctype');
-        } else if (this.html.hasAttribute('enctype')) {
-            this.html.removeAttribute('enctype');
-        }
-        for (const className of this.getProperties('classes')) {
-            this.html.classList.add(className);
-        }
-        for (const input of this.getInputs()) {
-            this.appendChild(input.getHTML());
-        }
+    static state = {
+        submit: true,
     }
 
     /**
-     * * Append an HTML Element.
-     * @param {HTMLElement} html New child.
+     * @static
+     * @var {object} callback Default callback.
      * @memberof Form
      */
-    appendChild(html){
-        this.html.appendChild(html);
+    static callback = {
+        function: function (params) { /* console.log('params') */ },
+        params: {}
     }
 }
+
+// ? Form childs
+Form.Input = Input;
+
+// ? Default export
+export default Form;
