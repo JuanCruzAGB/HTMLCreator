@@ -1,6 +1,9 @@
 // ? JuanCruzAGB repository
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+
 /**
  * * Button creates an excellet <button>.
  * @export
@@ -21,7 +24,7 @@ export class Button extends Html {
      * @param {object} [callback] Button click callback.
      * @param {function} [callback.function] Button click callback function.
      * @param {object} [callback.params] Button click callback params.
-     * @param {HTMLElement|false} [innerHTML=false] Button inner HTML Element.
+     * @param {string|HTMLElement|array|false|false} [innerHTML=false] Button inner HTML Element.
      * @memberof Button
      */
     constructor (props = {
@@ -37,7 +40,8 @@ export class Button extends Html {
     }, innerHTML = false) {
         super({ ...Button.props, ...props }, { ...Button.state, ...state });
         this.setCallbacks({ default: { ...Button.callback, ...callback }});
-        this.createHTML(this.props.nodeName, innerHTML);
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
         this.setEventListener();
         this.setHTMLAttributes();
         this.checkState();

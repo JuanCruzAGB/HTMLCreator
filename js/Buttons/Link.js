@@ -1,6 +1,9 @@
 // ? JuanCruzAGB repository
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+
 /**
  * * Link creates an excellet <link>.
  * @export
@@ -19,7 +22,7 @@ export class Link extends Html {
      * @param {object} [callback] Link click callback.
      * @param {function} [callback.function] Link click callback function.
      * @param {object} [callback.params] Link click callback params.
-     * @param {HTMLElement|false} [innerHTML=false] Link inner HTML Element.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Link inner HTML Element.
      * @memberof Link
      */
     constructor (props = {
@@ -33,7 +36,8 @@ export class Link extends Html {
     }, innerHTML = false) {
         super({ ...Link.props, ...props }, { ...Link.state, ...state });
         this.setCallbacks({ default: { ...Link.callback, ...callback }});
-        this.createHTML(this.props.nodeName, innerHTML);
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
         this.setEventListener();
     }
     

@@ -2,7 +2,7 @@
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
 // ? HTMLCreatorJS repository
-import Input from "./Input.js";
+import HTMLCreator from "../HTMLCreator.js";
 
 /**
  * * Label creates an excellent <label>.
@@ -18,7 +18,7 @@ export class Label extends Html {
      * @param {string} [props.id='label-1'] Label primary key.
      * @param {string|false} [props.for=false] Label HTML for <input> primary key.
      * @param {string[]} [props.classes] Label class names.
-     * @param {object|false} [input=false] Label Input properties & states.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Title inner HTML Element.
      * @memberof Label
      */
     constructor (props = {
@@ -27,20 +27,10 @@ export class Label extends Html {
         classes: [],
     }, input = false) {
         super({ ...Label.props, ...props });
-        this.setInput(input);
         this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
         this.setHTMLAttributes();
         this.setChilds();
-    }
-
-    /**
-     * * Set the HTML Element child nodes.
-     * @memberof Form
-     */
-    setChilds () {
-        if (this.hasOwnProperty(input)) {
-            this.appendChild(input.html);
-        }
     }
 
     /**
@@ -50,17 +40,6 @@ export class Label extends Html {
     setHTMLAttributes () {
         if (this.props.for) {
             this.setAttribute('for', this.props.for);
-        }
-    }
-
-    /**
-     * * Set the Label Input.
-     * @param {object|false} [input=false] Label Input properties & states.
-     * @memberof Label
-     */
-    setInput (input = false) {
-        if (input) {
-            this.input = new Input((input.hasOwnProperty('props') ? input.state : {}), (input.hasOwnProperty('state') ? input.state : {}), (input.hasOwnProperty('callbacks') ? input.callbacks : {}));
         }
     }
 
@@ -76,9 +55,6 @@ export class Label extends Html {
         nodeName: 'LABEL',
     }
 }
-
-// ? Label childs
-Label.Input = Input;
 
 // ? Default export
 export default Label;

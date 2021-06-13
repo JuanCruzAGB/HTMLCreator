@@ -53,6 +53,12 @@ export class Input extends Html {
             params: {}
         }
     }) {
+        if (props.type === 'select') {
+            props.nodeName = 'SELECT';
+        }
+        if (props.type === 'textarea') {
+            props.nodeName = 'TEXTAREA';
+        }
         super({ ...Input.props, ...props }, { ...Input.state, ...state });
         this.setCallbacks({ ...Input.callbacks, ...callbacks });
         this.createHTML(this.props.nodeName);
@@ -89,6 +95,7 @@ export class Input extends Html {
                 break;
             case 'password':
             case 'text':
+            case 'textarea':
                 this.html.addEventListener('focusout', function (e) {
                     e.preventDefault();
                     instance.focusout();
@@ -106,7 +113,9 @@ export class Input extends Html {
      */
     setHTMLAttributes () {
         this.setAttribute('name', this.props.name);
-        this.setAttribute('type', this.props.type);
+        if (this.props.type !== 'select' && this.props.type !== 'textarea') {
+            this.setAttribute('type', this.props.type);
+        }
         switch (this.props.type) {
             case 'file':
                 if (this.props.accept) {

@@ -1,547 +1,364 @@
+// ? JuanCruzAGB repository
+import Html from "../../../JuanCruzAGB/js/Html.js";
+
 // ? HTMLCreatorJS repository
-import { THead } from "./THead.js";
-import { TBody } from "./TBody.js";
-import { Tr } from "./Tr.js";
-import { Td } from "./Td.js";
-import { Th } from "./Th.js";
+import Cell from "./Cell.js";
+import Row from "./Row.js";
+import TPart from "./TPart.js";
 
 /**
  * * Table creates an excellent <table>.
  * @export
  * @class Table
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @extends Html
  */
-export class Table{
+export class Table extends Html {
     /**
      * * Creates an instance of Table.
-     * @param {Object} [properties] Table properties:
-     * @param {String} [properties.id] Table ID.
-     * @param {Boolean} [properties.thead] Table <thead> boolean.
-     * @param {Boolean} [properties.tbody] Table <tbody> boolean.
-     * @param {String[]} [properties.trClasses] Table <tr> class names.
-     * @param {Object[]} [cells] Table cells.
-     * @param {Object[]} [data] Table data.
+     * @param {object} [props] Table properties:
+     * @param {string} [props.id='table-1'] Table primary key.
+     * @param {object} [props.classes] Class names.
+     * @param {string[]} [props.classes.table] Table class names.
+     * @param {string[]} [props.classes.thead] THead class names.
+     * @param {string[]} [props.classes.tbody] TBody class names.
+     * @param {object[]} [props.structure] Table structure.
      * @memberof Table
      */
-    constructor(properties = {
+    constructor (props = {
         id: 'table-1',
-        thead: true,
-        tbody: true,
-        trClasses: [],
-    }, cells = [], data = undefined){
-        this.setProperties(properties);
-        this.setData(data);
-        this.setCells(cells, properties);
-        this.setHTML();
+        classes: {
+            table: [],
+            thead: [],
+            tbody: [],
+        },
+    }, structure = []) {
+        super({ ...Table.props, ...props });
+        this.createHTML(this.props.nodeName);
+        this.setStructure(structure);
     }
 
     /**
-     * * Set the Table properties.
-     * @param {Object} [properties] Table properties:
-     * @param {String} [properties.id] Table ID.
-     * @param {Boolean} [properties.thead] Table <thead> boolean.
-     * @param {Boolean} [properties.tbody] Table <tbody> boolean.
+     * * Set the Table structure.
+     * @param {object[]} [structure] Table structure.
      * @memberof Table
      */
-    setProperties(properties = {
-        id: 'table-1',
-        thead: true,
-        tbody: true,
-    }){
-        this.properties = {};
-        this.setIDProperty(properties);
-        this.setTHeadBooleanProperty(properties);
-        this.setTBodyBooleanProperty(properties);
-    }
-
-    /**
-     * * Returns the Table properties or an specific property.
-     * @param {String} [name] Property name.
-     * @returns {Object|*}
-     * @memberof Table
-     */
-    getProperties(name = ''){
-        if (name && name != '') {
-            return this.properties[name];
-        } else {
-            return this.properties;
+    setStructure (structure = []) {
+        if (!this.structure) {
+            this.structure = [];
+        }
+        let { body, head } = this.parseStructure(structure);
+        if (typeof head === 'object') {
+            this.setHead(head);
+        }
+        if (typeof body === 'object') {
+            this.setBody(body);
+        }
+        if (typeof head !== 'object' && typeof body !== 'object') {
+            this.setRows(structure);
         }
     }
 
     /**
-     * * Check if there is a property.
-     * @param {String} name Property name.
-     * @returns {Boolean}
+     * * Set the Table Body.
+     * @param {object[]} [structure] Body structure.
      * @memberof Table
      */
-    hasProperty(name = ''){
-        if (this.properties.hasOwnProperty(name)) {
-            return true;
-        } else {
-            return false;
+    setBody (structure = []) {
+        if (!this.structure) {
+            this.structure = [];
         }
+        this.structure.tbody = new TPart({
+            id: `${ this.props.id }-tbody`,
+            classes: this.props.classes.tbody,
+        }, structure);
+        this.appendChild(this.structure.tbody.html);
     }
 
     /**
-     * * Change a property value.
-     * @param {String} name Property name.
-     * @param {*} value Property value.
+     * * Set the Table Head.
+     * @param {object[]} [structure] Head structure.
      * @memberof Table
      */
-    changeProperty(name = '', value = ''){
-        if (this.hasProperty(name)) {
-            this.properties[name] = value;
+    setHead (structure = []) {
+        if (!this.structure) {
+            this.structure = [];
         }
-        switch (name) {
-            default:
-                break;
+        this.structure.thead = new TPart({
+            id: `${ this.props.id }-thead`,
+            classes: this.props.classes.thead,
+        }, structure);
+        this.appendChild(this.structure.thead.html);
+    }
+
+    /**
+     * * Set the Table Rows.
+     * @param {object[]} [structure] Row structure.
+     * @memberof Table
+     */
+    setRows (structure = []) {
+        if (!this.structure) {
+            this.structure = [];
         }
-    }
-
-    /**
-     * * Set the Table ID.
-     * @param {Object} [properties] Table properties:
-     * @param {String} [properties.id] Table ID.
-     * @memberof Table
-     */
-    setIDProperty(properties = {
-        id: 'table-1',
-    }){
-        if (properties.hasOwnProperty('id')) {
-            this.properties.id = properties.id;
-        } else {
-            this.properties.id = 'table-1';
+        let { body, head } = this.parseStructure(structure);
+        if (typeof head === 'object' && this.structure.hasOwnProperty('thead')) {
+            this.structure.thead.setRows(head);
         }
-    }
-
-    /**
-     * * Returns the Table ID.
-     * @returns {String}
-     * @memberof Table
-     */
-    getIDProperty(){
-        return this.properties.id;
-    }
-
-    /**
-     * * Set the Table <thead> boolean.
-     * @param {Object} [properties] Table properties:
-     * @param {Boolean} [properties.thead] Table <thead> boolean.
-     * @memberof Table
-     */
-    setTHeadBooleanProperty(properties = {
-        thead: true,
-    }){
-        if (properties.hasOwnProperty('thead')) {
-            this.properties.thead = properties.thead;
-        } else {
-            this.properties.thead = true;
-            this.thead = new THead({});
+        if (typeof body === 'object' && this.structure.hasOwnProperty('tbody')) {
+            this.structure.tbody.setRows(body);
         }
-    }
-
-    /**
-     * * Returns the Table <thead> Boolean.
-     * @returns {Boolean}
-     * @memberof Table
-     */
-    getTHeadBooleanProperty(){
-        return this.properties.thead;
-    }
-
-    /**
-     * * Returns the Table <thead>.
-     * @returns {THead|false}
-     * @memberof Table
-     */
-    getTHead(){
-        if (this.hasOwnProperty('thead')) {
-            return this.thead;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * * Set the Table <tbody> boolean.
-     * @param {Object} [properties] Table properties:
-     * @param {Boolean} [properties.tbody] Table <tbody> boolean.
-     * @memberof Table
-     */
-    setTBodyBooleanProperty(properties = {
-        tbody: true,
-    }){
-        if (properties.hasOwnProperty('tbody')) {
-            this.properties.tbody = properties.tbody;
-        } else {
-            this.properties.tbody = true;
-            this.tbody = new TBody({});
-        }
-    }
-
-    /**
-     * * Returns the Table <tbody> Boolean.
-     * @returns {Boolean}
-     * @memberof Table
-     */
-    getTBodyBooleanProperty(){
-        return this.properties.tbody;
-    }
-
-    /**
-     * * Returns the Table <tbody>.
-     * @returns {TBody|false}
-     * @memberof Table
-     */
-    getTBody(){
-        if (this.hasOwnProperty('tbody')) {
-            return this.tbody;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * * Set the Table data.
-     * @param {Object[]} [data] Table data.
-     * @memberof Table
-     */
-    setData(data = undefined){
-        this.data = data;
-    }
-
-    /**
-     * * Returns the Table data.
-     * @param {Number} [row] Number of row from data.
-     * @param {*} [index] Index of the data.
-     * @returns {*}
-     * @memberof Table
-     */
-    getData(row = false, index = undefined){
-        if (typeof row == 'number' && row >= 0) {
-            if (/:/.exec(index)) {
-                index = index.split(':');
-                if (index.length > 2) {
-                    if (this.data[row].hasOwnProperty(index[0])) {
-                        let element = this.data[row][index[0]],
-                            found = true;
-                        for (const key in index) {
-                            if (parseInt(key) >= 1) {
-                                if (element.hasOwnProperty(index[parseInt(key)])) {
-                                    element = element[index[parseInt(key)]];
-                                } else {
-                                    found = false;
-                                }
-                            }
-                        }
-                        if (found) {
-                            return element;
-                        }
+        if ((typeof head !== 'object' && !this.structure.hasOwnProperty('thead')) && (typeof body !== 'object' && !this.structure.hasOwnProperty('tbody'))) {
+            this.structure.rows = [];
+            for (const key in structure) {
+                if (Object.hasOwnProperty.call(structure, key)) {
+                    const cells = structure[key];
+                    if (typeof key === 'object') {
+                        const row = new Row((key.hasOwnProperty('props') ? key.props : []), cells);
+                        this.structure.rows.push(row);
+                        this.appendChild(row.html);
+                        continue;
                     }
-                } else {
-                    if (this.data[row].hasOwnProperty(index[0])) {
-                        if (this.data[row][index[0]].hasOwnProperty(index[1])) {
-                            return this.data[row][index[0]][index[1]];
-                        }
-                    }
+                    const row = new Row({
+                        id: `row-${ parseInt(key) + 1 }`,
+                    }, cells);
+                    this.structure.rows.push(row);
+                    this.appendChild(row.html);
                 }
-            } else {
-                for (const key in this.data[row]) {
-                    if (this.data[row].hasOwnProperty(index)) {
-                        return this.data[row][index];
+            }
+        }
+    }
+
+    /**
+     * * Get a Table Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {Cell|false}
+     * @memberof Table
+     */
+    getCell (id_cell = false) {
+        if (id_cell) {
+            if (this.structure.hasOwnProperty('thead')) {
+                return this.structure.thead.getCell(id_cell);
+            }
+            if (this.structure.hasOwnProperty('tbody')) {
+                return this.structure.tbody.getCell(id_cell);
+            }
+            if (!this.structure.hasOwnProperty('thead') && !this.structure.hasOwnProperty('tbody')) {
+                for (const row of this.structure.rows) {
+                    return row.getCell(id_cell);
+                }
+            }
+            return false;
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
+        }
+    }
+
+    /**
+     * * Get a Table Row.
+     * @param {string} id_row Row primary key.
+     * @returns {Row|false}
+     * @memberof Table
+     */
+    getRow (id_row = false) {
+        if (id_row) {
+            if (this.structure.hasOwnProperty('thead')) {
+                return this.structure.thead.getRow(id_row);
+            }
+            if (this.structure.hasOwnProperty('tbody')) {
+                return this.structure.tbody.getRow(id_row);
+            }
+            if (!this.structure.hasOwnProperty('thead') && !this.structure.hasOwnProperty('tbody')) {
+                for (const row of this.structure.rows) {
+                    if (row.props.id === id_row) {
+                        return row;
                     }
                 }
             }
-        } else {
-            return this.data;
+            return false;
+        }
+        if (!id_row) {
+            console.error("Row primary key is required");
         }
     }
 
     /**
-     * * Change the Table data.
-     * @param {Object[]} data Table data.
+     * * Check if there is a Table Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {boolean}
      * @memberof Table
      */
-    changeData(data){
-        this.setData(data);
-        this.setCells();
-    }
-
-    /**
-     * * Add new Table data.
-     * @param {Object[]} newData Table data.
-     * @memberof Table
-     */
-    addData(newData){
-        for (const data of newData) {
-            this.data.push(data);
-        }
-    }
-
-    /**
-     * * Remove a Table data.
-     * @param {Number} position Table data position.
-     * @memberof Table
-     */
-    removeData(position){
-        let data = this.getData();
-        for (const key in this.getData()) {
-            if (position == key) {
-                data.splice(key);
+    hasCell (id_cell = false) {
+        if (id_cell) {
+            if (this.structure.hasOwnProperty('thead')) {
+                if (this.structure.thead.hasCell(id_cell)) {
+                    return true;
+                }
             }
+            if (this.structure.hasOwnProperty('tbody')) {
+                if (this.structure.tbody.hasCell(id_cell)) {
+                    return true;
+                }
+            }
+            for (const row of this.rows) {
+                if (row.hasCell(id_cell)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
         }
     }
 
     /**
-     * * Set the Table info.
-     * @param {Object} [info] Table Cells information.
+     * * Check if there is a Table Row.
+     * @param {string} id_row Row primary key.
+     * @returns {boolean}
      * @memberof Table
      */
-    setInfo(info = []){
-        this.info = info;
-    }
-
-    /**
-     * * Returns the Table info.
-     * @returns {Object}
-     * @memberof Table
-     */
-    getInfo(){
-        return this.info;
-    }
-
-    /**
-     * * Set the Table cells.
-     * @param {Object[]} [cells] Table cells.
-     * @param {Object} [properties] Table properties:
-     * @param {String[]} [properties.trClasses] Table <tr> class names.
-     * @memberof Table
-     */
-    setCells(cells = [], properties = {
-        trClasses: [],
-    }){
-        this.cells = [];
-        let cellsToAppend;
-        if (!this.info) {
-            this.setInfo(cells);
+    hasRow (id_row = false) {
+        if (id_row) {
+            if (this.structure.hasOwnProperty('thead')) {
+                if (this.structure.thead.hasRow(id_row)) {
+                    return true;
+                }
+            }
+            if (this.structure.hasOwnProperty('tbody')) {
+                if (this.structure.tbody.hasRow(id_row)) {
+                    return true;
+                }
+            }
+            for (const row of this.rows) {
+                if (row.props.id === id_row) {
+                    return true;
+                }
+            }
+            return false;
         }
-        if (this.getData().length >= 1) {
-            for (const row in this.getData()) {
-                cellsToAppend = this.createCellByInfo(parseInt(row));
-                if (this.properties.tbody) {
-                    this.setTr(row, (properties.hasOwnProperty('trClasses') && properties.trClasses.hasOwnProperty('tbody')) ? properties.trClasses.tbody : [], cellsToAppend);
+        if (!id_row) {
+            console.error("Row primary key is required");
+        }
+    }
+
+    /**
+     * * Removes a Table Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {Cell|false}
+     * @memberof Table
+     */
+    removeCell (id_cell = false) {
+        if (id_cell) {
+            if (this.structure.hasOwnProperty('thead')) {
+                return this.structure.thead.removeCell(id_cell);
+            }
+            if (this.structure.hasOwnProperty('tbody')) {
+                return this.structure.tbody.removeCell(id_cell);
+            }
+            if (!this.structure.hasOwnProperty('thead') && !this.structure.hasOwnProperty('tbody')) {
+                for (const row of this.structure.rows) {
+                    return row.removeCell(id_cell);
+                }
+            }
+            return false;
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
+        }
+    }
+
+    /**
+     * * Removes a Table Row.
+     * @param {string} id_row Row primary key.
+     * @returns {Row|false}
+     * @memberof Table
+     */
+    removeRow (id_row = false) {
+        if (id_row) {
+            if (this.structure.hasOwnProperty('thead')) {
+                return this.structure.thead.removeRow(id_cell);
+            }
+            if (this.structure.hasOwnProperty('tbody')) {
+                return this.structure.tbody.removeRow(id_cell);
+            }
+            if (!this.structure.hasOwnProperty('thead') && !this.structure.hasOwnProperty('tbody')) {
+                for (const key in [...this.structure.rows]) {
+                    if (Object.hasOwnProperty.call(this.structure.rows, key)) {
+                        const row = this.structure.rows[key];
+                        if (row.props.id === id_row) {
+                            row.removeHTML();
+                            delete this.structure.rows[key];
+                            return row;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        if (!id_row) {
+            console.error("Row primary key is required");
+        }
+    }
+
+    /**
+     * * Parse the a Table structure.
+     * @param {object[]} [structure] Table structure.
+     * @returns {object}
+     * @memberof Table
+     */
+    parseStructure (structure = []) {
+        let body = false, head = false;
+        for (const key in structure) {
+            if (Object.hasOwnProperty.call(structure, key)) {
+                const html = structure[key];
+                if (key === 'tbody') {
+                    if (typeof body !== 'object') {
+                        body = [];
+                    }
+                    for (const row in html) {
+                        if (Object.hasOwnProperty.call(html, row)) {
+                            const cell = html[row];
+                            body.push(cell);
+                        }
+                    }
+                }
+                if (key === 'thead') {
+                    if (typeof head !== 'object') {
+                        head = [];
+                    }
+                    for (const row in html) {
+                        if (Object.hasOwnProperty.call(html, row)) {
+                            const cell = html[row];
+                            head.push(cell);
+                        }
+                    }
                 }
             }
         }
-        if (this.getTHeadBooleanProperty()) {
-            cellsToAppend = this.createCellByInfo(0, 'th');
-            this.setTrIntoTHead(properties, cellsToAppend);
-        }
+        return { body, head };
     }
 
     /**
-     * * Returns the Table data.
-     * @returns {TBody|false}
+     * @static
+     * @var {object} props Default properties.
      * @memberof Table
      */
-    getCells(){
-        return this.cells;
-    }
-
-    /**
-     * * Set a Table cell.
-     * @param {Number} row Number of rows from data.
-     * @param {Number} [key] Number of cell to set.
-     * @param {Object} [properties] Cell properties:
-     * @param {String} [properties.id] Cell ID.
-     * @param {String[]} [properties.thClasses] Th class names.
-     * @param {String[]} [properties.tdClasses] Td class names.
-     * @param {String} [type] Cell type.
-     * @memberof Table
-     */
-    setCell(row, key = 1, properties = {
-        id: 'td-1',
-        thClasses: [],
-        tdClasses: [],
-    }, type = 'td'){
-        let column;
-        switch (type) {
-            case 'th':
-                column = new Th({
-                    id: properties.hasOwnProperty('id') ? properties.id : `th-${ key }`,
-                    innerHTML: properties.hasOwnProperty('innerHTML') ? properties.innerHTML : undefined,
-                    classes: properties.hasOwnProperty('thClasses') ? properties.thClasses : [],
-                }, properties.hasOwnProperty('name') ? properties.name : `Table cell header ${ key }`);
-                break;
-            case 'td':
-                column = new Td({
-                    id: properties.hasOwnProperty('id') ? properties.id : `td-${ key }`,
-                    name: properties.hasOwnProperty('name') ? properties.name : `Table cell ${ key }`,
-                    innerHTML: properties.hasOwnProperty('innerHTML') ? properties.innerHTML : undefined,
-                    classes: properties.hasOwnProperty('tdClasses') ? properties.tdClasses : [],
-                }, this.getData(row, properties.innerHTML));
-                this.addCell(row, column);
-                break;
-        }
-        return column;
-    }
-
-    /**
-     * * Add a new cell into the Table cell Array.
-     * @param {Number} row Number of rows from data.
-     * @param {Td|Th} column Cell to add.
-     * @memberof Table
-     */
-    addCell(row, column){
-        if (!this.cells[row]) {
-            this.cells[row] = [];
-        }
-        this.cells[row].push(column);
-    }
-
-    /**
-     * * Creates Td by the Table information.
-     * @param {Number} row Number of rows from data.
-     * @param {String} [type] Cell type.
-     * @returns {Array}
-     * @memberof Table
-     */
-    createCellByInfo(row, type = 'td'){
-        let cellsToAppend = [];
-        if (this.getInfo().length >= 1) {
-            for (const col in this.getInfo()) {
-                const cell = this.getInfo()[col];
-                switch (type) {
-                    case 'th':
-                        cellsToAppend.push(this.setCell(0, col, cell, 'th'));
-                        break;
-                    default:
-                        cellsToAppend.push(this.setCell(row, col, cell));
-                        break;
-                }
-            }
-        }
-        return cellsToAppend;
-    }
-
-    /**
-     * * Set Table <tr> into the <thead>.
-     * @param {Number} key Number of Tr to set.
-     * @param {Object} [properties] Cell properties:
-     * @param {String} [properties.id] Cell ID.
-     * @param {String[]} [properties.trClasses] Tr class names.
-     * @memberof Table
-     */
-    setTrIntoTHead(properties = {
-        trClasses: [],
-    }, cellsToAppend){
-        let tr = new Tr({
-            id: `tr-header`,
-            classes: (properties.hasOwnProperty('trClasses') && properties.trClasses.hasOwnProperty('thead')) ? properties.trClasses.thead : [],
-        });
-        for (const cell of cellsToAppend) {
-            tr.appendChild(cell.getHTML());
-        }
-        this.getTHead().setTr(tr);
-    }
-
-    /**
-     * * Set Table <tr>.
-     * @param {Number} row Number of Tr to set.
-     * @param {String[]} [classes] Table row class names.
-     * @param {Object[]} cellsToAppend Array of Td to append into the Tr.
-     * @memberof Table
-     */
-    setTr(row, classes = [], cellsToAppend){
-        if (!this.trs) {
-            this.trs = [];
-        }
-        let tr = new Tr({
-            id: `tr-${ row }`,
-            classes: classes,
-        });
-        for (const cell of cellsToAppend) {
-            tr.appendChild(cell.getHTML());
-        }
-        this.trs.push(tr);
-        this.getTBody().setTr(tr);
-    }
-
-    /**
-     * * Returns the Table <tr>.
-     * @returns {Tr[]}
-     * @memberof Table
-     */
-    getTr(){
-        return this.trs;
-    }
-
-    /**
-     * * Add a new Table <tr>.
-     * @param {Number} row Number of Tr to set.
-     * @param {String[]} [classes] Table row class names.
-     * @param {String} [position] Table row position to append.
-     * @memberof Table
-     */
-    addTr(row, classes = [], position = 'after'){
-        if (!this.trs) {
-            this.trs = [];
-        }
-        let tr = new Tr({
-            id: `tr-${ row }`,
-            classes: classes,
-        });
-        for (const cell of this.createCellByInfo(row)) {
-            tr.appendChild(cell.getHTML());
-        }
-        this.getTBody().addTr(tr, position);
-        switch (position) {
-            case 'before':
-                this.trs.unshift(tr);
-                break;
-            default:
-                this.trs.push(tr);
-                break;
-        }
-    }
-
-    /**
-     * * Remove a Table <tr>.
-     * @param {String} ID Tr ID.
-     * @memberof Table
-     */
-    removeTr(ID){
-        let keyRemoved;
-        for (const key in this.trs) {
-            const tr = this.trs[key];
-            if (tr.getProperties('id') == ID) {
-                keyRemoved = key;
-            }
-        }
-        this.trs.splice(keyRemoved, 1);
-        this.getTBody().removeTr(ID);
-    }
-
-    /**
-     * * Set the Table HTML Element.
-     * @memberof Table
-     */
-    setHTML(){
-        this.html = document.querySelector(`table#${ this.getProperties('id') }`);
-        if (this.getProperties('thead')) {
-            this.html.appendChild(this.getTHead().getHTML());
-        }
-        if (this.getProperties('tbody')) {
-            this.html.appendChild(this.getTBody().getHTML());
-        }
-    }
-
-    /**
-     * * Returns the Table HTML Element.
-     * @returns {HTMLElement}
-     * @memberof Table
-     */
-    getHTML(){
-        return this.trs;
+    static props = {
+        id: 'table-1',
+        classes: {
+            table: [],
+            thead: [],
+            tbody: [],
+        },
+        nodeName: 'TABLE',
     }
 }
+
+// ? Table childs
+Table.Cell = Cell;
+Table.Row = Row;
+Table.TPart = TPart;
+
+// ? Default export
+export default Table;

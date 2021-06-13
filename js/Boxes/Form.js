@@ -2,7 +2,7 @@
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
 // ? HTMLCreatorJS repository
-import Input from "./Input.js";
+import HTMLCreator from "../HTMLCreator.js";
 
 /**
  * * Form creates an excellent <form>.
@@ -25,7 +25,7 @@ export class Form extends Html {
      * @param {object} [callback] Form submit callback:
      * @param {function} [callback.function] Form submit callback function.
      * @param {*} [callback.params] Form submit callback function params.
-     * @param {object[]} [inputs] Form Inputs.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Form inner HTML Element.
      * @memberof Form
      */
     constructor (props = {
@@ -39,24 +39,13 @@ export class Form extends Html {
     }, callback = {
         function: function (params) { /* console.log('params') */ },
         params: {}
-    }, inputs = []) {
+    }, innerHTML = false) {
         super({ ...Form.props, ...props }, { ...Form.state, ...state });
-        this.setCallbacks({ default: { ...Form.callback, ...callback } })
-        this.setInputs(inputs);
+        this.setCallbacks({ default: { ...Form.callback, ...callback } });
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
         this.createHTML(this.props.nodeName);
         this.setEventListener();
         this.setHTMLAttributes();
-        this.setChilds();
-    }
-
-    /**
-     * * Set the HTML Element child nodes.
-     * @memberof Form
-     */
-    setChilds () {
-        for (const input of this.inputs) {
-            this.appendChild(input.html);
-        }
     }
     
     /**
@@ -82,22 +71,6 @@ export class Form extends Html {
         this.setAttribute('method', this.props.method);
         if (this.props.enctype) {
             this.setAttribute('enctype', this.props.enctype);
-        }
-    }
-
-    /**
-     * * Set the Form Inputs.
-     * @param {object[]} [inputs] Form Inputs.
-     * @memberof Form
-     */
-    setInputs (inputs = []) {
-        if (!this.inputs) {
-            this.inputs = [];
-        }
-        if (inputs.length) {
-            for (const input of inputs) {
-                this.inputs.push(new Input((input.hasOwnProperty('props') ? input.state : {}), (input.hasOwnProperty('state') ? input.state : {}), (input.hasOwnProperty('callbacks') ? input.callbacks : {})));
-            }
         }
     }
 
@@ -146,9 +119,6 @@ export class Form extends Html {
         params: {}
     }
 }
-
-// ? Form childs
-Form.Input = Input;
 
 // ? Default export
 export default Form;

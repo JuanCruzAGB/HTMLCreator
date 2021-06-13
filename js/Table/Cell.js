@@ -1,6 +1,9 @@
 // ? JuanCruzAGB repository
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+
 /**
  * * Cell creates an excellent <td> or <th>.
  * @export
@@ -15,7 +18,7 @@ export class Cell extends Html {
      * @param {string} [props.id='cell-1'] Cell primary key.
      * @param {string} [props.type='normal'] Cell type.
      * @param {string[]} [props.classes] Cell class names.
-     * @param {HTMLElement|false} [innerHTML=false] Item inner HTML Element.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Item inner HTML Element.
      * @memberof Cell
      */
     constructor (props = {
@@ -25,7 +28,8 @@ export class Cell extends Html {
     }, innerHTML = false) {
         props.nodeName = ((props.type === 'header') ? 'TH' : 'TD');
         super({ ...Cell.props, ...props });
-        this.createHTML(this.props.nodeName, innerHTML);
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
     }
 
     /**

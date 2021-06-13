@@ -2,36 +2,36 @@
 # JuanCruzAGB repository
 > by [JuanCruzAGB](https://github.com/JuanCruzAGB)
 
-HTMLCreatorJS puede crea un excelente `<div>`.
+HTMLCreatorJS puede crea un excelente `<main>`.
 
 ## Configuración
 Importe **HTMLCreator** en tu javascript para generar la lógica.
 ```
 Import { HTMLCreator as HTMLCreatorJS } from 'submodules/HTMLCreatorJS/js/HTMLCreator.js';
 ```
-Y cree el `<div>`.
+Y cree el `<main>`.
 ```
-let div = new HTMLCreatorJS({props}, {innerHTML});
+let main = new HTMLCreatorJS({props}, {innerHTML});
 ```
 Las **propiedades** existentes son:
-- {string} **id:** Id de la etiqueta HTML. Por defecto viene en `div-1`
+- {string} **id:** Id de la etiqueta HTML. Por defecto viene en `main-1`
 - {string[]} **classes:** Las clases de la etiqueta HTML. Por defecto viene un array vacío.
 
 El **contenido** de la etiqueta puede ser tanto un `string` como un elemento HTML, pero también se puede pasar un array para insertar múltiples elementos creados con **HTMLCreatorJS**. Por ejemplo:
 ```
-let div = new HTMLCreatorJS({
-	id: 'div-perfecto',
+let main = new HTMLCreatorJS({
+	id: 'main-perfecto',
 	classes: ['container', 'text-center'],
 }, [
 	['h1', {
 		props: {
-			id: 'div-title',
+			id: 'main-title',
 			classes: ``,
 		}, innerHTML: 'Hola mundo!',
 	}],
 	['p', {
 		props: {
-			id: 'div-paragraph',
+			id: 'main-paragraph',
 			classes: ``,
 		}, innerHTML: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, eveniet eligendi impedit, dolorum culpa atque maiores hic doloribus labore aperiam nesciunt provident dolore officiis alias, quaerat nostrum beatae quibusdam maxime!',
 	}],

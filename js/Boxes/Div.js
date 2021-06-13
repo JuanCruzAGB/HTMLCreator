@@ -1,6 +1,9 @@
 // ? JuanCruzAGB repository
 import Html from "../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+
 /**
  * * Div creates an excellent <div>.
  * @export
@@ -14,7 +17,7 @@ export class Div extends Html {
      * @param {object} [props] Div properties:
      * @param {string} [props.id='div-1'] Div primary key.
      * @param {string[]} [props.classes] Div class names.
-     * @param {HTMLElement|false} [innerHTML=false] Div inner HTML Element.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Footer inner HTML Element.
      * @memberof Div
      */
     constructor (props = {
@@ -22,7 +25,8 @@ export class Div extends Html {
         classes: [],
     }, innerHTML = false) {
         super({ ...Div.props, ...props });
-        this.createHTML(this.props.nodeName, innerHTML);
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
     }
 
     /**

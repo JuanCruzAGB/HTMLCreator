@@ -1,6 +1,9 @@
 // ? JuanCruzAGB repository
 import Html from "../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+
 /**
  * * Title creates an excellent <h1>, <h2>...
  * @export
@@ -15,7 +18,7 @@ export class Title extends Html {
      * @param {string} [props.id='title-1'] Title primary key.
      * @param {number} [props.level=1] Title level.
      * @param {string[]} [props.classes] Title class names.
-     * @param {HTMLElement|false} [innerHTML=false] Title inner HTML Element.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Title inner HTML Element.
      * @memberof Title
      */
     constructor (props = {
@@ -25,7 +28,8 @@ export class Title extends Html {
     }, innerHTML = false) {
         props.nodeName = `H${ props.level }`;
         super({ ...Title.props, ...props });
-        this.createHTML(this.props.nodeName, innerHTML);
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this.html, innerHTML);
     }
 
     /**

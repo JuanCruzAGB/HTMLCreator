@@ -55,6 +55,70 @@ export class Row extends Html {
     }
 
     /**
+     * * Get a Row Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {Cell}
+     * @memberof Row
+     */
+    getCell (id_cell = false) {
+        if (id_cell) {
+            for (const cell of this.cells) {
+                if (cell.props.id === id_cell) {
+                    return cell;
+                }
+            }
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
+        }
+    }
+
+    /**
+     * * Check if there is a Row Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {boolean}
+     * @memberof Row
+     */
+    hasCell (id_cell = false) {
+        if (id_cell) {
+            for (const row of this.cells) {
+                if (cell.props.id === id_cell) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
+        }
+    }
+
+    /**
+     * * Removes a Row Cell.
+     * @param {string} id_cell Cell primary key.
+     * @returns {Cell|false}
+     * @memberof Row
+     */
+    removeCell (id_cell = false) {
+        if (id_cell) {
+            for (const key in [...this.cells]) {
+                if (Object.hasOwnProperty.call(this.cells, key)) {
+                    const cell = this.cells[key];
+                    if (cell.props.id === id_cell) {
+                        cell.removeHTML();
+                        delete this.cells[key];
+                        return cell;
+                    }
+                }
+            }
+            return false;
+        }
+        if (!id_cell) {
+            console.error("Cell primary key is required");
+        }
+    }
+
+    /**
      * @static
      * @var {object} props Default properties.
      * @memberof Row

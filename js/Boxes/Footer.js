@@ -5,26 +5,26 @@ import Html from "../../JuanCruzAGB/js/Html.js";
 import HTMLCreator from "../HTMLCreator.js";
 
 /**
- * * Span creates an excellent <span>.
+ * * Footer creates an excellent <footer>.
  * @export
- * @class Span
+ * @class Footer
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Span extends Html {
+export class Footer extends Html {
     /**
-     * * Creates an instance of Span.
-     * @param {object} [props] Span properties:
-     * @param {string} [props.id='span-1'] Span primary key.
-     * @param {string[]} [props.classes] Span class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Span inner HTML Element.
-     * @memberof Span
+     * * Creates an instance of Footer.
+     * @param {object} [props] Footer properties:
+     * @param {string} [props.id='footer-1'] Footer primary key.
+     * @param {string[]} [props.classes] Footer class names.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Footer inner HTML Element.
+     * @memberof Footer
      */
     constructor (props = {
-        id: 'span-1',
+        id: 'footer-1',
         classes: [],
     }, innerHTML = false) {
-        super({ ...Span.props, ...props });
+        super({ ...Footer.props, ...props });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this.html, innerHTML);
     }
@@ -32,14 +32,14 @@ export class Span extends Html {
     /**
      * @static
      * @var {object} props Default properties.
-     * @memberof Span
+     * @memberof Footer
      */
     static props = {
-        id: 'span-1',
+        id: 'footer-1',
         classes: [],
-        nodeName: 'SPAN',
+        nodeName: 'FOOTER',
     }
 }
 
 // ? Default export
-export default Span;
+export default Footer;
