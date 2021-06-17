@@ -28,7 +28,7 @@ export class Label extends Html {
     }, input = false) {
         super({ ...Label.props, ...props });
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setHTMLAttributes();
         this.setChilds();
     }

@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../JuanCruzAGB/js/Html.js";
+import Html from "../../../JuanCruzAGB/js/Html.js";
 
 // ? HTMLCreatorJS repository
 import HTMLCreator from "../HTMLCreator.js";
@@ -26,7 +26,7 @@ export class Section extends Html {
     }, innerHTML = false) {
         super({ ...Section.props, ...props });
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**

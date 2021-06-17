@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../JuanCruzAGB/js/Html.js";
+import Html from "../../../JuanCruzAGB/js/Html.js";
 
 /**
  * * Image creates an excellent <img>.

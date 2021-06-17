@@ -135,23 +135,43 @@ export class HTMLCreator extends Class {
                 return new Icon((data.hasOwnProperty('props') ? data.props : {}));
             case 'IMG':
                 return new Image((data.hasOwnProperty('props') ? data.props : {}));
+        // ? Menus
+            case 'NAVMENU':
+                this.import(tag, data);
+                break;
             default:
                 console.warn(`HTMLCreatorJS does not support ${ tag } yet`);
                 break;
         }
     }
 
+    async import (tag = 'DIV', data = {}) {
+        switch (tag.toUpperCase()) {
+        // ? Menus
+            case 'NAVMENU':
+                try {
+                    const { Nav } = await import("./Menu/Nav/Nav.js");
+                    console.log(new Nav());
+                } catch (error) {
+                    console.error(error);
+                    // console.error("Nav module does not found");
+                }
+                break;
+        }
+    }
+
     /**
      * * Set the inner HTML Element
+     * @static
      * @param {object} HTML HTML Element created with HTMLCreatorJS.
      * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof HTMLCreator
      */
-    setInnerHTML (HTML = false, innerHTML = false) {
+    static setInnerHTML (HTML = false, innerHTML = false) {
         if (typeof innerHTML === 'string') {
             HTML.appendChild(innerHTML);
         }
-        if (typeof innerHTML !== 'string') {
+        if (typeof innerHTML !== 'string' && typeof innerHTML !== 'boolean') {
             if (innerHTML.nodeName) {
                 HTML.appendChild(innerHTML);
             }

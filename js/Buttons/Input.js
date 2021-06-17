@@ -76,12 +76,14 @@ export class Input extends Html {
         switch (this.props.type) {
             case 'date':
                 this.html.addEventListener('change', function (e) {
-                    e.preventDefault();
-                    instance.change();
+                    instance.change({
+                        value: this.value,
+                    });
                 });
                 this.html.addEventListener('focusout', function (e) {
-                    e.preventDefault();
-                    instance.focusout();
+                    instance.focusout({
+                        value: this.value,
+                    });
                 });
                 break;
             case 'checkbox':
@@ -89,16 +91,22 @@ export class Input extends Html {
             case 'radio':
             case 'select':
                 this.html.addEventListener('change', function (e) {
-                    e.preventDefault();
-                    instance.change();
+                    let params = (
+                        (instance.props.type === 'checkbox') ? { checked: { [this.value]: this.checked } } :
+                        (instance.props.type === 'file') ? { files: this.files } :
+                        (instance.props.type === 'radio') ? { checked: this.value } :
+                        (instance.props.type === 'select') ? { selected: this.options[this.selectedIndex] } : {}
+                    );
+                    instance.change(params);
                 });
                 break;
             case 'password':
             case 'text':
             case 'textarea':
                 this.html.addEventListener('focusout', function (e) {
-                    e.preventDefault();
-                    instance.focusout();
+                    instance.focusout({
+                        value: this.value,
+                    });
                 });
                 break;
             default:
@@ -162,8 +170,8 @@ export class Input extends Html {
      * @memberof Input
      */
     checkMultipleState () {
-        if (this.state.disabled) {
-            this.setAttribute('multiple', Atrue);
+        if (this.state.multiple) {
+            this.setAttribute('multiple', true);
         }
     }
 
@@ -175,7 +183,7 @@ export class Input extends Html {
     change (params = {}) {
         this.execute('change', {
             input: this,
-            ...params
+            ...(Object.keys(params).length ? { ...this.callbacks.change.params, ...params } : { ...this.callbacks.change.params }),
         });
     }
 

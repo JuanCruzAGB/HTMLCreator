@@ -42,7 +42,7 @@ export class Form extends Html {
     }, innerHTML = false) {
         super({ ...Form.props, ...props }, { ...Form.state, ...state });
         this.setCallbacks({ default: { ...Form.callback, ...callback } });
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
         this.createHTML(this.props.nodeName);
         this.setEventListener();
         this.setHTMLAttributes();

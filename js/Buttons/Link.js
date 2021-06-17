@@ -37,7 +37,7 @@ export class Link extends Html {
         super({ ...Link.props, ...props }, { ...Link.state, ...state });
         this.setCallbacks({ default: { ...Link.callback, ...callback }});
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
     }
     

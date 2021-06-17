@@ -29,7 +29,7 @@ export class Cell extends Html {
         props.nodeName = ((props.type === 'header') ? 'TH' : 'TD');
         super({ ...Cell.props, ...props });
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**

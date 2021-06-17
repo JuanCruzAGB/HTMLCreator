@@ -41,7 +41,7 @@ export class Button extends Html {
         super({ ...Button.props, ...props }, { ...Button.state, ...state });
         this.setCallbacks({ default: { ...Button.callback, ...callback }});
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this.html, innerHTML);
+        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
         this.setHTMLAttributes();
         this.checkState();
