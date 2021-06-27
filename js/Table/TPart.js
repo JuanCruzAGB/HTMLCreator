@@ -26,7 +26,7 @@ export class TPart extends Html {
         type: 'body',
         classes: [],
     }, rows = []) {
-        if (type === 'head') {
+        if (props.type === 'head') {
             props.nodeName = 'THEAD';
         }
         super({ ...TPart.props, ...props });
@@ -45,16 +45,8 @@ export class TPart extends Html {
         }
         for (const key in rows) {
             if (Object.hasOwnProperty.call(rows, key)) {
-                const cells = rows[key];
-                if (typeof key === 'object') {
-                    const row = new Row((key.hasOwnProperty('props') ? key.props : []), cells);
-                    this.rows.push(row);
-                    this.appendChild(row.html);
-                    continue;
-                }
-                const row = new Row({
-                    id: `row-${ parseInt(key) + 1 }`,
-                }, cells);
+                let row = rows[key];
+                row = new Row((row.hasOwnProperty('props') ? { ...row.props, id: `${ this.props.id }-row-${ parseInt(key) + 1 }` } : {}), (row.hasOwnProperty('cells') ? row.cells : []));
                 this.rows.push(row);
                 this.appendChild(row.html);
             }

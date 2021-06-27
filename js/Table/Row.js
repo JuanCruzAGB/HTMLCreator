@@ -49,8 +49,11 @@ export class Row extends Html {
         if (!this.cells) {
             this.cells = [];
         }
-        for (const cell of cells) {
-            this.cells.push(new Cell((cell.hasOwnProperty('props') ? cell.props : []), (cell.hasOwnProperty('innerHTML') ? cell.innerHTML : [])));
+        for (const key in cells) {
+            if (Object.hasOwnProperty.call(cells, key)) {
+                const cell = cells[key];
+                this.cells.push(new Cell((cell.hasOwnProperty('props') ? { ...cell.props, id: `${ this.props.id }-cell-${ parseInt(key) + 1 }` } : []), (cell.hasOwnProperty('innerHTML') ? cell.innerHTML : [])));
+            }
         }
     }
 
