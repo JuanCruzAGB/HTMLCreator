@@ -46,7 +46,7 @@ export class TPart extends Html {
         for (const key in rows) {
             if (Object.hasOwnProperty.call(rows, key)) {
                 let row = rows[key];
-                row = new Row((row.hasOwnProperty('props') ? { ...row.props, id: `${ this.props.id }-row-${ parseInt(key) + 1 }` } : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+                row = new Row((row.hasOwnProperty('props') ? { id: `${ this.props.id }-row-${ parseInt(key) + 1 }`, ...row.props} : {}), (row.hasOwnProperty('cells') ? row.cells : []));
                 this.rows.push(row);
                 this.appendChild(row.html);
             }

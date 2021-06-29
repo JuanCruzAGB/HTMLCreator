@@ -60,7 +60,7 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.tbody = new TPart((tbody.hasOwnProperty('props') ? { ...tbody.props, id: `${ this.props.id }-body`, type: 'body' } : {}), (tbody.hasOwnProperty('structure') ? tbody.structure : []));
+        this.structure.tbody = new TPart((tbody.hasOwnProperty('props') ? { id: `${ this.props.id }-body`, ...tbody.props, type: 'body' } : {}), (tbody.hasOwnProperty('structure') ? tbody.structure : []));
         this.appendChild(this.structure.tbody.html);
     }
 
@@ -73,7 +73,7 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.thead = new TPart((thead.hasOwnProperty('props') ? { ...thead.props, id: `${ this.props.id }-head`, type: 'head' } : {}), (thead.hasOwnProperty('structure') ? thead.structure : []));
+        this.structure.thead = new TPart((thead.hasOwnProperty('props') ? { id: `${ this.props.id }-head`, ...thead.props, type: 'head' } : {}), (thead.hasOwnProperty('structure') ? thead.structure : []));
         this.appendChild(this.structure.thead.html);
     }
 
@@ -95,10 +95,10 @@ export class Table extends Html {
         }
         if ((typeof head !== 'object' || !this.structure.hasOwnProperty('thead')) && (typeof body !== 'object' || !this.structure.hasOwnProperty('tbody'))) {
             this.structure.rows = [];
-            for (const key in rows) {
-                if (Object.hasOwnProperty.call(rows, key)) {
-                    let row = rows[key];
-                    row = new Row((row.hasOwnProperty('props') ? { ...row.props, id: `row-${ parseInt(key) + 1 }` } : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+            for (const key in structure) {
+                if (Object.hasOwnProperty.call(structure, key)) {
+                    let row = structure[key];
+                    row = new Row((row.hasOwnProperty('props') ? { id: `row-${ parseInt(key) + 1 }`, ...row.props } : {}), (row.hasOwnProperty('cells') ? row.cells : []));
                     this.structure.rows.push(row);
                     this.appendChild(row.html);
                 }
