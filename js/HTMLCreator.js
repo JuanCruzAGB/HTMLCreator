@@ -37,7 +37,7 @@ import Image from "./Visuals/Image.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Class
  */
-export class HTMLCreator extends Class {
+export default class HTMLCreator extends Class {
     /**
      * * Creates an instance of HTMLCreator.
      * @param {otring} [tag] HTML Element node name.
@@ -120,15 +120,33 @@ export class HTMLCreator extends Class {
                 return new Cell((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Texts
             case 'P':
-                return new Span((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Paragraph((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'SPAN':
                 return new Span((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'H1':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 1;
+                }
             case 'H2':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 2;
+                }
             case 'H3':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 3;
+                }
             case 'H4':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 4;
+                }
             case 'H5':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 5;
+                }
             case 'H6':
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
+                    data.props.level = 6;
+                }
                 return new Title((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Visuals
             case 'ICON':
@@ -180,43 +198,48 @@ export class HTMLCreator extends Class {
                     if (!HTML.children) {
                         HTML.children = [];
                     }
-                    child = new this((child.length ? child[0] : 'DIV'), ((child.length > 1) ? child[1] : {}));
+                    if (child.nodeName) {
+                        HTML.appendChild(child);
+                    }
+                    if (!child.nodeName) {
+                        child = new this((child.length ? child[0] : 'DIV'), ((child.length > 1) ? child[1] : {}));
+                        HTML.appendChild(child.html);
+                    }
                     HTML.children.push(child);
-                    HTML.appendChild(child.html);
                 }
             }
         }
     }
+
+    // * HTMLCreator childs:
+    //  ? Boxes
+    static Div = Div;
+    static Figure = Figure;
+    static Footer = Footer;
+    static Form = Form;
+    static Header = Header;
+    static Item = Item;
+    static Label = Label;
+    static List = List;
+    static Main = Main;
+    static Section = Section;
+    //  ? Buttons
+    static Button = Button;
+    static Input = Input;
+    static Link = Link;
+    //  ? Table
+    static Table = Table;
+    static TPart = TPart;
+    static Row = Row;
+    static Cell = Cell;
+    //  ? Texts
+    static Paragraph = Paragraph;
+    static Span = Span;
+    static Title = Title;
+    //  ? Visuals
+    static Icon = Icon;
+    static Image = Image;
 }
 
-// ? HTMLCreator childs
-HTMLCreator.Div = Div;
-// ? Boxes
-HTMLCreator.Div = Div;
-HTMLCreator.Figure = Figure;
-HTMLCreator.Footer = Footer;
-HTMLCreator.Form = Form;
-HTMLCreator.Header = Header;
-HTMLCreator.Item = Item;
-HTMLCreator.Label = Label;
-HTMLCreator.List = List;
-HTMLCreator.Main = Main;
-HTMLCreator.Section = Section;
-// ? Buttons
-HTMLCreator.Button = Button;
-HTMLCreator.Input = Input;
-HTMLCreator.Link = Link;
-// ? Table
-HTMLCreator.Table = Table;
-HTMLCreator.TPart = TPart;
-HTMLCreator.Row = Row;
-HTMLCreator.Cell = Cell;
-// ? Texts
-HTMLCreator.Span = Span;
-HTMLCreator.Title = Title;
-// ? Visuals
-HTMLCreator.Icon = Icon;
-HTMLCreator.Image = Image;
-
 // ? Default export
-export default HTMLCreator;
+export { HTMLCreator as Html };

@@ -87,6 +87,11 @@ export class Input extends Html {
                 });
                 break;
             case 'checkbox':
+                this.html.addEventListener('click', function (e) {
+                    instance.click({
+                        checked: { [this.value]: this.checked },
+                    });
+                });
             case 'file':
             case 'radio':
             case 'select':
@@ -97,7 +102,7 @@ export class Input extends Html {
                         (instance.props.type === 'radio') ? { checked: this.value } :
                         (instance.props.type === 'select') ? { selected: this.options[this.selectedIndex] } : {}
                     );
-                    instance.change(params);
+                    instance.change({ ...params });
                 });
                 break;
             case 'password':
@@ -177,7 +182,7 @@ export class Input extends Html {
 
     /**
      * * Input change callback.
-     * @param {*} [params={}] Click callback function optional params
+     * @param {*} [params={}] Change callback function optional params
      * @memberof Input
      */
     change (params = {}) {
@@ -188,8 +193,20 @@ export class Input extends Html {
     }
 
     /**
-     * * Input focus out callback.
+     * * Input click callback.
      * @param {*} [params={}] Click callback function optional params
+     * @memberof Input
+     */
+    click (params = {}) {
+        this.execute('click', {
+            input: this,
+            ...(Object.keys(params).length ? { ...this.callbacks.click.params, ...params } : { ...this.callbacks.click.params }),
+        });
+    }
+
+    /**
+     * * Input focus out callback.
+     * @param {*} [params={}] Foucout callback function optional params
      * @memberof Input
      */
     focusout (params = {}) {

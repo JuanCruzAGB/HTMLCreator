@@ -25,12 +25,11 @@ export class Label extends Html {
         id: 'label-1',
         for: false,
         classes: [],
-    }, input = false) {
+    }, innerHTML = false) {
         super({ ...Label.props, ...props });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
         this.setHTMLAttributes();
-        this.setChilds();
     }
 
     /**

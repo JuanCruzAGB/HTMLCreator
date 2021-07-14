@@ -16,6 +16,7 @@ export class Link extends Html {
      * * Creates an instance of Link.
      * @param {object} [props] Link properties:
      * @param {string} [props.id='link-1'] Link primary key.
+     * @param {string} [props.url='#'] Link redirection url.
      * @param {string[]} [props.classes] Link class names.
      * @param {object} [state] Link state:
      * @param {boolean} [state.preventDefault=false] Link click event prevent default.
@@ -27,6 +28,7 @@ export class Link extends Html {
      */
     constructor (props = {
         id: 'link-1',
+        url: '#',
         classes: [],
     }, state = {
         preventDefault: false,
@@ -37,6 +39,7 @@ export class Link extends Html {
         super({ ...Link.props, ...props }, { ...Link.state, ...state });
         this.setCallbacks({ default: { ...Link.callback, ...callback }});
         this.createHTML(this.props.nodeName);
+        this.setHTMLAttributes();
         HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
     }
@@ -53,6 +56,14 @@ export class Link extends Html {
             }
             instance.click();
         });
+    }
+
+    /**
+     * * Set the HTML Element attributes.
+     * @memberof Link
+     */
+    setHTMLAttributes () {
+        this.setAttribute('href', this.props.url);
     }
 
     /**
@@ -74,6 +85,7 @@ export class Link extends Html {
      */
     static props = {
         id: 'link-1',
+        url: '#',
         classes: [],
         nodeName: 'A',
     }
