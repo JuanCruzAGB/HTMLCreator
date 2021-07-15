@@ -59,8 +59,7 @@ export class Input extends Html {
         if (props.type === 'textarea') {
             props.nodeName = 'TEXTAREA';
         }
-        super({ ...Input.props, ...props }, { ...Input.state, ...state });
-        this.setCallbacks({ ...Input.callbacks, ...callbacks });
+        super({ ...Input.props, ...props }, { ...Input.state, ...state }, { ...Input.callbacks, ...callbacks });
         this.createHTML(this.props.nodeName);
         this.setEventListener();
         this.setHTMLAttributes();
@@ -178,42 +177,6 @@ export class Input extends Html {
         if (this.state.multiple) {
             this.setAttribute('multiple', true);
         }
-    }
-
-    /**
-     * * Input change callback.
-     * @param {*} [params={}] Change callback function optional params
-     * @memberof Input
-     */
-    change (params = {}) {
-        this.execute('change', {
-            input: this,
-            ...(Object.keys(params).length ? { ...this.callbacks.change.params, ...params } : { ...this.callbacks.change.params }),
-        });
-    }
-
-    /**
-     * * Input click callback.
-     * @param {*} [params={}] Click callback function optional params
-     * @memberof Input
-     */
-    click (params = {}) {
-        this.execute('click', {
-            input: this,
-            ...(Object.keys(params).length ? { ...this.callbacks.click.params, ...params } : { ...this.callbacks.click.params }),
-        });
-    }
-
-    /**
-     * * Input focus out callback.
-     * @param {*} [params={}] Foucout callback function optional params
-     * @memberof Input
-     */
-    focusout (params = {}) {
-        this.execute('focusout', {
-            input: this,
-            ...params
-        });
     }
 
     /**

@@ -36,8 +36,8 @@ export class Link extends Html {
         function: function() { /* console.log('clicked') */ },
         params: {}
     }, innerHTML = false) {
-        super({ ...Link.props, ...props }, { ...Link.state, ...state });
-        this.setCallbacks({ default: { ...Link.callback, ...callback }});
+        super({ ...Link.props, ...props }, { ...Link.state, ...state }, { click: { ...Link.callback, ...callback }});
+        this.setCallbacks();
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
         HTMLCreator.setInnerHTML(this, innerHTML);
@@ -64,18 +64,6 @@ export class Link extends Html {
      */
     setHTMLAttributes () {
         this.setAttribute('href', this.props.url);
-    }
-
-    /**
-     * * Link click callback.
-     * @param {*} [params={}] Click callback function optional params
-     * @memberof Link
-     */
-    click (params = {}) {
-        this.execute('default', {
-            link: this,
-            ...params
-        });
     }
 
     /**

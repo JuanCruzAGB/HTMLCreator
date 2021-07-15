@@ -40,8 +40,7 @@ export class Form extends Html {
         function: function (params) { /* console.log('params') */ },
         params: {}
     }, innerHTML = false) {
-        super({ ...Form.props, ...props }, { ...Form.state, ...state });
-        this.setCallbacks({ default: { ...Form.callback, ...callback } });
+        super({ ...Form.props, ...props }, { ...Form.state, ...state }, { submit: { ...Form.callback, ...callback } });
         HTMLCreator.setInnerHTML(this, innerHTML);
         this.createHTML(this.props.nodeName);
         this.setEventListener();
@@ -72,18 +71,6 @@ export class Form extends Html {
         if (this.props.enctype) {
             this.setAttribute('enctype', this.props.enctype);
         }
-    }
-
-    /**
-     * * Form submit callback.
-     * @param {*} [params={}] Click callback function optional params
-     * @memberof Form
-     */
-    submit (params = {}) {
-        this.execute('default', {
-            form: this,
-            ...params
-        });
     }
 
     /**

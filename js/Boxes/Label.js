@@ -18,7 +18,7 @@ export class Label extends Html {
      * @param {string} [props.id='label-1'] Label primary key.
      * @param {string|false} [props.for=false] Label HTML for <input> primary key.
      * @param {string[]} [props.classes] Label class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Title inner HTML Element.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Label inner HTML Element.
      * @memberof Label
      */
     constructor (props = {

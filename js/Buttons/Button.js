@@ -38,8 +38,7 @@ export class Button extends Html {
         function: function () { /* console.log('clicked') */ },
         params: {}
     }, innerHTML = false) {
-        super({ ...Button.props, ...props }, { ...Button.state, ...state });
-        this.setCallbacks({ default: { ...Button.callback, ...callback }});
+        super({ ...Button.props, ...props }, { ...Button.state, ...state }, { click: { ...Button.callback, ...callback }});
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
@@ -89,18 +88,6 @@ export class Button extends Html {
         if (this.state.disabled) {
             this.setAttribute('disabled', true);
         }
-    }
-
-    /**
-     * * Button click callback.
-     * @param {*} [params={}] Click callback function optional params
-     * @memberof Button
-     */
-    click (params = {}) {
-        this.execute('default', {
-            button: this,
-            ...params
-        });
     }
 
     /**

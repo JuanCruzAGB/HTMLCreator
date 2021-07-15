@@ -2,7 +2,7 @@
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
 // ? HTMLCreatorJS repository
-import Image from "../Visuals/Image.js";
+import HTMLCreator from "../HTMLCreator.js";
 
 /**
  * * Figure creates an excellent <figure>.
@@ -17,25 +17,16 @@ export class Figure extends Html {
      * @param {object} [props] Figure properties:
      * @param {string} [props.id='figure-1'] Figure primary key.
      * @param {string[]} [props.classes] Figure class names.
-     * @param {object} [image] Image properties.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Image inner HTML Element.
      * @memberof Figure
      */
     constructor (props = {
         id: 'figure-1',
         classes: [],
-    }, image = {}) {
+    }, innerHTML = {}) {
         super({ ...Figure.props, ...props });
-        this.setImage(image);
-        this.createHTML(this.props.nodeName, this.image.html);
-    }
-
-    /**
-     * * Set the Figure Image.
-     * @param {object} [image] Image properties.
-     * @memberof Figure
-     */
-    setImage (image = {}) {
-        this.image = new Image(((image.hasOwnProperty('props')) ? image.props : {}));
+        this.createHTML(this.props.nodeName);
+        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**

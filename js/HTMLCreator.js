@@ -51,13 +51,13 @@ export default class HTMLCreator extends Class {
             case 'DIV':
                 return new Div((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'FIGURE':
-                return new Figure((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('image') ? data.image : {}));
+                return new Figure((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
             case 'FOOTER':
                 return new Footer((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'FORM':
                 return new Form((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('callback') ? data.callback : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : []));
             case 'HEADER':
-                return new Header((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('title') ? data.title : {}));
+                return new Header((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
             case 'LI':
                 return new Item((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'LABEL':
@@ -186,26 +186,28 @@ export default class HTMLCreator extends Class {
      * @memberof HTMLCreator
      */
     static setInnerHTML (HTML = false, innerHTML = false) {
-        if (typeof innerHTML === 'string') {
-            HTML.appendChild(innerHTML);
-        }
-        if (typeof innerHTML !== 'string' && typeof innerHTML !== 'boolean') {
-            if (innerHTML.nodeName) {
-                HTML.appendChild(innerHTML);
+        if (innerHTML !== false && innerHTML !== null) {
+            if (typeof innerHTML === 'string' || typeof innerHTML === 'number') {
+                HTML.appendChild(`${ innerHTML }`);
             }
-            if (!innerHTML.nodeName) {
-                for (let child of innerHTML) {
-                    if (!HTML.children) {
-                        HTML.children = [];
+            if (typeof innerHTML !== 'string' && typeof innerHTML !== 'number' && typeof innerHTML !== 'boolean') {
+                if (innerHTML.nodeName) {
+                    HTML.appendChild(innerHTML);
+                }
+                if (!innerHTML.nodeName) {
+                    for (let child of innerHTML) {
+                        if (!HTML.children) {
+                            HTML.children = [];
+                        }
+                        if (child.nodeName) {
+                            HTML.appendChild(child);
+                        }
+                        if (!child.nodeName) {
+                            child = new this((child.length ? child[0] : 'DIV'), ((child.length > 1) ? child[1] : {}));
+                            HTML.appendChild(child.html);
+                        }
+                        HTML.children.push(child);
                     }
-                    if (child.nodeName) {
-                        HTML.appendChild(child);
-                    }
-                    if (!child.nodeName) {
-                        child = new this((child.length ? child[0] : 'DIV'), ((child.length > 1) ? child[1] : {}));
-                        HTML.appendChild(child.html);
-                    }
-                    HTML.children.push(child);
                 }
             }
         }
