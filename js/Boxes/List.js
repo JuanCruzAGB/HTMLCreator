@@ -33,15 +33,6 @@ export class List extends Html {
     }
 
     /**
-     * * Set the HTML Element child nodes.
-     * @memberof List
-     */
-    setChilds () {
-        for (const item of this.items) {
-        }
-    }
-
-    /**
      * * Set the List Items.
      * @param {object[]} [items] List Items.
      * @memberof List
