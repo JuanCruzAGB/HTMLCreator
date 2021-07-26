@@ -11,11 +11,13 @@ import Html from "../../../JuanCruzAGB/js/Html.js";
 export class Image extends Html {
     /**
      * * Creates an instance of Image.
-     * @param {object} [props] Image properties:
-     * @param {string} [props.id='image-1'] Image primary key.
-     * @param {string|false} [props.url=false] Image url.
-     * @param {string} [props.name='Image genereted with HTMLCreatorJS'] Image name.
-     * @param {string[]} [props.classes] Image class names.
+     * @param {object} [props]
+     * @param {string} [props.id='image-1'] Primary key.
+     * @param {string|false} [props.url=false] File url.
+     * @param {string} [props.name='Image genereted with HTMLCreatorJS']
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @memberof Image
      */
     constructor (props = {
@@ -23,8 +25,10 @@ export class Image extends Html {
         url: false,
         name: 'Image genereted with HTMLCreatorJS',
         classes: [],
+    }, state = {
+        id: false,
     }) {
-        super({ ...Image.props, ...props });
+        super({ ...Image.props, ...props }, { ...Image.state, ...state });
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
     }
@@ -49,6 +53,15 @@ export class Image extends Html {
         name: 'Image genereted with HTMLCreatorJS',
         classes: [],
         nodeName: 'IMG',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Image
+     */
+    static state = {
+        id: false,
     }
 }
 

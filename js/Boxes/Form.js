@@ -14,18 +14,19 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Form extends Html {
     /**
      * * Creates an instance of Form.
-     * @param {object} [props] Form properties:
-     * @param {string} [props.id='form-1'] Form primary key.
-     * @param {string} [props.action='#'] Form action.
-     * @param {string} [props.method='post'] Form method.
-     * @param {string|false} [props.enctype=false] Form enctype.
-     * @param {string[]} [props.classes] Form class names.
-     * @param {object} [state] Form state:
-     * @param {boolean} [state.submit=true] If the Form has to be submited.
-     * @param {object} [callback] Form submit callback:
-     * @param {function} [callback.function] Form submit callback function.
-     * @param {*} [callback.params] Form submit callback function params.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Form inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='form-1'] Primary key.
+     * @param {string} [props.action='#']
+     * @param {string} [props.method='post']
+     * @param {string|false} [props.enctype=false]
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.submit=true] If the HTML Element should be submited.
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [callback] Submit callback:
+     * @param {function} [callback.function] Submit callback function.
+     * @param {*} [callback.params] Submit callback function params.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Form
      */
     constructor (props = {
@@ -36,6 +37,7 @@ export class Form extends Html {
         classes: [],
     }, state = {
         submit: true,
+        id: false,
     }, callback = {
         function: function (params) { /* console.log('params') */ },
         params: {}
@@ -94,6 +96,7 @@ export class Form extends Html {
      */
     static state = {
         submit: true,
+        id: false,
     }
 
     /**

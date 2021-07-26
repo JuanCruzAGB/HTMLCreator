@@ -14,17 +14,21 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Div extends Html {
     /**
      * * Creates an instance of Div.
-     * @param {object} [props] Div properties:
-     * @param {string} [props.id='div-1'] Div primary key.
-     * @param {string[]} [props.classes] Div class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Footer inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='div-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Div
      */
     constructor (props = {
         id: 'div-1',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Div.props, ...props });
+        super({ ...Div.props, ...props }, { ...Div.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -38,6 +42,15 @@ export class Div extends Html {
         id: 'div-1',
         classes: [],
         nodeName: 'DIV',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Div
+     */
+    static state = {
+        id: false,
     }
 }
 

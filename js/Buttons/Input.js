@@ -11,25 +11,26 @@ import Html from "../../../JuanCruzAGB/js/Html.js";
 export class Input extends Html {
     /**
      * * Creates an instance of Input.
-     * @param {object} [props] Input properties:
-     * @param {string} [props.id='input-1'] Input primary key.
-     * @param {string} [props.name='input-1'] Input name.
-     * @param {string} [props.type='text'] Input type.
-     * @param {string} [props.defaultValue] Input default value.
-     * @param {string} [props.placeholder] Input placeholder text.
-     * @param {string[]} [props.accept] Input mimetype accepted.
-     * @param {string[]} [props.classes] Input class names.
-     * @param {object} [state] Input state:
-     * @param {boolean} [state.checked=false] If the Input has to be checked.
-     * @param {boolean} [state.disabled=false] If the Input has to be disabled.
-     * @param {boolean} [state.multiple=false] If the Input accepts multiple files.
-     * @param {object} [callbacks] Input callbacks:
-     * @param {object} [callbacks.change] Input change callback:
-     * @param {function} [callbacks.change.function] Input change callback function.
-     * @param {*} [callbacks.change.params] Input change callback function params.
-     * @param {object} [callbacks.focusout] Input on focus out callback:
-     * @param {function} [callbacks.focusout.function] Input on focus out callback function.
-     * @param {*} [callbacks.focusout.params] Input on focus out callback function params.
+     * @param {object} [props]
+     * @param {string} [props.id='input-1'] Primary key.
+     * @param {string} [props.name='input-1']
+     * @param {string} [props.type='text']
+     * @param {string} [props.defaultValue]
+     * @param {string} [props.placeholder]
+     * @param {string[]} [props.accept] Mimetype of files accepted.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.checked=false] If the HTML Element should be checked.
+     * @param {boolean} [state.disabled=false] If the HTML Element should be disabled.
+     * @param {boolean} [state.multiple=false] If the HTML Element should accepts multiple files.
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [callbacks]
+     * @param {object} [callbacks.change] Change callback:
+     * @param {function} [callbacks.change.function] Change callback function.
+     * @param {*} [callbacks.change.params] Change callback function params.
+     * @param {object} [callbacks.focusout] On focus out callback:
+     * @param {function} [callbacks.focusout.function] On focus out callback function.
+     * @param {*} [callbacks.focusout.params] On focus out callback function params.
      * @memberof Input
      */
     constructor (props = {
@@ -44,6 +45,7 @@ export class Input extends Html {
         checked: false,
         disabled: false,
         multiple: false,
+        id: false,
     }, callbacks = {
         change: {
             function: function (params) { /* console.log(params) */ },
@@ -204,6 +206,7 @@ export class Input extends Html {
         checked: false,
         disabled: false,
         multiple: false,
+        id: false,
     }
 
     /**

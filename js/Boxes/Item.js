@@ -14,17 +14,21 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Item extends Html {
     /**
      * * Creates an instance of Item.
-     * @param {object} [props] Item properties:
-     * @param {string} [props.id='li-1'] Item primary key.
-     * @param {string[]} [props.classes] Item class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Item inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='li-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Item
      */
     constructor (props = {
         id: 'li-1',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Item.props, ...props });
+        super({ ...Item.props, ...props }, { ...Item.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -38,6 +42,15 @@ export class Item extends Html {
         id: 'li-1',
         classes: [],
         nodeName: 'LI',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Item
+     */
+    static state = {
+        id: false,
     }
 }
 

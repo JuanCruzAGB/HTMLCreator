@@ -49,33 +49,32 @@ export default class HTMLCreator extends Class {
         switch (tag.toUpperCase()) {
         // ? Boxes
             case 'DIV':
-                return new Div((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Div((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'FIGURE':
-                return new Figure((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
+                return new Figure((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
             case 'FOOTER':
-                return new Footer((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Footer((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'FORM':
                 return new Form((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('callback') ? data.callback : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : []));
             case 'HEADER':
-                return new Header((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
+                return new Header((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : {}));
             case 'LI':
-                return new Item((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Item((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'LABEL':
-                return new Label((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Label((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'OL':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'ordered';
                 }
-                return new List((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('items') ? data.items : []));
             case 'UL':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'unordered';
                 }
-                return new List((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('items') ? data.items : []));
+                return new List((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('items') ? data.items : []));
             case 'MAIN':
-                return new Main((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Main((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'SECTION':
-                return new Section((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Section((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Buttons
             case 'BUTTON':
                 return new Button((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('callback') ? data.callback : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
@@ -95,34 +94,32 @@ export default class HTMLCreator extends Class {
                 return new Link((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('callback') ? data.callback : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Table
             case 'TABLE':
-                return new Table((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('structure') ? data.structure : []));
+                return new Table((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('structure') ? data.structure : []));
             case 'TBODY':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'body';
                 }
-                return new TPart((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('rows') ? data.rows : []));
             case 'THEAD':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'head';
                 }
-                return new TPart((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('rows') ? data.rows : []));
+                return new TPart((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('rows') ? data.rows : []));
             case 'TR':
-                return new Row((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('cells') ? data.cells : []));
+                return new Row((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('cells') ? data.cells : []));
             case 'TD':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'normal';
                 }
-                return new Cell((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'TH':
-                if (data.hasOwnProperty('props')) {
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("type")) {
                     data.props.type = 'header';
                 }
-                return new Cell((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Cell((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Texts
             case 'P':
-                return new Paragraph((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Paragraph((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'SPAN':
-                return new Span((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Span((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
             case 'H1':
                 if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
                     data.props.level = 1;
@@ -147,12 +144,12 @@ export default class HTMLCreator extends Class {
                 if (data.hasOwnProperty('props') && !data.props.hasOwnProperty("level")) {
                     data.props.level = 6;
                 }
-                return new Title((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
+                return new Title((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}), (data.hasOwnProperty('innerHTML') ? data.innerHTML : false));
         // ? Visuals
             case 'ICON':
-                return new Icon((data.hasOwnProperty('props') ? data.props : {}));
+                return new Icon((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}));
             case 'IMG':
-                return new Image((data.hasOwnProperty('props') ? data.props : {}));
+                return new Image((data.hasOwnProperty('props') ? data.props : {}), (data.hasOwnProperty('state') ? data.state : {}));
         // ? Menus
             case 'NAVMENU':
                 this.import(tag, data);

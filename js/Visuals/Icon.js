@@ -11,16 +11,20 @@ import Html from "../../../JuanCruzAGB/js/Html.js";
 export class Icon extends Html {
     /**
      * * Creates an instance of Icon.
-     * @param {object} [props] Icon properties:
-     * @param {string} [props.id='icon-1'] Icon primary key.
-     * @param {string[]} [props.classes] Icon class names.
+     * @param {object} [props]
+     * @param {string} [props.id='icon-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @memberof Icon
      */
     constructor (props = {
         id: 'icon-1',
         classes: [],
+    }, state = {
+        id: false,
     }) {
-        super({ ...Icon.props, ...props });
+        super({ ...Icon.props, ...props }, { ...Icon.state, ...state });
         this.createHTML(this.props.nodeName);
     }
 
@@ -33,6 +37,15 @@ export class Icon extends Html {
         id: 'icon-1',
         classes: [],
         nodeName: 'I',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Icon
+     */
+    static state = {
+        id: false,
     }
 }
 

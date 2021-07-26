@@ -14,17 +14,21 @@ import Cell from "./Cell.js";
 export class Row extends Html {
     /**
      * * Creates an instance of Row.
-     * @param {object} [props] Row properties:
-     * @param {string} [props.id='row-1'] Row primary key.
-     * @param {string[]} [props.classes] Row class names.
-     * @param {object[]} [cells] Row Cells.
+     * @param {object} [props]
+     * @param {string} [props.id='row-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object[]} [cells] Array of <td> and/or <th>.
      * @memberof Row
      */
     constructor (props = {
         id: 'row-1',
         classes: [],
+    }, state = {
+        id: false,
     }, cells = []) {
-        super({ ...Row.props, ...props });
+        super({ ...Row.props, ...props }, { ...Row.state, ...state });
         this.setCells(cells);
         this.createHTML(this.props.nodeName);
         this.setChilds();
@@ -52,7 +56,7 @@ export class Row extends Html {
         for (const key in cells) {
             if (Object.hasOwnProperty.call(cells, key)) {
                 const cell = cells[key];
-                this.cells.push(new Cell((cell.hasOwnProperty('props') ? { id: `${ this.props.id }-cell-${ parseInt(key) + 1 }`, ...cell.props } : []), (cell.hasOwnProperty('innerHTML') ? cell.innerHTML : [])));
+                this.cells.push(new Cell((cell.hasOwnProperty('props') ? { id: `${ this.props.id }-cell-${ parseInt(key) + 1 }`, ...cell.props } : {}), (cell.hasOwnProperty('state') ? cell.state : {}), (cell.hasOwnProperty('innerHTML') ? cell.innerHTML : [])));
             }
         }
     }
@@ -130,6 +134,15 @@ export class Row extends Html {
         id: 'row-1',
         classes: [],
         nodeName: 'TR',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Row
+     */
+    static state = {
+        id: false,
     }
 }
 

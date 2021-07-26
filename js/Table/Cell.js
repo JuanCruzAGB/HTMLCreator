@@ -14,20 +14,24 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Cell extends Html {
     /**
      * * Creates an instance of Cell.
-     * @param {object} [props] Cell properties:
-     * @param {string} [props.id='cell-1'] Cell primary key.
-     * @param {string} [props.type='normal'] Cell type.
-     * @param {string[]} [props.classes] Cell class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Item inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='cell-1'] Primary key.
+     * @param {string} [props.type='normal']
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Cell
      */
     constructor (props = {
         id: 'cell-1',
         type: 'normal',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
         props.nodeName = ((props.type === 'header') ? 'TH' : 'TD');
-        super({ ...Cell.props, ...props });
+        super({ ...Cell.props, ...props }, { ...Cell.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -42,6 +46,15 @@ export class Cell extends Html {
         type: 'normal',
         classes: [],
         nodeName: 'TD',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Cell
+     */
+    static state = {
+        id: false,
     }
 }
 

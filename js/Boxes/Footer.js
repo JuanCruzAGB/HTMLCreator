@@ -14,17 +14,21 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Footer extends Html {
     /**
      * * Creates an instance of Footer.
-     * @param {object} [props] Footer properties:
-     * @param {string} [props.id='footer-1'] Footer primary key.
-     * @param {string[]} [props.classes] Footer class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Footer inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='footer-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Footer
      */
     constructor (props = {
         id: 'footer-1',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Footer.props, ...props });
+        super({ ...Footer.props, ...props }, { ...Footer.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -38,6 +42,15 @@ export class Footer extends Html {
         id: 'footer-1',
         classes: [],
         nodeName: 'FOOTER',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Footer
+     */
+    static state = {
+        id: false,
     }
 }
 

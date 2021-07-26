@@ -16,16 +16,21 @@ import TPart from "./TPart.js";
 export class Table extends Html {
     /**
      * * Creates an instance of Table.
-     * @param {object} [props] Table properties:
-     * @param {string} [props.id='table-1'] Table primary key.
-     * @param {string[]} [props.table] Table class names.
+     * @param {object} [props]
+     * @param {string} [props.id='table-1'] Primary key.
+     * @param {string[]} [props.table] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {array} [structure] Array of <thead>, <tbody>, <tr>, <td> and/or <th>.
      * @memberof Table
      */
     constructor (props = {
         id: 'table-1',
         classes: [],
+    }, state = {
+        id: false,
     }, structure = []) {
-        super({ ...Table.props, ...props });
+        super({ ...Table.props, ...props }, { ...Table.state, ...state });
         this.createHTML(this.props.nodeName);
         this.setStructure(structure);
     }
@@ -60,7 +65,7 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.tbody = new TPart((tbody.hasOwnProperty('props') ? { id: `${ this.props.id }-body`, ...tbody.props, type: 'body' } : {}), (tbody.hasOwnProperty('structure') ? tbody.structure : []));
+        this.structure.tbody = new TPart((tbody.hasOwnProperty('props') ? { id: `${ this.props.id }-body`, ...tbody.props, type: 'body' } : {}), (tbody.hasOwnProperty('state') ? tbody.state : {}), (tbody.hasOwnProperty('structure') ? tbody.structure : []));
         this.appendChild(this.structure.tbody.html);
     }
 
@@ -73,7 +78,7 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.thead = new TPart((thead.hasOwnProperty('props') ? { id: `${ this.props.id }-head`, ...thead.props, type: 'head' } : {}), (thead.hasOwnProperty('structure') ? thead.structure : []));
+        this.structure.thead = new TPart((thead.hasOwnProperty('props') ? { id: `${ this.props.id }-head`, ...thead.props, type: 'head' } : {}), (thead.hasOwnProperty('state') ? thead.state : {}), (thead.hasOwnProperty('structure') ? thead.structure : []));
         this.appendChild(this.structure.thead.html);
     }
 
@@ -98,7 +103,7 @@ export class Table extends Html {
             for (const key in structure) {
                 if (Object.hasOwnProperty.call(structure, key)) {
                     let row = structure[key];
-                    row = new Row((row.hasOwnProperty('props') ? { id: `row-${ parseInt(key) + 1 }`, ...row.props } : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+                    row = new Row((row.hasOwnProperty('props') ? { id: `row-${ parseInt(key) + 1 }`, ...row.props } : {}), (row.hasOwnProperty('state') ? row.state : {}), (row.hasOwnProperty('cells') ? row.cells : []));
                     this.structure.rows.push(row);
                     this.appendChild(row.html);
                 }
@@ -309,6 +314,15 @@ export class Table extends Html {
         id: 'table-1',
         classes: [],
         nodeName: 'TABLE',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Table
+     */
+    static state = {
+        id: false,
     }
 }
 

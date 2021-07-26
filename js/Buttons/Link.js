@@ -14,16 +14,17 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Link extends Html {
     /**
      * * Creates an instance of Link.
-     * @param {object} [props] Link properties:
-     * @param {string} [props.id='link-1'] Link primary key.
-     * @param {string} [props.url='#'] Link redirection url.
-     * @param {string[]} [props.classes] Link class names.
-     * @param {object} [state] Link state:
-     * @param {boolean} [state.preventDefault=false] Link click event prevent default.
-     * @param {object} [callback] Link click callback.
-     * @param {function} [callback.function] Link click callback function.
-     * @param {object} [callback.params] Link click callback params.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Link inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='link-1'] Primary key.
+     * @param {string} [props.url='#'] Redirection url.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.preventDefault=true] If the Click event should execut prevent default.
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [callback] Click callback:
+     * @param {function} [callback.function] Click callback function.
+     * @param {object} [callback.params] Click callback params.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Link
      */
     constructor (props = {
@@ -32,6 +33,7 @@ export class Link extends Html {
         classes: [],
     }, state = {
         preventDefault: false,
+        id: false,
     }, callback = {
         function: function() { /* console.log('clicked') */ },
         params: {}
@@ -85,6 +87,7 @@ export class Link extends Html {
      */
     static state = {
         preventDefault: false,
+        id: false,
     }
 
     /**

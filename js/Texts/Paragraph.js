@@ -14,17 +14,21 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Paragraph extends Html {
     /**
      * * Creates an instance of Paragraph.
-     * @param {object} [props] Paragraph properties:
-     * @param {string} [props.id='paragraph-1'] Paragraph primary key.
-     * @param {string[]} [props.classes] Paragraph class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Paragraph inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='paragraph-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Paragraph
      */
     constructor (props = {
         id: 'paragraph-1',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Paragraph.props, ...props });
+        super({ ...Paragraph.props, ...props }, { ...Paragraph.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -38,6 +42,15 @@ export class Paragraph extends Html {
         id: 'paragraph-1',
         classes: [],
         nodeName: 'P',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Paragraph
+     */
+    static state = {
+        id: false,
     }
 }
 

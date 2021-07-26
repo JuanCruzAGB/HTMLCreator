@@ -14,19 +14,23 @@ import Item from "./Item.js";
 export class List extends Html {
     /**
      * * Creates an instance of List.
-     * @param {object} [props] List properties:
-     * @param {string} [props.id='list-1'] List primary key.
-     * @param {string} [props.type='unordered'] List type.
-     * @param {string[]} [props.classes] List class names.
-     * @param {object[]} [items] List Items.
+     * @param {object} [props]
+     * @param {string} [props.id='list-1'] Primary key.
+     * @param {string} [props.type='unordered']
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object[]} [items] Array of <li>.
      * @memberof List
      */
     constructor (props = {
         id: 'list-1',
         type: 'unordered',
         classes: [],
+    }, state = {
+        id: false,
     }, items = []) {
-        props.nodeName = ((props.type === 'ordered') ? 'OL' : 'UL');
+        super({ ...List.props, ...props }, { ...List.state, ...state });
         super({ ...List.props, ...props });
         this.createHTML(this.props.nodeName);
         this.setItems(items);
@@ -42,7 +46,7 @@ export class List extends Html {
             this.items = [];
         }
         for (let item of items) {
-            item = new Item((item.hasOwnProperty('props') ? item.props : []), (item.hasOwnProperty('innerHTML') ? item.innerHTML : []));
+            item = new Item((item.hasOwnProperty('props') ? item.props : {}), (item.hasOwnProperty('state') ? item.state : {}), (item.hasOwnProperty('innerHTML') ? item.innerHTML : []));
             this.items.push(item.html);
             this.appendChild(item.html);
         }
@@ -123,6 +127,15 @@ export class List extends Html {
         type: 'unordered',
         classes: [],
         nodeName: 'UL',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof List
+     */
+    static state = {
+        id: false,
     }
 }
 

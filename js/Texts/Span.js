@@ -14,17 +14,21 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Span extends Html {
     /**
      * * Creates an instance of Span.
-     * @param {object} [props] Span properties:
-     * @param {string} [props.id='span-1'] Span primary key.
-     * @param {string[]} [props.classes] Span class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Span inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='span-1'] Primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Span
      */
     constructor (props = {
         id: 'span-1',
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Span.props, ...props });
+        super({ ...Span.props, ...props }, { ...Span.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
     }
@@ -38,6 +42,15 @@ export class Span extends Html {
         id: 'span-1',
         classes: [],
         nodeName: 'SPAN',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Span
+     */
+    static state = {
+        id: false,
     }
 }
 

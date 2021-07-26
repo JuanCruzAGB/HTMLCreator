@@ -14,17 +14,18 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Button extends Html {
     /**
      * * Creates an instance of Button.
-     * @param {object} [props] Button properties:
-     * @param {string} [props.id='button-1'] Button primary key.
-     * @param {string|false} [props.title=false] Button title.
-     * @param {string[]} [props.classes] Button class names.
-     * @param {object} [state] Button state:
-     * @param {boolean} [state.preventDefault=true] Button click event prevent default.
-     * @param {boolean} [state.disabled=false] Button disabled state.
-     * @param {object} [callback] Button click callback.
-     * @param {function} [callback.function] Button click callback function.
-     * @param {object} [callback.params] Button click callback params.
-     * @param {string|HTMLElement|array|false|false} [innerHTML=false] Button inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='button-1'] Primary key.
+     * @param {string|false} [props.title=false]
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.preventDefault=true] If the Click event should execut prevent default.
+     * @param {boolean} [state.disabled=false] If the HTML Element should be disabled.
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [callback] Click callback:
+     * @param {function} [callback.function] Click callback function.
+     * @param {object} [callback.params] Click callback params.
+     * @param {string|HTMLElement|array|false|false} [innerHTML=false] Inner HTML Element.
      * @memberof Button
      */
     constructor (props = {
@@ -34,6 +35,7 @@ export class Button extends Html {
     }, state = {
         preventDefault: true,
         disabled: false,
+        id: false,
     }, callback = {
         function: function () { /* console.log('clicked') */ },
         params: {}
@@ -110,6 +112,7 @@ export class Button extends Html {
     static state = {
         preventDefault: true,
         disabled: false,
+        id: false,
     }
 
     /**

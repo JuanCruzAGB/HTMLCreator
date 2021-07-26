@@ -14,19 +14,23 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Label extends Html {
     /**
      * * Creates an instance of Label.
-     * @param {object} [props] Label properties:
-     * @param {string} [props.id='label-1'] Label primary key.
-     * @param {string|false} [props.for=false] Label HTML for <input> primary key.
-     * @param {string[]} [props.classes] Label class names.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Label inner HTML Element.
+     * @param {object} [props]
+     * @param {string} [props.id='label-1'] Primary key.
+     * @param {string|false} [props.for=false] HTML for <input> primary key.
+     * @param {string[]} [props.classes] Class names.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
      * @memberof Label
      */
     constructor (props = {
         id: 'label-1',
         for: false,
         classes: [],
+    }, state = {
+        id: false,
     }, innerHTML = false) {
-        super({ ...Label.props, ...props });
+        super({ ...Label.props, ...props }, { ...Label.state, ...state });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, innerHTML);
         this.setHTMLAttributes();
@@ -52,6 +56,15 @@ export class Label extends Html {
         for: false,
         classes: [],
         nodeName: 'LABEL',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof Label
+     */
+    static state = {
+        id: false,
     }
 }
 

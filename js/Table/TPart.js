@@ -15,21 +15,25 @@ import Row from "./Row.js";
 export class TPart extends Html {
     /**
      * * Creates an instance of TPart.
-     * @param {object} [props] TPart properties:
-     * @param {string} [props.id='tbody-1'] TPart primary key.
-     * @param {string[]} [props.classes] TPart primary key.
-     * @param {object} [rows] TPart Rows.
+     * @param {object} [props]
+     * @param {string} [props.id='tbody-1'] Primary key.
+     * @param {string[]} [props.classes] Primary key.
+     * @param {object} [state]
+     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [rows] Array of <tr>.
      * @memberof TPart
      */
     constructor (props = {
         id: 'tbody-1',
         type: 'body',
         classes: [],
+    }, state = {
+        id: false,
     }, rows = []) {
         if (props.type === 'head') {
             props.nodeName = 'THEAD';
         }
-        super({ ...TPart.props, ...props });
+        super({ ...TPart.props, ...props }, { ...TPart.state, ...state });
         this.createHTML(this.props.nodeName);
         this.setRows(rows);
     }
@@ -46,7 +50,7 @@ export class TPart extends Html {
         for (const key in rows) {
             if (Object.hasOwnProperty.call(rows, key)) {
                 let row = rows[key];
-                row = new Row((row.hasOwnProperty('props') ? { id: `${ this.props.id }-row-${ parseInt(key) + 1 }`, ...row.props} : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+                row = new Row((row.hasOwnProperty('props') ? { id: `${ this.props.id }-row-${ parseInt(key) + 1 }`, ...row.props} : {}), (row.hasOwnProperty('state') ? row.state : {}), (row.hasOwnProperty('cells') ? row.cells : []));
                 this.rows.push(row);
                 this.appendChild(row.html);
             }
@@ -185,6 +189,15 @@ export class TPart extends Html {
         id: 'tbody-1',
         classes: [],
         nodeName: 'TBODY',
+    }
+
+    /**
+     * @static
+     * @var {object} state Default state.
+     * @memberof TPart
+     */
+    static state = {
+        id: false,
     }
 }
 
