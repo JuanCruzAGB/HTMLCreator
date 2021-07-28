@@ -31,7 +31,6 @@ export class List extends Html {
         id: false,
     }, items = []) {
         super({ ...List.props, ...props }, { ...List.state, ...state });
-        super({ ...List.props, ...props });
         this.createHTML(this.props.nodeName);
         this.setItems(items);
     }
@@ -46,7 +45,7 @@ export class List extends Html {
             this.items = [];
         }
         for (let item of items) {
-            item = new Item((item.hasOwnProperty('props') ? item.props : {}), (item.hasOwnProperty('state') ? item.state : {}), (item.hasOwnProperty('innerHTML') ? item.innerHTML : []));
+            item = new Item((item.hasOwnProperty("props") ? item.props : {}), (item.hasOwnProperty("state") ? item.state : {}), (item.hasOwnProperty("innerHTML") ? item.innerHTML : false));
             this.items.push(item.html);
             this.appendChild(item.html);
         }
