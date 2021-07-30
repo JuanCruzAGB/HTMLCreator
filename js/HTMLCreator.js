@@ -12,6 +12,7 @@ import Item from "./Boxes/Item.js";
 import Label from "./Boxes/Label.js";
 import List from "./Boxes/List.js";
 import Main from "./Boxes/Main.js";
+import Option from "./Boxes/Option.js";
 import Section from "./Boxes/Section.js";
 // ? Buttons
 import Button from "./Buttons/Button.js";
@@ -75,23 +76,23 @@ export default class HTMLCreator extends Class {
                 return new List((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("items") ? data.items : []));
             case "MAIN":
                 return new Main((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
+            case "OPTION":
+                return new Option(data);
             case "SECTION":
                 return new Section((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
         // ? Buttons
             case "BUTTON":
                 return new Button((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callback") ? data.callback : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "INPUT":
-                return new Input((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callbacks") ? data.callbacks : {}));
             case "SELECT":
-                if (data.hasOwnProperty("props")) {
+                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
                     data.props.type = "select";
                 }
-                return new Input((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callbacks") ? data.callbacks : {}));
             case "TEXTAREA":
-                if (data.hasOwnProperty("props")) {
+                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
                     data.props.type = "textarea";
                 }
-                return new Input((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callbacks") ? data.callbacks : {}));
+            case "INPUT":
+                return new Input((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callbacks") ? data.callbacks : false), (data.hasOwnProperty("options") ? data.options : false));
             case "A":
                 return new Link((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callback") ? data.callback : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
         // ? Table
@@ -197,7 +198,10 @@ export default class HTMLCreator extends Class {
                 if (innerHTML.nodeName) {
                     HTML.appendChild(innerHTML);
                 }
-                if (!innerHTML.nodeName) {
+                if (innerHTML.props && innerHTML.hasProp("nodeName")) {
+                    HTML.appendChild(innerHTML.html);
+                }
+                if (!innerHTML.nodeName && !innerHTML.props) {
                     for (let child of innerHTML) {
                         if (!HTML.children) {
                             HTML.children = [];
@@ -205,7 +209,10 @@ export default class HTMLCreator extends Class {
                         if (child.nodeName) {
                             HTML.appendChild(child);
                         }
-                        if (!child.nodeName) {
+                        if (child.props && child.hasProp("nodeName")) {
+                            HTML.appendChild(child.html);
+                        }
+                        if (!child.nodeName && !child.props) {
                             child = new this((child.length ? child[0] : "DIV"), ((child.length > 1) ? child[1] : {}));
                             HTML.appendChild(child.html);
                         }

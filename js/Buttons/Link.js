@@ -15,9 +15,10 @@ export class Link extends Html {
     /**
      * * Creates an instance of Link.
      * @param {object} [props]
-     * @param {string} [props.id='link-1'] Primary key.
-     * @param {string} [props.url='#'] Redirection url.
      * @param {string[]} [props.classes] Class names.
+     * @param {string} [props.id="link-1"] Primary key.
+     * @param {string|boolean} [props.target=false]
+     * @param {string} [props.url="#"] Redirection url.
      * @param {object} [state]
      * @param {boolean} [state.preventDefault=true] If the Click event should execut prevent default.
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
@@ -28,14 +29,15 @@ export class Link extends Html {
      * @memberof Link
      */
     constructor (props = {
-        id: 'link-1',
-        url: '#',
         classes: [],
+        id: "link-1",
+        target: false,
+        url: "#",
     }, state = {
         preventDefault: false,
         id: false,
     }, callback = {
-        function: function() { /* console.log('clicked') */ },
+        function: function() { /* console.log("clicked") */ },
         params: {}
     }, innerHTML = false) {
         super({ ...Link.props, ...props }, { ...Link.state, ...state }, { click: { ...Link.callback, ...callback }});
@@ -52,7 +54,7 @@ export class Link extends Html {
      */
     setEventListener () {
         const instance = this;
-        this.html.addEventListener('click', function(e) {
+        this.html.addEventListener("click", function(e) {
             if (instance.state.preventDefault) {
                 e.preventDefault();
             }
@@ -65,7 +67,10 @@ export class Link extends Html {
      * @memberof Link
      */
     setHTMLAttributes () {
-        this.setAttribute('href', this.props.url);
+        this.setAttribute("href", this.props.url);
+        if (this.props.target) {
+            this.setAttribute("target", this.props.target);
+        }
     }
 
     /**
@@ -74,10 +79,10 @@ export class Link extends Html {
      * @memberof Link
      */
     static props = {
-        id: 'link-1',
-        url: '#',
+        id: "link-1",
+        url: "#",
         classes: [],
-        nodeName: 'A',
+        nodeName: "A",
     }
 
     /**
@@ -96,7 +101,7 @@ export class Link extends Html {
      * @memberof Link
      */
     static callback = {
-        function: function() { /* console.log('clicked') */ },
+        function: function() { /* console.log("clicked") */ },
         params: {}
     }
 }

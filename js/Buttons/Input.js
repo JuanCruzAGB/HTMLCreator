@@ -1,6 +1,10 @@
 // ? JuanCruzAGB repository
 import Html from "../../../JuanCruzAGB/js/Html.js";
 
+// ? HTMLCreatorJS repository
+import HTMLCreator from "../HTMLCreator.js";
+import Option from "../Boxes/Option.js";
+
 /**
  * * Input creates an excellent <input>.
  * @export
@@ -8,7 +12,7 @@ import Html from "../../../JuanCruzAGB/js/Html.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Input extends Html {
+export default class Input extends Html {
     /**
      * * Creates an instance of Input.
      * @param {object} [props]
@@ -24,6 +28,7 @@ export class Input extends Html {
      * @param {boolean} [state.disabled=false] If the HTML Element should be disabled.
      * @param {boolean} [state.multiple=false] If the HTML Element should accepts multiple files.
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {number|false} [state.selectedIndex=false] Input select selected Option index.
      * @param {object} [callbacks]
      * @param {object} [callbacks.change] Change callback:
      * @param {function} [callbacks.change.function] Change callback function.
@@ -31,6 +36,7 @@ export class Input extends Html {
      * @param {object} [callbacks.focusout] On focus out callback:
      * @param {function} [callbacks.focusout.function] On focus out callback function.
      * @param {*} [callbacks.focusout.params] On focus out callback function params.
+     * @param {array} [options] Input select options
      * @memberof Input
      */
     constructor (props = {
@@ -46,6 +52,7 @@ export class Input extends Html {
         disabled: false,
         multiple: false,
         id: false,
+        selectedIndex: false,
     }, callbacks = {
         change: {
             function: function (params) { /* console.log(params) */ },
@@ -54,7 +61,7 @@ export class Input extends Html {
             function: function (params) { /* console.log(params) */ },
             params: {}
         }
-    }) {
+    }, options = []) {
         if (props.type === 'select') {
             props.nodeName = 'SELECT';
         }
@@ -65,6 +72,9 @@ export class Input extends Html {
         this.createHTML(this.props.nodeName);
         this.setEventListener();
         this.setHTMLAttributes();
+        if (options.length) {
+            this.setOptions(options);
+        }
         this.checkState();
     }
     
@@ -142,6 +152,17 @@ export class Input extends Html {
     }
 
     /**
+     * * Set the <select> <ptions>.
+     * @memberof Input
+     */
+    setOptions (options = []) {
+        this.setProps("options", Option.generate(options));
+        for (const option of this.props.options) {
+            HTMLCreator.setInnerHTML(this, option);
+        }
+    }
+
+    /**
      * * Check the Input state.
      * @memberof Input
      */
@@ -149,6 +170,7 @@ export class Input extends Html {
         this.checkCheckedState();
         this.checkDisabledState();
         this.checkMultipleState();
+        this.checkSelectedIndexState();
     }
 
     /**
@@ -182,6 +204,42 @@ export class Input extends Html {
     }
 
     /**
+     * * Check the Input selected option index state.
+     * @memberof Input
+     */
+    checkSelectedIndexState () {
+        if (this.props.type === "select" && this.state.selectedIndex) {
+            for (const key in this.props.options) {
+                if (Object.hasOwnProperty.call(this.props.options, key)) {
+                    const option = this.props.options[key];
+                    if (parseInt(key) === parseInt(this.state.selectedIndex) || option.props.id === this.state.selectedIndex) {
+                        option.select();
+                    }
+                    if (parseInt(key) !== parseInt(this.state.selectedIndex) && option.props.id !== this.state.selectedIndex) {
+                        option.unselect();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * * Select an Option.
+     * @param {number} selectedIndex
+     * @returns {boolean}
+     * @memberof Input
+     */
+    select (selectedIndex = false) {
+        if (selectedIndex) {
+            this.setState("selectedIndex", selectedIndex);
+            this.checkSelectedIndexState();
+            return true;
+        }
+        console.error("Selected index is required");
+        return false;
+    }
+
+    /**
      * @static
      * @var {object} props Default properties.
      * @memberof Input
@@ -207,6 +265,7 @@ export class Input extends Html {
         disabled: false,
         multiple: false,
         id: false,
+        selectedIndex: false,
     }
 
     /**
@@ -224,6 +283,3 @@ export class Input extends Html {
         }
     }
 }
-
-// ? Default export
-export default Input;
