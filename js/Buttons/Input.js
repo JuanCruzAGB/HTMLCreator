@@ -16,9 +16,9 @@ export default class Input extends Html {
     /**
      * * Creates an instance of Input.
      * @param {object} [props]
-     * @param {string} [props.id='input-1'] Primary key.
-     * @param {string} [props.name='input-1']
-     * @param {string} [props.type='text']
+     * @param {string} [props.id="input-1"] Primary key.
+     * @param {string} [props.name="input-1"]
+     * @param {string} [props.type="text"]
      * @param {string} [props.defaultValue]
      * @param {string} [props.placeholder]
      * @param {string[]} [props.accept] Mimetype of files accepted.
@@ -40,11 +40,11 @@ export default class Input extends Html {
      * @memberof Input
      */
     constructor (props = {
-        id: 'input-1',
-        name: 'input-1',
-        type: 'text',
-        defaultValue: '',
-        placeholder: '',
+        id: "input-1",
+        name: "input-1",
+        type: "text",
+        defaultValue: "",
+        placeholder: "",
         accept: [],
         classes: [],
     }, state = {
@@ -57,16 +57,19 @@ export default class Input extends Html {
         change: {
             function: function (params) { /* console.log(params) */ },
             params: {}
+        }, click: {
+            function: function (params) { /* console.log(params) */ },
+            params: {}
         }, focusout: {
             function: function (params) { /* console.log(params) */ },
             params: {}
         }
     }, options = []) {
-        if (props.type === 'select') {
-            props.nodeName = 'SELECT';
+        if (props.type === "select") {
+            props.nodeName = "SELECT";
         }
-        if (props.type === 'textarea') {
-            props.nodeName = 'TEXTAREA';
+        if (props.type === "textarea") {
+            props.nodeName = "TEXTAREA";
         }
         super({ ...Input.props, ...props }, { ...Input.state, ...state }, { ...Input.callbacks, ...callbacks });
         this.createHTML(this.props.nodeName);
@@ -85,41 +88,54 @@ export default class Input extends Html {
     setEventListener () {
         const instance = this;
         switch (this.props.type) {
-            case 'date':
-                this.html.addEventListener('change', function (e) {
+            case "date":
+                this.html.addEventListener("change", function (e) {
+                    instance.setProps("value", this.value);
                     instance.change({
                         value: this.value,
                     });
                 });
-                this.html.addEventListener('focusout', function (e) {
+                this.html.addEventListener("focusout", function (e) {
+                    instance.setProps("value", this.value);
                     instance.focusout({
                         value: this.value,
                     });
                 });
                 break;
-            case 'checkbox':
-                this.html.addEventListener('click', function (e) {
+            case "checkbox":
+                this.html.addEventListener("click", function (e) {
+                    instance.setState("checked", this.checked);
                     instance.click({
                         checked: { [this.value]: this.checked },
                     });
                 });
-            case 'file':
-            case 'radio':
-            case 'select':
-                this.html.addEventListener('change', function (e) {
+            case "file":
+            case "radio":
+            case "select":
+                this.html.addEventListener("change", function (e) {
                     let params = (
-                        (instance.props.type === 'checkbox') ? { checked: { [this.value]: this.checked } } :
-                        (instance.props.type === 'file') ? { files: this.files } :
-                        (instance.props.type === 'radio') ? { checked: this.value } :
-                        (instance.props.type === 'select') ? { selected: this.options[this.selectedIndex] } : {}
+                        (instance.props.type === "checkbox") ? { checked: { [this.value]: this.checked } } :
+                        (instance.props.type === "file") ? { files: this.files } :
+                        (instance.props.type === "radio") ? { checked: this.value } :
+                        (instance.props.type === "select") ? { selected: this.options[this.selectedIndex] } : {}
                     );
+                    if (instance.props.type === "select") {
+                        instance.setProps("files", this.files ? this.files : false);
+                    }
+                    if (instance.props.type === "radio" || instance.props.type === "checkbox") {
+                        instance.setState("checked", this.checked);
+                    }
+                    if (instance.props.type === "select") {
+                        instance.setState("selectedIndex", this.selectedIndex ? this.selectedIndex : false);
+                    }
                     instance.change({ ...params });
                 });
                 break;
-            case 'password':
-            case 'text':
-            case 'textarea':
-                this.html.addEventListener('focusout', function (e) {
+            case "password":
+            case "text":
+            case "textarea":
+                this.html.addEventListener("focusout", function (e) {
+                    instance.setProps("value", this.value);
                     instance.focusout({
                         value: this.value,
                     });
@@ -136,19 +152,19 @@ export default class Input extends Html {
      * @memberof Input
      */
     setHTMLAttributes () {
-        this.setAttribute('name', this.props.name);
-        if (this.props.type !== 'select' && this.props.type !== 'textarea') {
-            this.setAttribute('type', this.props.type);
+        this.setAttribute("name", this.props.name);
+        if (this.props.type !== "select" && this.props.type !== "textarea") {
+            this.setAttribute("type", this.props.type);
         }
         switch (this.props.type) {
-            case 'file':
+            case "file":
                 if (this.props.accept) {
-                    this.setAttribute('accept', this.props.accept.join());
+                    this.setAttribute("accept", this.props.accept.join());
                 }
                 break;
         }
-        this.setAttribute('value', this.props.defaultValue);
-        this.setAttribute('placeholder', this.props.placeholder);
+        this.setAttribute("value", this.props.defaultValue);
+        this.setAttribute("placeholder", this.props.placeholder);
     }
 
     /**
@@ -179,7 +195,7 @@ export default class Input extends Html {
      */
     checkCheckedState () {
         if (this.state.checked) {
-            this.setAttribute('checked', true);
+            this.setAttribute("checked", true);
         }
     }
 
@@ -189,7 +205,7 @@ export default class Input extends Html {
      */
     checkDisabledState () {
         if (this.state.disabled) {
-            this.setAttribute('disabled', true);
+            this.setAttribute("disabled", true);
         }
     }
 
@@ -199,7 +215,7 @@ export default class Input extends Html {
      */
     checkMultipleState () {
         if (this.state.multiple) {
-            this.setAttribute('multiple', true);
+            this.setAttribute("multiple", true);
         }
     }
 
@@ -245,14 +261,14 @@ export default class Input extends Html {
      * @memberof Input
      */
     static props = {
-        id: 'input-1',
-        name: 'input-1',
-        type: 'text',
-        defaultValue: '',
-        placeholder: '',
+        id: "input-1",
+        name: "input-1",
+        type: "text",
+        defaultValue: "",
+        placeholder: "",
         accept: [],
         classes: [],
-        nodeName: 'INPUT',
+        nodeName: "INPUT",
     }
 
     /**
@@ -275,6 +291,9 @@ export default class Input extends Html {
      */
     static callbacks = {
         change: {
+            function: function (params) { /* console.log(params) */ },
+            params: {}
+        }, click: {
             function: function (params) { /* console.log(params) */ },
             params: {}
         }, focusout: {
