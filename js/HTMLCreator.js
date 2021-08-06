@@ -24,6 +24,7 @@ import TPart from "./Table/TPart.js";
 import Row from "./Table/Row.js";
 import Cell from "./Table/Cell.js";
 // ? Texts
+import Italic from "./Texts/Italic.js";
 import LineBreak from "./Texts/LineBreak.js";
 import Paragraph from "./Texts/Paragraph.js";
 import Span from "./Texts/Span.js";
@@ -52,7 +53,7 @@ export default class HTMLCreator extends Class {
         switch (tag.toUpperCase()) {
         // ? Boxes
             case "DIV":
-                return new Div((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
+                return new Div(data);
             case "FIGURE":
                 return new Figure((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : {}));
             case "FOOTER":
@@ -121,6 +122,8 @@ export default class HTMLCreator extends Class {
         // ? Texts
             case "BR":
                 return new LineBreak((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}));
+            case "I":
+                return new Italic(data);
             case "P":
                 return new Paragraph((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
             case "SPAN":

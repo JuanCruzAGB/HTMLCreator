@@ -5,32 +5,33 @@ import Html from "../../../JuanCruzAGB/js/Html.js";
 import HTMLCreator from "../HTMLCreator.js";
 
 /**
- * * Div creates an excellent <div>.
+ * * Italic creates an excellent <i>.
  * @export
- * @class Div
+ * @class Italic
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Div extends Html {
+export class Italic extends Html {
     /**
-     * * Creates an instance of Div.
+     * * Creates an instance of Italic.
+     * @param {object} [data]
      * @param {object} [data.props]
-     * @param {string} [data.props.id="div-1"] Primary key.
+     * @param {string} [data.props.id="italic-1"] Primary key.
      * @param {string[]} [data.props.classes] Class names.
      * @param {object} [data.state]
      * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
      * @param {string|HTMLElement|array|false} [data.innerHTML=false] Inner HTML Element.
-     * @memberof Div
+     * @memberof Italic
      */
     constructor (data = {
         props: {
-            id: "div-1",
+            id: "italic-1",
             classes: [],
         }, state: {
             id: false,
-        }, innerHTML: false
+        }, innerHTML: false,
     }) {
-        super({ ...Div.props, ...(data.hasOwnProperty("props") ? data.props : {}) }, { ...Div.state, ...(data.hasOwnProperty("state") ? data.state : {}) });
+        super({ ...Italic.props, ...(data.hasOwnProperty("props") ? data.props : {}) }, { ...Italic.state, ...(data.hasOwnProperty("state") ? data.state : {}) });
         this.createHTML(this.props.nodeName);
         HTMLCreator.setInnerHTML(this, (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
     }
@@ -38,18 +39,18 @@ export class Div extends Html {
     /**
      * @static
      * @var {object} props Default properties.
-     * @memberof Div
+     * @memberof Italic
      */
     static props = {
-        id: "div-1",
+        id: "italic-1",
         classes: [],
-        nodeName: "DIV",
+        nodeName: "I",
     }
 
     /**
      * @static
      * @var {object} state Default state.
-     * @memberof Div
+     * @memberof Italic
      */
     static state = {
         id: false,
@@ -57,4 +58,4 @@ export class Div extends Html {
 }
 
 // ? Default export
-export default Div;
+export default Italic;
