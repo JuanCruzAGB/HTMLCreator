@@ -3,6 +3,7 @@ import Class from "../../JuanCruzAGB/js/Class.js";
 
 // ? HTMLCreatorJS repository
 // ? Boxes
+import Aside from "./Boxes/Aside.js";
 import Div from "./Boxes/Div.js";
 import Figure from "./Boxes/Figure.js";
 import Footer from "./Boxes/Footer.js";
@@ -52,6 +53,8 @@ export default class HTMLCreator extends Class {
         super();
         switch (tag.toUpperCase()) {
         // ? Boxes
+            case "ASIDE":
+                return new Aside(data);
             case "DIV":
                 return new Div(data);
             case "FIGURE":

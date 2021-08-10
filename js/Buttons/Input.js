@@ -240,6 +240,17 @@ export default class Input extends Html {
     }
 
     /**
+     * * Check the Input.
+     * @param {boolean} [check=true] New Input checked state
+     * @returns {boolean}
+     * @memberof Input
+     */
+    check (check = true) {
+        this.setState("checked", check);
+        this.checkCheckedState();
+    }
+
+    /**
      * * Select an Option.
      * @param {number} selectedIndex
      * @returns {boolean}
