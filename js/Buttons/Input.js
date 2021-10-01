@@ -163,8 +163,12 @@ export default class Input extends Html {
                 }
                 break;
         }
-        this.setAttribute("value", this.props.defaultValue);
-        this.setAttribute("placeholder", this.props.placeholder);
+        if (this.props.defaultValue && this.props.defaultValue === 0) {
+            this.setAttribute("value", this.props.defaultValue);
+        }
+        if (this.props.placeholder && this.props.placeholder === 0) {
+            this.setAttribute("placeholder", this.props.placeholder);
+        }
     }
 
     /**
