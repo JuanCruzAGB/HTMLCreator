@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Item creates an excellent <li>.
@@ -11,26 +8,29 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Item extends Html {
+export default class Item extends Html {
     /**
      * * Creates an instance of Item.
-     * @param {object} [props]
-     * @param {string} [props.id='li-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='li-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Item
      */
-    constructor (props = {
-        id: 'li-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Item.props, ...props }, { ...Item.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'li-1',
+            classList: [],
+            children: false,
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
+        super({ ...Item.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Item.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Item.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Item.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -40,7 +40,7 @@ export class Item extends Html {
      */
     static props = {
         id: 'li-1',
-        classes: [],
+        classList: [],
         nodeName: 'LI',
     }
 
@@ -52,7 +52,22 @@ export class Item extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Item;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Item
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Item
+     */
+    static children = [
+        // 
+    ]
+}

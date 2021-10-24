@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from "../Html.js";
 
 /**
  * * Label creates an excellent <label>.
@@ -11,34 +8,36 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Label extends Html {
+export default class Label extends Html {
     /**
      * * Creates an instance of Label.
-     * @param {object} [props]
-     * @param {string} [props.id='label-1'] Primary key.
-     * @param {string|false} [props.for=false] HTML for <input> primary key.
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='label-1'] Primary key.
+     * @param {string|false} [data.props.for=false] HTML for <input> primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Label
      */
-    constructor (props = {
-        id: 'label-1',
-        for: false,
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Label.props, ...props }, { ...Label.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'label-1',
+            for: false,
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
+        super({ ...Label.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Label.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Label.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Label.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setHTMLAttributes();
     }
 
     /**
      * * Set the HTML Element attributes.
-     * @memberof Form
+     * @memberof Label
      */
     setHTMLAttributes () {
         if (this.props.for) {
@@ -54,7 +53,7 @@ export class Label extends Html {
     static props = {
         id: 'label-1',
         for: false,
-        classes: [],
+        classList: [],
         nodeName: 'LABEL',
     }
 
@@ -66,7 +65,22 @@ export class Label extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Label;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Label
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Label
+     */
+    static children = [
+        // 
+    ]
+}

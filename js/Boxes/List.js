@@ -1,8 +1,6 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import Item from "./Item.js";
+import Html from '../Html.js';
+import Item from './Item.js';
 
 /**
  * * List creates an excellent <ul> or <ol>.
@@ -11,26 +9,29 @@ import Item from "./Item.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class List extends Html {
+export default class List extends Html {
     /**
      * * Creates an instance of List.
-     * @param {object} [props]
-     * @param {string} [props.id='list-1'] Primary key.
-     * @param {string} [props.type='unordered']
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {object[]} [items] Array of <li>.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='list-1'] Primary key.
+     * @param {string} [data.props.type='unordered']
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {object[]} [data.items] Array of <li>.
      * @memberof List
      */
-    constructor (props = {
-        id: 'list-1',
-        type: 'unordered',
-        classes: [],
-    }, state = {
-        id: false,
-    }, items = []) {
-        super({ ...List.props, ...props }, { ...List.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'list-1',
+            type: 'unordered',
+            classList: [],
+        }, state: {
+            id: false,
+        }, items: [],
+    }) {
+        super({ ...List.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...List.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...List.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
         this.createHTML(this.props.nodeName);
         this.setItems(items);
     }
@@ -44,10 +45,16 @@ export class List extends Html {
         if (!this.items) {
             this.items = [];
         }
-        for (let item of items) {
-            item = new Item((item.hasOwnProperty("props") ? item.props : {}), (item.hasOwnProperty("state") ? item.state : {}), (item.hasOwnProperty("innerHTML") ? item.innerHTML : false));
-            this.items.push(item.html);
-            this.appendChild(item.html);
+        for (const key in items) {
+            if (Object.hasOwnProperty.call(items, key)) {
+                let data = items[key];
+                let item = new Item({
+                    ...data,
+                    id: `${ this.props.id }-item-${ parseInt(key) + 1 }`,
+                });
+                this.items.push(item);
+                this.appendChild(item.html);
+            }
         }
     }
 
@@ -59,15 +66,15 @@ export class List extends Html {
      */
     getItem (id_item = false) {
         if (id_item) {
-            for (const item of this.structure.items) {
-                if (item.props.id === id_item) {
+            for (const item of this.items) {
+                if (item.props.id == id_item) {
                     return item;
                 }
             }
             return false;
         }
         if (!id_item) {
-            console.error("Item primary key is required");
+            console.error('Item primary key is required');
         }
     }
 
@@ -79,30 +86,30 @@ export class List extends Html {
      */
     hasItem (id_item = false) {
         if (id_item) {
-            for (const row of this.rows) {
-                if (row.props.id === id_item) {
+            for (const item of this.items) {
+                if (item.props.id == id_item) {
                     return true;
                 }
             }
             return false;
         }
         if (!id_item) {
-            console.error("Item primary key is required");
+            console.error('Item primary key is required');
         }
     }
 
     /**
      * * Removes a List Item.
-     * @param {string} item Item primary key.
+     * @param {string} id_item Item primary key.
      * @returns {Item|false}
      * @memberof List
      */
-    removeItem (item = false) {
-        if (item) {
+    removeItem (id_item = false) {
+        if (id_item) {
             for (const key in [...this.items]) {
                 if (Object.hasOwnProperty.call(this.items, key)) {
                     const item = this.items[key];
-                    if (item.props.id === item) {
+                    if (item.props.id == id_item) {
                         item.removeHTML();
                         delete this.items[key];
                         return item;
@@ -111,8 +118,8 @@ export class List extends Html {
             }
             return false;
         }
-        if (!item) {
-            console.error("Item primary key is required");
+        if (!id_item) {
+            console.error('Item primary key is required');
         }
     }
 
@@ -124,7 +131,7 @@ export class List extends Html {
     static props = {
         id: 'list-1',
         type: 'unordered',
-        classes: [],
+        classList: [],
         nodeName: 'UL',
     }
 
@@ -136,10 +143,20 @@ export class List extends Html {
     static state = {
         id: false,
     }
+
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof List
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {Item} Item Item class child.
+     * @memberof List
+     */
+    static Item = Item;
 }
-
-// ? List childs
-List.Item = Item;
-
-// ? Default export
-export default List;

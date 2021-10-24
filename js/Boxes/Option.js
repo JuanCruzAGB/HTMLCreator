@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Option creates an excellent <option>.
@@ -16,31 +13,30 @@ export default class Option extends Html {
      * * Creates an instance of Option.
      * @param {object} [data]
      * @param {object} [data.props]
-     * @param {string} [data.props.id="option-1"] Primary key.
+     * @param {string} [data.props.id='option-1'] Primary key.
      * @param {string} [data.props.defaultValue]
-     * @param {string[]} [data.props.classes] Class names.
+     * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
      * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
      * @param {boolean} [data.state.selected=false] If the HTML Element should be selected.
-     * @param {string|HTMLElement|array|false|false} [data.innerHTML=false] Inner HTML Element.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Option
      */
     constructor (data = {
         props: {
-            id: "option-1",
-            defaultValue: "",
-            classes: [],
+            id: 'option-1',
+            defaultValue: '',
+            classList: [],
         }, state: {
             disabled: false,
             id: false,
             selected: false,
-        }, innerHTML: false,
+        }, children: false,
     }) {
-        super({ ...Option.props, ...data.props }, { ...Option.state, ...data.state });
+        super({ ...Option.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Option.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Option.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Option.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
-        HTMLCreator.setInnerHTML(this, data.innerHTML);
         this.checkState();
     }
 
@@ -67,7 +63,7 @@ export default class Option extends Html {
      */
     checkDisabledState () {
         if (this.state.disabled) {
-            this.setAttribute("disabled", true);
+            this.setAttribute('disabled', true);
         }
     }
 
@@ -77,10 +73,10 @@ export default class Option extends Html {
      */
     checkSelectedState () {
         if (this.state.selected) {
-            this.setAttribute("selected", true);
+            this.setAttribute('selected', true);
         }
         if (!this.state.selected) {
-            this.removeAttribute("selected");
+            this.removeAttribute('selected');
         }
     }
 
@@ -91,7 +87,7 @@ export default class Option extends Html {
      */
     select () {
         if (!this.state.selected) {
-            this.setState("selected", true);
+            this.setState('selected', true);
             this.checkSelectedState();
             return true;
         }
@@ -105,7 +101,7 @@ export default class Option extends Html {
      */
     unselect () {
         if (this.state.selected) {
-            this.setState("selected", false);
+            this.setState('selected', false);
             this.checkSelectedState();
             return true;
         }
@@ -135,10 +131,10 @@ export default class Option extends Html {
      * @memberof Option
      */
     static props = {
-        id: "option-1",
-        defaultValue: "",
-        classes: [],
-        nodeName: "OPTION",
+        id: 'option-1',
+        defaultValue: '',
+        classList: [],
+        nodeName: 'OPTION',
     }
 
     /**
@@ -151,4 +147,22 @@ export default class Option extends Html {
         id: false,
         selected: false,
     }
+
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Option
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Option
+     */
+    static children = [
+        // 
+    ]
 }

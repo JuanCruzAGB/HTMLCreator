@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Form creates an excellent <form>.
@@ -11,39 +8,44 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Form extends Html {
+export default class Form extends Html {
     /**
      * * Creates an instance of Form.
-     * @param {object} [props]
-     * @param {string} [props.id='form-1'] Primary key.
-     * @param {string} [props.action='#']
-     * @param {string} [props.method='post']
-     * @param {string|false} [props.enctype=false]
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.submit=true] If the HTML Element should be submited.
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {object} [callback] Submit callback:
-     * @param {function} [callback.function] Submit callback function.
-     * @param {*} [callback.params] Submit callback function params.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='form-1'] Primary key.
+     * @param {string} [data.props.action='#']
+     * @param {string} [data.props.method='post']
+     * @param {string|false} [data.props.enctype=false]
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.submit=true] If the HTML Element should be submited.
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data.callbacks]
+     * @param {function} [data.callbacks.submit]
+     * @param {function} [data.callbacks.submit.function]
+     * @param {object} [data.callbacks.submit.params]
      * @memberof Form
      */
-    constructor (props = {
-        id: 'form-1',
-        action: '#',
-        method: 'post',
-        enctype: false,
-        classes: [],
-    }, state = {
-        submit: true,
-        id: false,
-    }, callback = {
-        function: function (params) { /* console.log('params') */ },
-        params: {}
-    }, innerHTML = false) {
-        super({ ...Form.props, ...props }, { ...Form.state, ...state }, { submit: { ...Form.callback, ...callback } });
-        HTMLCreator.setInnerHTML(this, innerHTML);
+    constructor (data = {
+        props: {
+            id: 'form-1',
+            action: '#',
+            method: 'post',
+            enctype: false,
+            classList: [],
+        }, state: {
+            id: false,
+            submit: true,
+        }, callbacks: {
+            submit: {
+                function: (params) => { /* console.log('params') */ },
+                params: {}
+            },
+        }, children: false,
+    }) {
+        super({ ...Form.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Form.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Form.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Form.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
         this.setEventListener();
         this.setHTMLAttributes();
@@ -54,11 +56,10 @@ export class Form extends Html {
      * @memberof Form
      */
     setEventListener () {
-        const instance = this;
-        this.html.addEventListener('submit', function(e) {
-            if (instance.state.submit) {
+        this.html.addEventListener('submit', (e) => {
+            if (this.state.submit) {
                 e.preventDefault();
-                instance.submit();
+                this.submit();
             }
         });
     }
@@ -85,7 +86,7 @@ export class Form extends Html {
         action: '#',
         method: 'post',
         enctype: false,
-        classes: [],
+        classList: [],
         nodeName: 'FORM',
     }
 
@@ -95,20 +96,28 @@ export class Form extends Html {
      * @memberof Form
      */
     static state = {
-        submit: true,
         id: false,
+        submit: true,
     }
 
     /**
      * @static
-     * @var {object} callback Default callback.
+     * @var {object} callbacks Default callbacks.
      * @memberof Form
      */
-    static callback = {
-        function: function (params) { /* console.log('params') */ },
-        params: {}
+    static callbacks = {
+        submit: {
+            function: (params) => { /* console.log('params') */ },
+            params: {}
+        },
     }
-}
 
-// ? Default export
-export default Form;
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Form
+     */
+    static children = [
+        // 
+    ]
+}

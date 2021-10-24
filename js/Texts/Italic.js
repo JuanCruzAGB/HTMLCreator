@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
+import Html from "../Html.js";
 
 // ? HTMLCreatorJS repository
 import HTMLCreator from "../HTMLCreator.js";
@@ -17,7 +17,7 @@ export class Italic extends Html {
      * @param {object} [data]
      * @param {object} [data.props]
      * @param {string} [data.props.id="italic-1"] Primary key.
-     * @param {string[]} [data.props.classes] Class names.
+     * @param {string[]} [data.props.classes] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
      * @param {string|HTMLElement|array|false} [data.innerHTML=false] Inner HTML Element.

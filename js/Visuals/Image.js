@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
+import Html from "../Html.js";
 
 /**
  * * Image creates an excellent <img>.
@@ -15,7 +15,7 @@ export class Image extends Html {
      * @param {string} [props.id='image-1'] Primary key.
      * @param {string|false} [props.url=false] File url.
      * @param {string} [props.name='Image genereted with HTMLCreatorJS']
-     * @param {string[]} [props.classes] Class names.
+     * @param {string[]} [props.classes] Class list.
      * @param {object} [state]
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @memberof Image

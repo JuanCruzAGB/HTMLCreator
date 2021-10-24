@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Button creates an excellet <button>.
@@ -11,38 +8,43 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Button extends Html {
+export default class Button extends Html {
     /**
      * * Creates an instance of Button.
-     * @param {object} [props]
-     * @param {string} [props.id='button-1'] Primary key.
-     * @param {string|false} [props.title=false]
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.preventDefault=true] If the Click event should execut prevent default.
-     * @param {boolean} [state.disabled=false] If the HTML Element should be disabled.
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {object} [callback] Click callback:
-     * @param {function} [callback.function] Click callback function.
-     * @param {object} [callback.params] Click callback params.
-     * @param {string|HTMLElement|array|false|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='button-1'] Primary key.
+     * @param {string|false} [data.props.title=false]
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.preventDefault=true] If the Click event should execut prevent default.
+     * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data.callbacks]
+     * @param {function} [data.callbacks.click]
+     * @param {function} [data.callbacks.click.function]
+     * @param {object} [data.callbacks.click.params]
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Button
      */
-    constructor (props = {
-        id: 'button-1',
-        title: false,
-        classes: [],
-    }, state = {
-        preventDefault: true,
-        disabled: false,
-        id: false,
-    }, callback = {
-        function: function () { /* console.log('clicked') */ },
-        params: {}
-    }, innerHTML = false) {
-        super({ ...Button.props, ...props }, { ...Button.state, ...state }, { click: { ...Button.callback, ...callback }});
+    constructor (data = {
+        props: {
+            id: 'button-1',
+            title: false,
+            classList: [],
+        }, state: {
+            disabled: false,
+            id: false,
+            preventDefault: true,
+        }, callbacks: {
+            click: {
+                function: (params) => { /* console.log(params) */ },
+                params: {}
+            },
+        }, children: false,
+    }) {
+        super({ ...Button.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Button.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Button.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Button.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
         this.setHTMLAttributes();
         this.checkState();
@@ -53,12 +55,11 @@ export class Button extends Html {
      * @memberof Button
      */
     setEventListener () {
-        const instance = this;
-        this.html.addEventListener('click', function(e) {
-            if (instance.state.preventDefault) {
+        this.html.addEventListener('click', (e) => {
+            if (this.state.preventDefault) {
                 e.preventDefault();
             }
-            instance.click();
+            this.click();
         });
     }
 
@@ -100,7 +101,7 @@ export class Button extends Html {
     static props = {
         id: 'button-1',
         title: false,
-        classes: [],
+        classList: [],
         nodeName: 'BUTTON',
     }
 
@@ -117,14 +118,22 @@ export class Button extends Html {
 
     /**
      * @static
-     * @var {object} callback Default callback.
+     * @var {object} callbacks Default callbacks.
      * @memberof Button
      */
-    static callback = {
-        function: function() { /* console.log('clicked') */ },
-        params: {}
+    static callbacks = {
+        click: {
+            function: (params) => { /* console.log(params) */ },
+            params: {}
+        },
     }
-}
 
-// ? Default export
-export default Button;
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Button
+     */
+    static children = [
+        // 
+    ]
+}

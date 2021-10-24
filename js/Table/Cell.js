@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Cell creates an excellent <td> or <th>.
@@ -14,26 +11,28 @@ import HTMLCreator from "../HTMLCreator.js";
 export class Cell extends Html {
     /**
      * * Creates an instance of Cell.
-     * @param {object} [props]
-     * @param {string} [props.id='cell-1'] Primary key.
-     * @param {string} [props.type='normal']
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='cell-1'] Primary key.
+     * @param {string} [data.props.type='normal']
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Cell
      */
-    constructor (props = {
-        id: 'cell-1',
-        type: 'normal',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
+    constructor (data = {
+        props: {
+            id: 'cell-1',
+            type: 'normal',
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
         props.nodeName = ((props.type === 'header') ? 'TH' : 'TD');
-        super({ ...Cell.props, ...props }, { ...Cell.state, ...state });
+        super({ ...Cell.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Cell.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Cell.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Cell.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -44,7 +43,7 @@ export class Cell extends Html {
     static props = {
         id: 'cell-1',
         type: 'normal',
-        classes: [],
+        classList: [],
         nodeName: 'TD',
     }
 
@@ -56,7 +55,22 @@ export class Cell extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Cell;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Cell
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Cell
+     */
+    static children = [
+        // 
+    ]
+}

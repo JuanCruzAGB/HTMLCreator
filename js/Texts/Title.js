@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
+import Html from "../Html.js";
 
 // ? HTMLCreatorJS repository
 import HTMLCreator from "../HTMLCreator.js";
@@ -17,7 +17,7 @@ export class Title extends Html {
      * @param {object} [props]
      * @param {string} [props.id='title-1'] Primary key.
      * @param {number} [props.level=1]
-     * @param {string[]} [props.classes] Class names.
+     * @param {string[]} [props.classes] Class list.
      * @param {object} [state]
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.

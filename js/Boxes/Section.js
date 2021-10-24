@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Section creates an excellent <section>.
@@ -11,26 +8,28 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Section extends Html {
+export default class Section extends Html {
     /**
      * * Creates an instance of Section.
-     * @param {object} [props]
-     * @param {string} [props.id='section-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='section-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Section
      */
-    constructor (props = {
-        id: 'section-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Section.props, ...props }, { ...Section.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'section-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
+        super({ ...Section.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Section.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Section.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Section.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -40,7 +39,7 @@ export class Section extends Html {
      */
     static props = {
         id: 'section-1',
-        classes: [],
+        classList: [],
         nodeName: 'SECTION',
     }
 
@@ -52,7 +51,22 @@ export class Section extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Section;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Section
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Section
+     */
+    static children = [
+        // 
+    ]
+}

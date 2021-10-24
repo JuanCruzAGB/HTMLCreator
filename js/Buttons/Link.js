@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Link creates an excellet <link>.
@@ -11,40 +8,44 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Link extends Html {
+export default class Link extends Html {
     /**
      * * Creates an instance of Link.
-     * @param {object} [props]
-     * @param {string[]} [props.classes] Class names.
-     * @param {string} [props.id="link-1"] Primary key.
-     * @param {string|boolean} [props.target=false]
-     * @param {string} [props.url="#"] Redirection url.
-     * @param {object} [state]
-     * @param {boolean} [state.preventDefault=true] If the Click event should execut prevent default.
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {object} [callback] Click callback:
-     * @param {function} [callback.function] Click callback function.
-     * @param {object} [callback.params] Click callback params.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {string} [data.props.id='link-1'] Primary key.
+     * @param {string|boolean} [data.props.target=false]
+     * @param {string} [data.props.url='#'] Redirection url.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.preventDefault=true] If the Click event should execut prevent default.
+     * @param {object} [data.callbacks]
+     * @param {object} [data.callbacks.click]
+     * @param {function} [data.callbacks.click.function]
+     * @param {object} [data.callbacks.click.params]
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Link
      */
-    constructor (props = {
-        classes: [],
-        id: "link-1",
-        target: false,
-        url: "#",
-    }, state = {
-        preventDefault: false,
-        id: false,
-    }, callback = {
-        function: function() { /* console.log("clicked") */ },
-        params: {}
-    }, innerHTML = false) {
-        super({ ...Link.props, ...props }, { ...Link.state, ...state }, { click: { ...Link.callback, ...callback }});
-        this.setCallbacks();
+    constructor (data = {
+        props: {
+            classList: [],
+            id: 'link-1',
+            target: false,
+            url: '#',
+        }, state: {
+            id: false,
+            preventDefault: false,
+        }, callbacks: {
+            click: {
+                function: (params) => { /* console.log(params) */ },
+                params: {},
+            },
+        }, children: false,
+    }) {
+        super({ ...Link.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Link.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Link.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Link.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
-        HTMLCreator.setInnerHTML(this, innerHTML);
         this.setEventListener();
     }
     
@@ -53,12 +54,11 @@ export class Link extends Html {
      * @memberof Link
      */
     setEventListener () {
-        const instance = this;
-        this.html.addEventListener("click", function(e) {
-            if (instance.state.preventDefault) {
+        this.html.addEventListener('click', (e) => {
+            if (this.state.preventDefault) {
                 e.preventDefault();
             }
-            instance.click();
+            this.click();
         });
     }
 
@@ -67,9 +67,9 @@ export class Link extends Html {
      * @memberof Link
      */
     setHTMLAttributes () {
-        this.setAttribute("href", this.props.url);
+        this.setAttribute('href', this.props.url);
         if (this.props.target) {
-            this.setAttribute("target", this.props.target);
+            this.setAttribute('target', this.props.target);
         }
     }
 
@@ -79,10 +79,10 @@ export class Link extends Html {
      * @memberof Link
      */
     static props = {
-        id: "link-1",
-        url: "#",
-        classes: [],
-        nodeName: "A",
+        id: 'link-1',
+        url: '#',
+        classList: [],
+        nodeName: 'A',
     }
 
     /**
@@ -91,20 +91,28 @@ export class Link extends Html {
      * @memberof Link
      */
     static state = {
-        preventDefault: false,
         id: false,
+        preventDefault: false,
     }
 
     /**
      * @static
-     * @var {object} callback Default callback.
+     * @var {object} callbacks Default callbacks.
      * @memberof Link
      */
-    static callback = {
-        function: function() { /* console.log("clicked") */ },
-        params: {}
+    static callbacks = {
+        click: {
+            function: (params) => { /* console.log(params) */ },
+            params: {},
+        },
     }
-}
 
-// ? Default export
-export default Link;
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Link
+     */
+    static children = [
+        // 
+    ]
+}

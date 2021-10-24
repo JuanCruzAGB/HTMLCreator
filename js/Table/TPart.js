@@ -1,8 +1,6 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
 import Cell from "./Cell.js";
+import Html from "../Html.js";
 import Row from "./Row.js";
 
 /**
@@ -12,28 +10,31 @@ import Row from "./Row.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class TPart extends Html {
+export default class TPart extends Html {
     /**
      * * Creates an instance of TPart.
-     * @param {object} [props]
-     * @param {string} [props.id='tbody-1'] Primary key.
-     * @param {string[]} [props.classes] Primary key.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {object} [rows] Array of <tr>.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='tbody-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data.rows] Array of <tr>.
      * @memberof TPart
      */
-    constructor (props = {
-        id: 'tbody-1',
-        type: 'body',
-        classes: [],
-    }, state = {
-        id: false,
-    }, rows = []) {
-        if (props.type === 'head') {
+    constructor (data = {
+        props: {
+            id: 'tbody-1',
+            type: 'body',
+            classList: [],
+        }, state: {
+            id: false,
+        }, rows: [],
+    }) {
+        if (props.type == 'head') {
             props.nodeName = 'THEAD';
         }
-        super({ ...TPart.props, ...props }, { ...TPart.state, ...state });
+        super({ ...TPart.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...TPart.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...TPart.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
         this.createHTML(this.props.nodeName);
         this.setRows(rows);
     }
@@ -49,8 +50,11 @@ export class TPart extends Html {
         }
         for (const key in rows) {
             if (Object.hasOwnProperty.call(rows, key)) {
-                let row = rows[key];
-                row = new Row((row.hasOwnProperty('props') ? { id: `${ this.props.id }-row-${ parseInt(key) + 1 }`, ...row.props} : {}), (row.hasOwnProperty('state') ? row.state : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+                let data = rows[key];
+                let row = new Row({
+                    ...data,
+                    id: `${ this.props.id }-row-${ parseInt(key) + 1 }`,
+                });
                 this.rows.push(row);
                 this.appendChild(row.html);
             }
@@ -86,7 +90,7 @@ export class TPart extends Html {
     getRow (id_row = false) {
         if (id_row) {
             for (const row of this.rows) {
-                if (row.props.id === id_row) {
+                if (row.props.id == id_row) {
                     return row;
                 }
             }
@@ -126,7 +130,7 @@ export class TPart extends Html {
     hasRow (id_row = false) {
         if (id_row) {
             for (const row of this.rows) {
-                if (row.props.id === id_row) {
+                if (row.props.id == id_row) {
                     return true;
                 }
             }
@@ -166,7 +170,7 @@ export class TPart extends Html {
             for (const key in [...this.rows]) {
                 if (Object.hasOwnProperty.call(this.rows, key)) {
                     const row = this.rows[key];
-                    if (row.props.id === id_row) {
+                    if (row.props.id == id_row) {
                         row.removeHTML();
                         delete this.rows[key];
                         return row;
@@ -187,7 +191,7 @@ export class TPart extends Html {
      */
     static props = {
         id: 'tbody-1',
-        classes: [],
+        classList: [],
         nodeName: 'TBODY',
     }
 
@@ -199,11 +203,27 @@ export class TPart extends Html {
     static state = {
         id: false,
     }
+
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof TPart
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {Cell} Cell Cell class child.
+     * @memberof TPart
+     */
+    static Cell = Cell;
+
+    /**
+     * @static
+     * @var {Row} Row Row class child.
+     * @memberof TPart
+     */
+    static Row = Row;
 }
-
-// ? TPart childs
-TPart.Cell = Cell;
-TPart.Row = Row;
-
-// ? Default export
-export default TPart;

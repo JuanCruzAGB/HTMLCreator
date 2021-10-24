@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Footer creates an excellent <footer>.
@@ -11,26 +8,28 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Footer extends Html {
+export default class Footer extends Html {
     /**
      * * Creates an instance of Footer.
-     * @param {object} [props]
-     * @param {string} [props.id='footer-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='footer-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Footer
      */
-    constructor (props = {
-        id: 'footer-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Footer.props, ...props }, { ...Footer.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'footer-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
+        super({ ...Footer.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Footer.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Footer.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Footer.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -40,7 +39,7 @@ export class Footer extends Html {
      */
     static props = {
         id: 'footer-1',
-        classes: [],
+        classList: [],
         nodeName: 'FOOTER',
     }
 
@@ -52,7 +51,22 @@ export class Footer extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Footer;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Footer
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Footer
+     */
+    static children = [
+        // 
+    ]
+}

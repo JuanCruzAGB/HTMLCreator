@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
+import Html from "../Html.js";
 
 // ? HTMLCreatorJS repository
 import HTMLCreator from "../HTMLCreator.js";
@@ -16,7 +16,7 @@ export class LineBreak extends Html {
      * * Creates an instance of LineBreak.
      * @param {object} [props]
      * @param {string} [props.id='line-break-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
+     * @param {string[]} [props.classes] Class list.
      * @param {object} [state]
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @memberof LineBreak

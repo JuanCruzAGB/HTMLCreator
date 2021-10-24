@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Figure creates an excellent <figure>.
@@ -11,26 +8,28 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Figure extends Html {
+export default class Figure extends Html {
     /**
      * * Creates an instance of Figure.
-     * @param {object} [props]
-     * @param {string} [props.id='figure-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='figure-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Figure
      */
-    constructor (props = {
-        id: 'figure-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Figure.props, ...props }, { ...Figure.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'figure-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+    }) {
+        super({ ...Figure.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Figure.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Figure.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Figure.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -40,7 +39,7 @@ export class Figure extends Html {
      */
     static props = {
         id: 'figure-1',
-        classes: [],
+        classList: [],
         nodeName: 'FIGURE',
     }
 
@@ -52,10 +51,22 @@ export class Figure extends Html {
     static state = {
         id: false,
     }
+
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Aside
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Aside
+     */
+    static children = [
+        // 
+    ]
 }
-
-// ? Figure childs
-Figure.Image = Image;
-
-// ? Default export
-export default Figure;

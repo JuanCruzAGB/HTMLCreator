@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
+import Html from "../Html.js";
 
 /**
  * * Icon creates an excellent <icon>.
@@ -13,7 +13,7 @@ export class Icon extends Html {
      * * Creates an instance of Icon.
      * @param {object} [props]
      * @param {string} [props.id='icon-1'] Primary key.
-     * @param {string[]} [props.classes] Class names.
+     * @param {string[]} [props.classes] Class list.
      * @param {object} [state]
      * @param {boolean} [state.id=false] If the HTML Element should print the id property.
      * @memberof Icon

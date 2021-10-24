@@ -1,10 +1,8 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import Cell from "./Cell.js";
-import Row from "./Row.js";
-import TPart from "./TPart.js";
+import Cell from './Cell.js';
+import Html from '../Html.js';
+import Row from './Row.js';
+import TPart from './TPart.js';
 
 /**
  * * Table creates an excellent <table>.
@@ -13,24 +11,27 @@ import TPart from "./TPart.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Table extends Html {
+export default class Table extends Html {
     /**
      * * Creates an instance of Table.
-     * @param {object} [props]
-     * @param {string} [props.id='table-1'] Primary key.
-     * @param {string[]} [props.table] Class names.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {array} [structure] Array of <thead>, <tbody>, <tr>, <td> and/or <th>.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='table-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {array} [data.structure] Array of <thead>, <tbody>, <tr>, <td> and/or <th>.
      * @memberof Table
      */
-    constructor (props = {
-        id: 'table-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, structure = []) {
-        super({ ...Table.props, ...props }, { ...Table.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'table-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, structure: [],
+    }) {
+        super({ ...Table.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Table.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Table.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
         this.createHTML(this.props.nodeName);
         this.setStructure(structure);
     }
@@ -45,13 +46,13 @@ export class Table extends Html {
             this.structure = [];
         }
         let { body, head } = this.parseStructure(structure);
-        if (typeof head === 'object') {
+        if (typeof head == 'object') {
             this.setHead(head);
         }
-        if (typeof body === 'object') {
+        if (typeof body == 'object') {
             this.setBody(body);
         }
-        if (typeof head !== 'object' && typeof body !== 'object') {
+        if (typeof head != 'object' && typeof body != 'object') {
             this.setRows(structure);
         }
     }
@@ -65,7 +66,10 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.tbody = new TPart((tbody.hasOwnProperty('props') ? { id: `${ this.props.id }-body`, ...tbody.props, type: 'body' } : {}), (tbody.hasOwnProperty('state') ? tbody.state : {}), (tbody.hasOwnProperty('structure') ? tbody.structure : []));
+        this.structure.tbody = new TPart({
+            ...tbody,
+            id: `${ this.props.id }-body`,
+        });
         this.appendChild(this.structure.tbody.html);
     }
 
@@ -78,7 +82,10 @@ export class Table extends Html {
         if (!this.structure) {
             this.structure = [];
         }
-        this.structure.thead = new TPart((thead.hasOwnProperty('props') ? { id: `${ this.props.id }-head`, ...thead.props, type: 'head' } : {}), (thead.hasOwnProperty('state') ? thead.state : {}), (thead.hasOwnProperty('structure') ? thead.structure : []));
+        this.structure.thead = new TPart({
+            ...thead,
+            id: `${ this.props.id }-head`,
+        });
         this.appendChild(this.structure.thead.html);
     }
 
@@ -92,18 +99,21 @@ export class Table extends Html {
             this.structure = [];
         }
         let { body, head } = this.parseStructure(structure);
-        if (typeof head === 'object' && this.structure.hasOwnProperty('thead')) {
+        if (typeof head == 'object' && this.structure.hasOwnProperty('thead')) {
             this.structure.thead.setRows(head);
         }
-        if (typeof body === 'object' && this.structure.hasOwnProperty('tbody')) {
+        if (typeof body == 'object' && this.structure.hasOwnProperty('tbody')) {
             this.structure.tbody.setRows(body);
         }
-        if ((typeof head !== 'object' || !this.structure.hasOwnProperty('thead')) && (typeof body !== 'object' || !this.structure.hasOwnProperty('tbody'))) {
+        if ((typeof head != 'object' || !this.structure.hasOwnProperty('thead')) && (typeof body != 'object' || !this.structure.hasOwnProperty('tbody'))) {
             this.structure.rows = [];
             for (const key in structure) {
                 if (Object.hasOwnProperty.call(structure, key)) {
-                    let row = structure[key];
-                    row = new Row((row.hasOwnProperty('props') ? { id: `row-${ parseInt(key) + 1 }`, ...row.props } : {}), (row.hasOwnProperty('state') ? row.state : {}), (row.hasOwnProperty('cells') ? row.cells : []));
+                    let data = structure[key];
+                    let row = new Row({
+                        ...data,
+                        id: `row-${ parseInt(key) + 1 }`,
+                    });
                     this.structure.rows.push(row);
                     this.appendChild(row.html);
                 }
@@ -133,7 +143,7 @@ export class Table extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -153,7 +163,7 @@ export class Table extends Html {
             }
             if (!this.structure.hasOwnProperty('thead') && !this.structure.hasOwnProperty('tbody')) {
                 for (const row of this.structure.rows) {
-                    if (row.props.id === id_row) {
+                    if (row.props.id == id_row) {
                         return row;
                     }
                 }
@@ -161,7 +171,7 @@ export class Table extends Html {
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 
@@ -191,7 +201,7 @@ export class Table extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -214,14 +224,14 @@ export class Table extends Html {
                 }
             }
             for (const row of this.rows) {
-                if (row.props.id === id_row) {
+                if (row.props.id == id_row) {
                     return true;
                 }
             }
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 
@@ -247,7 +257,7 @@ export class Table extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -269,7 +279,7 @@ export class Table extends Html {
                 for (const key in [...this.structure.rows]) {
                     if (Object.hasOwnProperty.call(this.structure.rows, key)) {
                         const row = this.structure.rows[key];
-                        if (row.props.id === id_row) {
+                        if (row.props.id == id_row) {
                             row.removeHTML();
                             delete this.structure.rows[key];
                             return row;
@@ -280,7 +290,7 @@ export class Table extends Html {
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 
@@ -294,10 +304,10 @@ export class Table extends Html {
         let body = false, head = false;
         for (const key in structure) {
             if (Object.hasOwnProperty.call(structure, key)) {
-                if (key === 'tbody') {
+                if (key == 'tbody') {
                     body = structure[key];
                 }
-                if (key === 'thead') {
+                if (key == 'thead') {
                     head = structure[key];
                 }
             }
@@ -312,7 +322,7 @@ export class Table extends Html {
      */
     static props = {
         id: 'table-1',
-        classes: [],
+        classList: [],
         nodeName: 'TABLE',
     }
 
@@ -324,12 +334,34 @@ export class Table extends Html {
     static state = {
         id: false,
     }
+
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Table
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {Cell} Cell Cell class child.
+     * @memberof Table
+     */
+    static Cell = Cell;
+
+    /**
+     * @static
+     * @var {Row} Row Row class child.
+     * @memberof Table
+     */
+    static Row = Row;
+
+    /**
+     * @static
+     * @var {TPart} TPart TPart class child.
+     * @memberof Table
+     */
+    static TPart = TPart;
 }
-
-// ? Table childs
-Table.Cell = Cell;
-Table.Row = Row;
-Table.TPart = TPart;
-
-// ? Default export
-export default Table;

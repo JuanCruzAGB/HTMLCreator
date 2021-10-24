@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../../../JuanCruzAGB/js/Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Aside creates an excellent <aside>.
@@ -11,28 +8,28 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Aside extends Html {
+export default class Aside extends Html {
     /**
      * * Creates an instance of Aside.
+     * @param {object} [data]
      * @param {object} [data.props]
-     * @param {string} [data.props.id="aside-1"] Primary key.
-     * @param {string[]} [data.props.classes] Class names.
+     * @param {string} [data.props.id='aside-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [data.innerHTML=false] Inner HTML Element.
+     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Aside
      */
     constructor (data = {
         props: {
-            id: "aside-1",
-            classes: [],
+            id: 'aside-1',
+            classList: [],
         }, state: {
             id: false,
-        }, innerHTML: false
+        }, children: false,
     }) {
-        super({ ...Aside.props, ...(data.hasOwnProperty("props") ? data.props : {}) }, { ...Aside.state, ...(data.hasOwnProperty("state") ? data.state : {}) });
+        super({ ...Aside.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Aside.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Aside.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Aside.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
     }
 
     /**
@@ -41,9 +38,9 @@ export class Aside extends Html {
      * @memberof Aside
      */
     static props = {
-        id: "aside-1",
-        classes: [],
-        nodeName: "ASIDE",
+        id: 'aside-1',
+        classList: [],
+        nodeName: 'ASIDE',
     }
 
     /**
@@ -54,7 +51,22 @@ export class Aside extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Aside;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Aside
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Aside
+     */
+    static children = [
+        // 
+    ]
+}

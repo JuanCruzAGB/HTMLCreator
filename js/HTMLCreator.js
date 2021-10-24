@@ -1,39 +1,39 @@
 // ? JuanCruzAGB repository
-import Class from "../../JuanCruzAGB/js/Class.js";
+import Class from '../../JuanCruzAGB/js/Class.js';
 
 // ? HTMLCreatorJS repository
 // ? Boxes
-import Aside from "./Boxes/Aside.js";
-import Div from "./Boxes/Div.js";
-import Figure from "./Boxes/Figure.js";
-import Footer from "./Boxes/Footer.js";
-import Form from "./Boxes/Form.js";
-import Header from "./Boxes/Header.js";
-import Item from "./Boxes/Item.js";
-import Label from "./Boxes/Label.js";
-import List from "./Boxes/List.js";
-import Main from "./Boxes/Main.js";
-import Option from "./Boxes/Option.js";
-import Section from "./Boxes/Section.js";
+import Aside from './Boxes/Aside.js';
+import Div from './Boxes/Div.js';
+import Figure from './Boxes/Figure.js';
+import Footer from './Boxes/Footer.js';
+import Form from './Boxes/Form.js';
+import Header from './Boxes/Header.js';
+import Item from './Boxes/Item.js';
+import Label from './Boxes/Label.js';
+import List from './Boxes/List.js';
+import Main from './Boxes/Main.js';
+import Option from './Boxes/Option.js';
+import Section from './Boxes/Section.js';
 // ? Buttons
-import Button from "./Buttons/Button.js";
-import Input from "./Buttons/Input.js";
-import Link from "./Buttons/Link.js";
+import Button from './Buttons/Button.js';
+import Input from './Buttons/Input.js';
+import Link from './Buttons/Link.js';
 // ? Table
-import Table from "./Table/Table.js";
-import TPart from "./Table/TPart.js";
-import Row from "./Table/Row.js";
-import Cell from "./Table/Cell.js";
+import Table from './Table/Table.js';
+import TPart from './Table/TPart.js';
+import Row from './Table/Row.js';
+import Cell from './Table/Cell.js';
 // ? Texts
-import Italic from "./Texts/Italic.js";
-import LineBreak from "./Texts/LineBreak.js";
-import Paragraph from "./Texts/Paragraph.js";
-import Span from "./Texts/Span.js";
-import Title from "./Texts/Title.js";
+import Italic from './Texts/Italic.js';
+import LineBreak from './Texts/LineBreak.js';
+import Paragraph from './Texts/Paragraph.js';
+import Span from './Texts/Span.js';
+import Title from './Texts/Title.js';
 // ? Visuals
-import Icon from "./Visuals/Icon.js";
-import Image from "./Visuals/Image.js";
-import Line from "./Visuals/Line.js";
+import Icon from './Visuals/Icon.js';
+import Image from './Visuals/Image.js';
+import Line from './Visuals/Line.js';
 
 /**
  * * HTMLCreator creates multiple HTMLElement.
@@ -45,148 +45,197 @@ import Line from "./Visuals/Line.js";
 export default class HTMLCreator extends Class {
     /**
      * * Creates an instance of HTMLCreator.
-     * @param {otring} [tag] HTML Element node name.
-     * @param {sbject} [data] HTML Elemenet data.
+     * @param {string} [query]
+     * @param {object} [data]
      * @memberof HTMLCreator
      */
-    constructor (tag = "DIV", data = {}) {
+    constructor (query = 'DIV', data = {}) {
         super();
-        switch (tag.toUpperCase()) {
-        // ? Boxes
-            case "ASIDE":
-                return new Aside(data);
-            case "DIV":
-                return new Div(data);
-            case "FIGURE":
-                return new Figure((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : {}));
-            case "FOOTER":
-                return new Footer((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "FORM":
-                return new Form((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callback") ? data.callback : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : []));
-            case "HEADER":
-                return new Header((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : {}));
-            case "LI":
-                return new Item((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "LABEL":
-                return new Label((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "OL":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "ordered";
-                }
-            case "UL":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "unordered";
-                }
-                return new List((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("items") ? data.items : []));
-            case "MAIN":
-                return new Main((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "OPTION":
-                return new Option(data);
-            case "SECTION":
-                return new Section((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-        // ? Buttons
-            case "BUTTON":
-                return new Button((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callback") ? data.callback : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "SELECT":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "select";
-                }
-            case "TEXTAREA":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "textarea";
-                }
-            case "INPUT":
-                return new Input((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callbacks") ? data.callbacks : false), (data.hasOwnProperty("options") ? data.options : false));
-            case "A":
-                return new Link((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("callback") ? data.callback : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-        // ? Table
-            case "TABLE":
-                return new Table((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("structure") ? data.structure : []));
-            case "TBODY":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "body";
-                }
-            case "THEAD":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "head";
-                }
-                return new TPart((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("rows") ? data.rows : []));
-            case "TR":
-                return new Row((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("cells") ? data.cells : []));
-            case "TD":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "normal";
-                }
-            case "TH":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("type")) {
-                    data.props.type = "header";
-                }
-                return new Cell((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-        // ? Texts
-            case "BR":
-                return new LineBreak((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}));
-            case "I":
-                return new Italic(data);
-            case "P":
-                return new Paragraph((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "SPAN":
-                return new Span((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-            case "H1":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 1;
-                }
-            case "H2":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 2;
-                }
-            case "H3":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 3;
-                }
-            case "H4":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 4;
-                }
-            case "H5":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 5;
-                }
-            case "H6":
-                if (data.hasOwnProperty("props") && !data.props.hasOwnProperty("level")) {
-                    data.props.level = 6;
-                }
-                return new Title((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}), (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
-        // ? Visuals
-            case "ICON":
-                return new Icon((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}));
-            case "IMG":
-                return new Image((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}));
-            case "HR":
-                return new Line((data.hasOwnProperty("props") ? data.props : {}), (data.hasOwnProperty("state") ? data.state : {}));
-        // ? Menus
-            case "NAVMENU":
-                this.import(tag, data);
-                break;
-            default:
-                console.warn(`HTMLCreatorJS does not support ${ tag } yet`);
-                break;
+        if (!data || !data.hasOwnProperty('state')) {
+            data = {
+                state: {
+                    exist: false,
+                },
+            };
+        }
+        if (document.querySelector(query)) {
+            data.state.exist = true;
+        }
+        query = this.parseQuery(query);
+        for (let subquery of query) {
+            switch (subquery.nodeName.toUpperCase()) {
+            // ? Boxes
+                case 'ASIDE':
+                    return new Aside(data);
+                case 'DIV':
+                    return new Div(data);
+                case 'FIGURE':
+                    return new Figure(data);
+                case 'FOOTER':
+                    return new Footer(data);
+                case 'FORM':
+                    return new Form(data);
+                case 'HEADER':
+                    return new Header(data);
+                case 'LI':
+                    return new Item(data);
+                case 'LABEL':
+                    return new Label(data);
+                case 'OL':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'ordered';
+                    }
+                case 'UL':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'unordered';
+                    }
+                    return new List(data);
+                case 'MAIN':
+                    return new Main(data);
+                case 'OPTION':
+                    return new Option(data);
+                case 'SECTION':
+                    return new Section(data);
+            // ? Buttons
+                case 'BUTTON':
+                    return new Button(data);
+                case 'SELECT':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'select';
+                    }
+                case 'TEXTAREA':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'textarea';
+                    }
+                case 'INPUT':
+                    return new Input(data);
+                case 'A':
+                    return new Link(data);
+            // ? Table
+                case 'TABLE':
+                    return new Table(data);
+                case 'TBODY':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'body';
+                    }
+                case 'THEAD':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'head';
+                    }
+                    return new TPart(data);
+                case 'TR':
+                    return new Row(data);
+                case 'TD':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'normal';
+                    }
+                case 'TH':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
+                        data.props.type = 'header';
+                    }
+                    return new Cell(data);
+            // ? Texts
+                case 'BR':
+                    return new LineBreak(data);
+                case 'I':
+                    return new Italic(data);
+                case 'P':
+                    return new Paragraph(data);
+                case 'SPAN':
+                    return new Span(data);
+                case 'H1':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 1;
+                    }
+                case 'H2':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 2;
+                    }
+                case 'H3':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 3;
+                    }
+                case 'H4':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 4;
+                    }
+                case 'H5':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 5;
+                    }
+                case 'H6':
+                    if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
+                        data.props.level = 6;
+                    }
+                    return new Title(data);
+            // ? Visuals
+                case 'ICON':
+                    return new Icon(data);
+                case 'IMG':
+                    return new Image(data);
+                case 'HR':
+                    return new Line(data);
+            // ? Menus
+                case 'NAVMENU':
+                    this.import(query, data);
+                    break;
+                default:
+                    console.warn(`HTMLCreatorJS does not support ${ query } yet`);
+                    break;
+            }
         }
     }
 
-    async import (tag = "DIV", data = {}) {
-        switch (tag.toUpperCase()) {
-        // ? Menus
-            case "NAVMENU":
-                try {
-                    const { Nav } = await import("./Menu/Nav/Nav.js");
-                    console.log(new Nav());
-                } catch (error) {
-                    console.error(error);
-                    // console.error("Nav module does not found");
+    /**
+     * * Parse the query.
+     * @param {string} [query='DIV']
+     * @returns {object}
+     * @memberof HTMLCreator
+     */
+    parseQuery (query = 'DIV') {
+        query = query.split(' ');
+        for (const key in query) {
+            if (Object.hasOwnProperty.call(query, key)) {
+                const subquery = query[key].split(':').shift();
+                let classList = [], id = false, nodeName = subquery;
+                if (/#/.exec(subquery)) {
+                    id = subquery.split('#').pop();
+                    nodeName = subquery.split('#').shift();
                 }
-                break;
+                if (id && /\./.exec(id)) {
+                    classList = id.split('.');
+                    classList.shift();
+                    id = id.split('.').shift();
+                }
+                if (!id && /\./.exec(nodeName)) {
+                    classList = nodeName.split('.');
+                    classList.shift();
+                    nodeName = nodeName.split('.').shift();
+                }
+                query[key] = {
+                    'classList': classList,
+                    'id': id,
+                    'nodeName': nodeName.toUpperCase(),
+                };
+            }
         }
+        return query;
     }
+
+    // async import (query = 'DIV', data = {}) {
+    //     switch (query.toUpperCase()) {
+    //     // ? Menus
+    //         case 'NAVMENU':
+    //             try {
+    //                 const { Nav } = await import('./Menu/Nav/Nav.js');
+    //                 console.log(new Nav());
+    //             } catch (error) {
+    //                 console.error(error);
+    //                 // console.error('Nav module does not found');
+    //             }
+    //             break;
+    //     }
+    // }
 
     /**
      * * Set the inner HTML Element
@@ -197,14 +246,14 @@ export default class HTMLCreator extends Class {
      */
     static setInnerHTML (HTML = false, innerHTML = false) {
         if (innerHTML !== false && innerHTML !== null) {
-            if (typeof innerHTML === "string" || typeof innerHTML === "number") {
+            if (typeof innerHTML === 'string' || typeof innerHTML === 'number') {
                 HTML.appendChild(`${ innerHTML }`);
             }
-            if (typeof innerHTML !== "string" && typeof innerHTML !== "number" && typeof innerHTML !== "boolean") {
+            if (typeof innerHTML !== 'string' && typeof innerHTML !== 'number' && typeof innerHTML !== 'boolean') {
                 if (innerHTML.nodeName) {
                     HTML.appendChild(innerHTML);
                 }
-                if (innerHTML.props && innerHTML.hasProp("nodeName")) {
+                if (innerHTML.props && innerHTML.hasProp('nodeName')) {
                     HTML.appendChild(innerHTML.html);
                 }
                 if (!innerHTML.nodeName && !innerHTML.props) {
@@ -215,11 +264,11 @@ export default class HTMLCreator extends Class {
                         if (child.nodeName) {
                             HTML.appendChild(child);
                         }
-                        if (child.props && child.hasProp("nodeName")) {
+                        if (child.props && child.hasProp('nodeName')) {
                             HTML.appendChild(child.html);
                         }
                         if (!child.nodeName && !child.props) {
-                            child = new this((child.length ? child[0] : "DIV"), ((child.length > 1) ? child[1] : {}));
+                            child = new this((child.length ? child[0] : 'DIV'), ((child.length > 1) ? child[1] : {}));
                             HTML.appendChild(child.html);
                         }
                         HTML.children.push(child);
@@ -231,6 +280,7 @@ export default class HTMLCreator extends Class {
 
     // * HTMLCreator childs:
     //  ? Boxes
+    static Aside = Aside;
     static Div = Div;
     static Figure = Figure;
     static Footer = Footer;
@@ -260,6 +310,3 @@ export default class HTMLCreator extends Class {
     static Image = Image;
     static Line = Line;
 }
-
-// ? Default export
-export { HTMLCreator as Html };
