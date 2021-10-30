@@ -18,8 +18,9 @@ export default class TPart extends Html {
      * @param {string} [data.props.id='tbody-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {object} [data.rows] Array of <tr>.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof TPart
      */
     constructor (data = {
@@ -30,11 +31,23 @@ export default class TPart extends Html {
         }, state: {
             id: false,
         }, rows: [],
+        parentNode: false,
     }) {
         if (props.type == 'head') {
             props.nodeName = 'THEAD';
         }
-        super({ ...TPart.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...TPart.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...TPart.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
+        super({
+            props: {
+                ...TPart.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...TPart.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...TPart.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
         this.setRows(rows);
     }

@@ -19,12 +19,13 @@ export default class Button extends Html {
      * @param {object} [data.state]
      * @param {boolean} [data.state.preventDefault=true] If the Click event should execut prevent default.
      * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {object} [data.callbacks]
      * @param {function} [data.callbacks.click]
      * @param {function} [data.callbacks.click.function]
      * @param {object} [data.callbacks.click.params]
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Button
      */
     constructor (data = {
@@ -36,31 +37,33 @@ export default class Button extends Html {
             disabled: false,
             id: false,
             preventDefault: true,
+            parentNode: false,
         }, callbacks: {
             click: {
                 function: (params) => { /* console.log(params) */ },
                 params: {}
             },
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Button.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Button.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Button.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Button.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Button.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Button.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Button.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Button.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
-        this.setEventListener();
         this.setHTMLAttributes();
         this.checkState();
-    }
-    
-    /**
-     * * Set the Button event listener.
-     * @memberof Button
-     */
-    setEventListener () {
-        this.html.addEventListener('click', (e) => {
-            if (this.state.preventDefault) {
-                e.preventDefault();
-            }
-            this.click();
-        });
     }
 
     /**
@@ -78,9 +81,7 @@ export default class Button extends Html {
      * @memberof Button
      */
     checkState () {
-        if (this.state.disabled) {
-            this.checkDisabledState();
-        }
+        this.checkDisabledState();
     }
 
     /**
@@ -111,9 +112,9 @@ export default class Button extends Html {
      * @memberof Button
      */
     static state = {
-        preventDefault: true,
         disabled: false,
         id: false,
+        preventDefault: true,
     }
 
     /**

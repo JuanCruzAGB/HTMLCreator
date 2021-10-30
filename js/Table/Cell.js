@@ -8,7 +8,7 @@ import Html from '../Html.js';
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Cell extends Html {
+export default class Cell extends Html {
     /**
      * * Creates an instance of Cell.
      * @param {object} [data]
@@ -17,8 +17,9 @@ export class Cell extends Html {
      * @param {string} [data.props.type='normal']
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Cell
      */
     constructor (data = {
@@ -29,9 +30,24 @@ export class Cell extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
         props.nodeName = ((props.type === 'header') ? 'TH' : 'TD');
-        super({ ...Cell.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Cell.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Cell.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Cell.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Cell.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Cell.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Cell.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Cell.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 

@@ -24,8 +24,9 @@ export default class Input extends Html {
      * @param {object} [data.state]
      * @param {boolean} [data.state.checked=false] If the HTML Element should be checked.
      * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
+     * @param {boolean} [data.state.hidden=false] If the HTML Element should be hidden.
      * @param {boolean} [data.state.multiple=false] If the HTML Element should accepts multiple files.
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {number|false} [data.state.selectedIndex=false] Input select selected Option index.
      * @param {object} [data.callbacks]
      * @param {object} [data.callbacks.change]
@@ -35,7 +36,7 @@ export default class Input extends Html {
      * @param {function} [data.callbacks.focusout.function]
      * @param {*} [data.callbacks.focusout.params]
      * @param {array} [data.options] Array of <options>
-     * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Input
      */
     constructor (data = {
@@ -50,6 +51,7 @@ export default class Input extends Html {
         }, state: {
             checked: false,
             disabled: false,
+            hidden: false,
             multiple: false,
             id: false,
             selectedIndex: false,
@@ -63,89 +65,50 @@ export default class Input extends Html {
             }, focusout: {
                 function: (params) => { /* console.log(params) */ },
                 params: {},
-            }
+            },
         }, options: [],
-        children: false,
+        parentNode: false,
     }) {
-        if (props.type == 'select') {
-            props.nodeName = 'SELECT';
+        if (data) {
+            if (data.hasOwnProperty('props')) {
+                if (data.props.hasOwnProperty('type')) {
+                    if (data.props.type.toUpperCase() == 'SELECT') {
+                        data.props.nodeName = 'SELECT';
+                    }
+                    if (data.props.type.toUpperCase() == 'TEXTAREA') {
+                        data.props.nodeName = 'TEXTAREA';
+                    }
+                }
+            }
         }
-        if (props.type == 'textarea') {
-            props.nodeName = 'TEXTAREA';
-        }
-        super({ ...Input.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Input.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Input.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Input.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Input.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Input.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Input.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
-        this.setEventListener();
         this.setHTMLAttributes();
-        if (options.length) {
-            this.setOptions(options);
+        if (this.props.type.toUpperCase() == 'SELECT' && data && data.hasOwnProperty('options') && options.length) {
+            this.setOptions(data.options);
         }
         this.checkState();
     }
-    
+
     /**
-     * * Set the Input event listener.
-     * @memberof Input
+     * * Saves the Input value.
+     * @param {*} value
+     * @memberof Image
      */
-    setEventListener () {
-        switch (this.props.type) {
-            case 'date':
-                this.html.addEventListener('change', (e) => {
-                    this.setProps('value', this.html.value);
-                    this.change({
-                        value: this.html.value,
-                    });
-                });
-                this.html.addEventListener('focusout', (e) => {
-                    this.setProps('value', this.html.value);
-                    this.focusout({
-                        value: this.html.value,
-                    });
-                });
-                break;
-            case 'checkbox':
-                this.html.addEventListener('click', (e) => {
-                    this.setState('checked', this.html.checked);
-                    this.click({
-                        checked: { [this.html.value]: this.html.checked },
-                    });
-                });
-            case 'file':
-            case 'radio':
-            case 'select':
-                this.html.addEventListener('change', (e) => {
-                    let params = (
-                        (this.props.type == 'checkbox') ? { checked: { [this.html.value]: this.html.checked } } :
-                        (this.props.type == 'file') ? { files: this.html.files } :
-                        (this.props.type == 'radio') ? { checked: this.html.value } :
-                        (this.props.type == 'select') ? { selected: this.options[this.html.selectedIndex] } : {}
-                    );
-                    if (this.props.type == 'select') {
-                        this.setProps('files', this.html.files ? this.html.files : false);
-                    }
-                    if (this.props.type == 'radio' || this.props.type == 'checkbox') {
-                        this.setState('checked', this.html.checked);
-                    }
-                    if (this.props.type == 'select') {
-                        this.setState('selectedIndex', this.html.selectedIndex ? this.html.selectedIndex : false);
-                    }
-                    this.change({ ...params });
-                });
-                break;
-            case 'password':
-            case 'text':
-            case 'textarea':
-                this.html.addEventListener('focusout', (e) => {
-                    this.setProps('value', this.html.value);
-                    this.focusout({
-                        value: this.html.value,
-                    });
-                });
-                break;
-            default:
-                console.error(`Input type: ${ this.props.type } does not have event`);
-                break;
-        }
+    set value (value) {
+        this.setProps('value', value);
+        this.setAttribute('value', this.props.value);
     }
 
     /**
@@ -154,20 +117,21 @@ export default class Input extends Html {
      */
     setHTMLAttributes () {
         this.setAttribute('name', this.props.name);
-        if (this.props.type != 'select' && this.props.type != 'textarea') {
+        if (this.props.type.toUpperCase() != 'SELECT' && this.props.type.toUpperCase() != 'TEXTAREA') {
             this.setAttribute('type', this.props.type);
         }
-        switch (this.props.type) {
-            case 'file':
+        switch (this.props.type.toUpperCase()) {
+            case 'FILE':
                 if (this.props.accept) {
                     this.setAttribute('accept', this.props.accept.join());
                 }
                 break;
         }
-        if (this.props.defaultValue && this.props.defaultValue == 0) {
-            this.setAttribute("value", this.props.defaultValue);
+        if (this.props.defaultValue || this.props.defaultValue == 0) {
+            this.setProps('value', this.props.defaultValue);
+            this.setAttribute('value', this.props.defaultValue);
         }
-        if (this.props.placeholder && this.props.placeholder == 0) {
+        if (this.props.placeholder || this.props.placeholder == 0) {
             this.setAttribute("placeholder", this.props.placeholder);
         }
     }
@@ -177,9 +141,9 @@ export default class Input extends Html {
      * @memberof Input
      */
     setOptions (options = []) {
-        this.setProps('options', Option.generate(options));
-        for (const option of this.props.options) {
-            HTMLCreator.setInnerHTML(this, option);
+        this.options = Option.generate(options);
+        for (const option of this.options) {
+            this.appendChild(option.html);
         }
     }
 
@@ -190,6 +154,7 @@ export default class Input extends Html {
     checkState () {
         this.checkCheckedState();
         this.checkDisabledState();
+        this.checkHiddenState();
         this.checkMultipleState();
         this.checkSelectedIndexState();
     }
@@ -215,7 +180,17 @@ export default class Input extends Html {
     }
 
     /**
-     * * Check the Input disabled state.
+     * * Check the Input hidden state.
+     * @memberof Input
+     */
+    checkHiddenState () {
+        if (this.state.hidden) {
+            this.setAttribute('hidden', true);
+        }
+    }
+
+    /**
+     * * Check the Input multiple state.
      * @memberof Input
      */
     checkMultipleState () {
@@ -229,16 +204,22 @@ export default class Input extends Html {
      * @memberof Input
      */
     checkSelectedIndexState () {
-        if (this.props.type == 'select' && this.state.selectedIndex) {
-            for (const key in this.props.options) {
-                if (Object.hasOwnProperty.call(this.props.options, key)) {
-                    const option = this.props.options[key];
-                    if (key == this.state.selectedIndex || option.props.id == this.state.selectedIndex) {
-                        option.select();
+        if (this.props.type.toUpperCase() == 'SELECT') {
+            if (this.state.selectedIndex) {
+                for (const key in this.options) {
+                    if (Object.hasOwnProperty.call(this.options, key)) {
+                        const option = this.options[key];
+                        if (key == this.state.selectedIndex.index) {
+                            option.select();
+                        }
+                        if (key != this.state.selectedIndex.index) {
+                            option.unselect();
+                        }
                     }
-                    if (key != this.state.selectedIndex && option.props.id != this.state.selectedIndex) {
-                        option.unselect();
-                    }
+                }
+            } else {
+                for (const option of this.options) {
+                    option.unselect();
                 }
             }
         }
@@ -263,12 +244,14 @@ export default class Input extends Html {
      */
     select (selectedIndex = false) {
         if (selectedIndex) {
-            this.setState('selectedIndex', selectedIndex);
+            this.setState('selectedIndex', {
+                index: selectedIndex,
+                option: this.options[selectedIndex],
+            });
             this.checkSelectedIndexState();
-            return true;
         }
-        console.error('Selected index is required');
-        return false;
+        this.setState('selectedIndex', false);
+        this.checkSelectedIndexState();
     }
 
     /**
@@ -295,6 +278,7 @@ export default class Input extends Html {
     static state = {
         checked: false,
         disabled: false,
+        hidden: false,
         multiple: false,
         id: false,
         selectedIndex: false,
@@ -315,7 +299,7 @@ export default class Input extends Html {
         }, focusout: {
             function: (params) => { /* console.log(params) */ },
             params: {},
-        }
+        },
     }
 
     /**

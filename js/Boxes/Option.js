@@ -18,9 +18,8 @@ export default class Option extends Html {
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {boolean} [data.state.selected=false] If the HTML Element should be selected.
-     * @param {array|false} [data.children=false] HTML Element childrens.
      * @memberof Option
      */
     constructor (data = {
@@ -32,9 +31,20 @@ export default class Option extends Html {
             disabled: false,
             id: false,
             selected: false,
-        }, children: false,
+        },
     }) {
-        super({ ...Option.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Option.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Option.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Option.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Option.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Option.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Option.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            },
+        });
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
         this.checkState();
@@ -89,9 +99,7 @@ export default class Option extends Html {
         if (!this.state.selected) {
             this.setState('selected', true);
             this.checkSelectedState();
-            return true;
         }
-        return false;
     }
 
     /**
@@ -103,9 +111,7 @@ export default class Option extends Html {
         if (this.state.selected) {
             this.setState('selected', false);
             this.checkSelectedState();
-            return true;
         }
-        return false;
     }
 
     /**
@@ -117,11 +123,9 @@ export default class Option extends Html {
      */
     static generate (options = []) {
         let collection = [];
-
         for (const data of options) {
             collection.push(new this(data));
         }
-
         return collection;
     }
 

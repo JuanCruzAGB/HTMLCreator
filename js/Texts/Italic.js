@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Italic creates an excellent <i>.
@@ -11,29 +8,44 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Italic extends Html {
+export default class Italic extends Html {
     /**
      * * Creates an instance of Italic.
      * @param {object} [data]
      * @param {object} [data.props]
-     * @param {string} [data.props.id="italic-1"] Primary key.
-     * @param {string[]} [data.props.classes] Class list.
+     * @param {string} [data.props.id='italic-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [data.innerHTML=false] Inner HTML Element.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Italic
      */
     constructor (data = {
         props: {
-            id: "italic-1",
-            classes: [],
+            id: 'italic-1',
+            classList: [],
         }, state: {
             id: false,
-        }, innerHTML: false,
+        }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Italic.props, ...(data.hasOwnProperty("props") ? data.props : {}) }, { ...Italic.state, ...(data.hasOwnProperty("state") ? data.state : {}) });
+        super({
+            props: {
+                ...Italic.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Italic.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Italic.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Italic.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, (data.hasOwnProperty("innerHTML") ? data.innerHTML : false));
     }
 
     /**
@@ -42,9 +54,9 @@ export class Italic extends Html {
      * @memberof Italic
      */
     static props = {
-        id: "italic-1",
-        classes: [],
-        nodeName: "I",
+        id: 'italic-1',
+        classList: [],
+        nodeName: 'I',
     }
 
     /**
@@ -55,7 +67,22 @@ export class Italic extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Italic;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Italic
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Italic
+     */
+    static children = [
+        // 
+    ]
+}

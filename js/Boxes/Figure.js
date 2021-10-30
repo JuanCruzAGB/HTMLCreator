@@ -16,8 +16,9 @@ export default class Figure extends Html {
      * @param {string} [data.props.id='figure-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Figure
      */
     constructor (data = {
@@ -27,8 +28,23 @@ export default class Figure extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Figure.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Figure.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Figure.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Figure.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Figure.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Figure.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Figure.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Figure.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 

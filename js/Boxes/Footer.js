@@ -16,8 +16,9 @@ export default class Footer extends Html {
      * @param {string} [data.props.id='footer-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Footer
      */
     constructor (data = {
@@ -27,8 +28,23 @@ export default class Footer extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Footer.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Footer.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Footer.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Footer.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Footer.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Footer.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Footer.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Footer.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 

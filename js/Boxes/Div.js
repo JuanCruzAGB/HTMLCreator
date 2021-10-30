@@ -16,8 +16,9 @@ export default class Div extends Html {
      * @param {string} [data.props.id='div-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Div
      */
     constructor (data = {
@@ -27,8 +28,23 @@ export default class Div extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Div.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Div.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Div.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Div.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Div.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Div.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Div.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Div.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 

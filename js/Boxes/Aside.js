@@ -16,8 +16,9 @@ export default class Aside extends Html {
      * @param {string} [data.props.id='aside-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Aside
      */
     constructor (data = {
@@ -27,8 +28,23 @@ export default class Aside extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Aside.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Aside.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Aside.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Aside.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Aside.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Aside.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Aside.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Aside.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 

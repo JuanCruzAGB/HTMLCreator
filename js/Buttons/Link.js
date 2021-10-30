@@ -18,13 +18,14 @@ export default class Link extends Html {
      * @param {string|boolean} [data.props.target=false]
      * @param {string} [data.props.url='#'] Redirection url.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {boolean} [data.state.preventDefault=true] If the Click event should execut prevent default.
      * @param {object} [data.callbacks]
      * @param {object} [data.callbacks.click]
      * @param {function} [data.callbacks.click.function]
      * @param {object} [data.callbacks.click.params]
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Link
      */
     constructor (data = {
@@ -42,24 +43,25 @@ export default class Link extends Html {
                 params: {},
             },
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Link.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Link.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Link.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Link.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Link.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Link.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Link.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Link.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
-        this.setEventListener();
-    }
-    
-    /**
-     * * Set the Link event listener.
-     * @memberof Link
-     */
-    setEventListener () {
-        this.html.addEventListener('click', (e) => {
-            if (this.state.preventDefault) {
-                e.preventDefault();
-            }
-            this.click();
-        });
     }
 
     /**

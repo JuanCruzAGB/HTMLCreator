@@ -17,8 +17,9 @@ export default class Row extends Html {
      * @param {string} [data.props.id='row-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {object[]} [data.cells] Array of <td> and/or <th>.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Row
      */
     constructor (data = {
@@ -28,8 +29,20 @@ export default class Row extends Html {
         }, state: {
             id: false,
         }, cells: [],
+        parentNode: false,
     }) {
-        super({ ...Row.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Row.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Row.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
+        super({
+            props: {
+                ...Row.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Row.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Row.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.setCells(cells);
         this.createHTML(this.props.nodeName);
         this.setChilds();

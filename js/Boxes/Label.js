@@ -1,5 +1,6 @@
 // ? HTMLCreatorJS repository
-import Html from "../Html.js";
+import Html from '../Html.js';
+import HTMLCreator from '../HTMLCreator.js';
 
 /**
  * * Label creates an excellent <label>.
@@ -17,8 +18,9 @@ export default class Label extends Html {
      * @param {string|false} [data.props.for=false] HTML for <input> primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Label
      */
     constructor (data = {
@@ -29,8 +31,23 @@ export default class Label extends Html {
         }, state: {
             id: false,
         }, children: false,
+        parentNode: false,
     }) {
-        super({ ...Label.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...Label.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...Label.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) }, [ ...Label.children, ...((data && data.hasOwnProperty('children')) ? data.children : []) ]);
+        super({
+            props: {
+                ...Label.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Label.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Label.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Label.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
     }

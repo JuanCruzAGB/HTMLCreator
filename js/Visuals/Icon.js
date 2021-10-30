@@ -1,5 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../Html.js";
+// ? HTMLCreatorJS repository
+import Html from '../Html.js';
 
 /**
  * * Icon creates an excellent <icon>.
@@ -8,23 +8,38 @@ import Html from "../Html.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Icon extends Html {
+export default class Icon extends Html {
     /**
      * * Creates an instance of Icon.
-     * @param {object} [props]
-     * @param {string} [props.id='icon-1'] Primary key.
-     * @param {string[]} [props.classes] Class list.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='icon-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Icon
      */
-    constructor (props = {
-        id: 'icon-1',
-        classes: [],
-    }, state = {
-        id: false,
+    constructor (data = {
+        props: {
+            id: 'icon-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, parentNode: false,
     }) {
-        super({ ...Icon.props, ...props }, { ...Icon.state, ...state });
+        super({
+            props: {
+                ...Icon.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Icon.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Icon.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 
@@ -35,7 +50,7 @@ export class Icon extends Html {
      */
     static props = {
         id: 'icon-1',
-        classes: [],
+        classList: [],
         nodeName: 'I',
     }
 
@@ -47,7 +62,13 @@ export class Icon extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Icon;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Icon
+     */
+    static callbacks = {
+        // 
+    }
+}

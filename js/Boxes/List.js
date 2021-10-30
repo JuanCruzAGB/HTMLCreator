@@ -18,8 +18,9 @@ export default class List extends Html {
      * @param {string} [data.props.type='unordered']
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.id=false] If the HTML Element should print the id property.
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {object[]} [data.items] Array of <li>.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof List
      */
     constructor (data = {
@@ -30,8 +31,23 @@ export default class List extends Html {
         }, state: {
             id: false,
         }, items: [],
+        parentNode: false,
     }) {
-        super({ ...List.props, ...((data && data.hasOwnProperty('props')) ? data.props : {}) }, { ...List.state, ...((data && data.hasOwnProperty('state')) ? data.state : {}) }, { ...List.callbacks, ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {}) });
+        super({
+            props: {
+                ...List.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...List.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...List.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...List.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
         this.setItems(items);
     }

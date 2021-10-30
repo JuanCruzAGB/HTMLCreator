@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Span creates an excellent <span>.
@@ -11,26 +8,44 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Span extends Html {
+export default class Span extends Html {
     /**
      * * Creates an instance of Span.
-     * @param {object} [props]
-     * @param {string} [props.id='span-1'] Primary key.
-     * @param {string[]} [props.classes] Class list.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
-     * @param {string|HTMLElement|array|false} [innerHTML=false] Inner HTML Element.
+     * @param {object} [data]
+     * @param {object} [data.props]
+     * @param {string} [data.props.id='span-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {array|false} [data.children=false] HTML Element childrens.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Span
      */
-    constructor (props = {
-        id: 'span-1',
-        classes: [],
-    }, state = {
-        id: false,
-    }, innerHTML = false) {
-        super({ ...Span.props, ...props }, { ...Span.state, ...state });
+    constructor (data = {
+        props: {
+            id: 'span-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, children: false,
+        parentNode: false,
+    }) {
+        super({
+            props: {
+                ...Span.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Span.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Span.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, children: [
+                ...Span.children,
+                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
-        HTMLCreator.setInnerHTML(this, innerHTML);
     }
 
     /**
@@ -40,7 +55,7 @@ export class Span extends Html {
      */
     static props = {
         id: 'span-1',
-        classes: [],
+        classList: [],
         nodeName: 'SPAN',
     }
 
@@ -52,7 +67,22 @@ export class Span extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Span;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Span
+     */
+    static callbacks = {
+        // 
+    }
+
+    /**
+     * @static
+     * @var {array} children Default children.
+     * @memberof Span
+     */
+    static children = [
+        // 
+    ]
+}

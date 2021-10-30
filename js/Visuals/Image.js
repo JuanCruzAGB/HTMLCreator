@@ -1,5 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../Html.js";
+// ? HTMLCreatorJS repository
+import Html from '../Html.js';
 
 /**
  * * Image creates an excellent <img>.
@@ -8,27 +8,42 @@ import Html from "../Html.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Image extends Html {
+export default class Image extends Html {
     /**
      * * Creates an instance of Image.
-     * @param {object} [props]
-     * @param {string} [props.id='image-1'] Primary key.
-     * @param {string|false} [props.url=false] File url.
-     * @param {string} [props.name='Image genereted with HTMLCreatorJS']
-     * @param {string[]} [props.classes] Class list.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data.data]
+     * @param {object} [data.data.props]
+     * @param {string} [data.props.id='image-1'] Primary key.
+     * @param {string|false} [data.props.url=false] File url.
+     * @param {string} [data.props.name='Image genereted with HTMLCreatorJS']
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Image
      */
-    constructor (props = {
-        id: 'image-1',
-        url: false,
-        name: 'Image genereted with HTMLCreatorJS',
-        classes: [],
-    }, state = {
-        id: false,
+    constructor (data = {
+        props: {
+            id: 'image-1',
+            url: false,
+            name: 'Image genereted with HTMLCreatorJS',
+            classList: [],
+        }, state: {
+            id: false,
+        }, parentNode: false,
     }) {
-        super({ ...Image.props, ...props }, { ...Image.state, ...state });
+        super({
+            props: {
+                ...Image.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Image.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Image.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
     }
@@ -43,6 +58,16 @@ export class Image extends Html {
     }
 
     /**
+     * * Saves a new Image URL.
+     * @param {string} url
+     * @memberof Image
+     */
+    set url (url) {
+        this.setProps('url', url);
+        this.setAttribute('src', this.props.url);
+    }
+
+    /**
      * @static
      * @var {object} props Default properties.
      * @memberof Image
@@ -51,7 +76,7 @@ export class Image extends Html {
         id: 'image-1',
         url: false,
         name: 'Image genereted with HTMLCreatorJS',
-        classes: [],
+        classList: [],
         nodeName: 'IMG',
     }
 
@@ -63,7 +88,13 @@ export class Image extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Image;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Image
+     */
+    static callbacks = {
+        // 
+    }
+}

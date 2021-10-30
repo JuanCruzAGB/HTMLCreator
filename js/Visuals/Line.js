@@ -1,8 +1,5 @@
-// ? JuanCruzAGB repository
-import Html from "../Html.js";
-
 // ? HTMLCreatorJS repository
-import HTMLCreator from "../HTMLCreator.js";
+import Html from '../Html.js';
 
 /**
  * * Line creates an excellent <hr>.
@@ -11,23 +8,38 @@ import HTMLCreator from "../HTMLCreator.js";
  * @author Juan Cruz Armentia <juancarmentia@gmail.com>
  * @extends Html
  */
-export class Line extends Html {
+export default class Line extends Html {
     /**
      * * Creates an instance of Line.
-     * @param {object} [props]
-     * @param {string} [props.id='line-1'] Primary key.
-     * @param {string[]} [props.classes] Class list.
-     * @param {object} [state]
-     * @param {boolean} [state.id=false] If the HTML Element should print the id property.
+     * @param {object} [data.data]
+     * @param {object} [data.data.props]
+     * @param {string} [data.props.id='line-1'] Primary key.
+     * @param {string[]} [data.props.classList] Class list.
+     * @param {object} [data.state]
+     * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Line
      */
-    constructor (props = {
-        id: 'line-1',
-        classes: [],
-    }, state = {
-        id: false,
+    constructor (data = {
+        props: {
+            id: 'line-1',
+            classList: [],
+        }, state: {
+            id: false,
+        }, parentNode: false,
     }) {
-        super({ ...Line.props, ...props }, { ...Line.state, ...state });
+        super({
+            props: {
+                ...Line.props,
+                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+            }, state: {
+                ...Line.state,
+                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+            }, callbacks: {
+                ...Line.callbacks,
+                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+        });
         this.createHTML(this.props.nodeName);
     }
 
@@ -38,7 +50,7 @@ export class Line extends Html {
      */
     static props = {
         id: 'line-1',
-        classes: [],
+        classList: [],
         nodeName: 'HR',
     }
 
@@ -50,7 +62,13 @@ export class Line extends Html {
     static state = {
         id: false,
     }
-}
 
-// ? Default export
-export default Line;
+    /**
+     * @static
+     * @var {object} callbacks Default callbacks.
+     * @memberof Line
+     */
+    static callbacks = {
+        // 
+    }
+}
