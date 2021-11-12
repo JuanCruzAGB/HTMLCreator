@@ -1,11 +1,11 @@
 // ? HTMLCreatorJS repository
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 
 /**
  * * Form creates an excellent <form>.
  * @export
  * @class Form
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class Form extends Html {
@@ -50,19 +50,18 @@ export default class Form extends Html {
         super({
             props: {
                 ...Form.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...Form.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...Form.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, children: [
                 ...Form.children,
-                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+                ...(data && data.hasOwnProperty('children')) ? data.children : [],
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
-        this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
     }
 

@@ -1,6 +1,6 @@
 // ? HTMLCreatorJS repository
 import Cell from './Cell.js';
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 import Row from './Row.js';
 import TPart from './TPart.js';
 
@@ -8,7 +8,7 @@ import TPart from './TPart.js';
  * * Table creates an excellent <table>.
  * @export
  * @class Table
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class Table extends Html {
@@ -36,16 +36,15 @@ export default class Table extends Html {
         super({
             props: {
                 ...Table.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...Table.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...Table.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
-        this.createHTML(this.props.nodeName);
         this.setStructure(structure);
     }
 

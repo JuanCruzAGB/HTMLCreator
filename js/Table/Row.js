@@ -1,12 +1,12 @@
 // ? HTMLCreatorJS repository
 import Cell from './Cell.js';
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 
 /**
  * * Row creates an excellent <tr>.
  * @export
  * @class Row
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class Row extends Html {
@@ -34,17 +34,16 @@ export default class Row extends Html {
         super({
             props: {
                 ...Row.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...Row.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...Row.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
         this.setCells(cells);
-        this.createHTML(this.props.nodeName);
         this.setChilds();
     }
 

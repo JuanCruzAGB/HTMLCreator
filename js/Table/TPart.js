@@ -1,13 +1,13 @@
 // ? HTMLCreatorJS repository
-import Cell from "./Cell.js";
-import Html from "../Html.js";
-import Row from "./Row.js";
+import Cell from './Cell.js';
+import Html from '../Core/Html.js';
+import Row from './Row.js';
 
 /**
  * * TPart creates an excellent <tbody> or <thead>.
  * @export
  * @class TPart
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class TPart extends Html {
@@ -39,16 +39,15 @@ export default class TPart extends Html {
         super({
             props: {
                 ...TPart.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...TPart.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...TPart.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
-        this.createHTML(this.props.nodeName);
         this.setRows(rows);
     }
 
@@ -90,7 +89,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -110,7 +109,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 
@@ -130,7 +129,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -150,7 +149,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 
@@ -168,7 +167,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error("Cell primary key is required");
+            console.error('Cell primary key is required');
         }
     }
 
@@ -193,7 +192,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error("Row primary key is required");
+            console.error('Row primary key is required');
         }
     }
 

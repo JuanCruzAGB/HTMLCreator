@@ -1,11 +1,11 @@
 // ? HTMLCreatorJS repository
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 
 /**
  * * Option creates an excellent <option>.
  * @export
  * @class Option
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class Option extends Html {
@@ -36,16 +36,15 @@ export default class Option extends Html {
         super({
             props: {
                 ...Option.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...Option.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...Option.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             },
         });
-        this.createHTML(this.props.nodeName);
         this.setHTMLAttributes();
         this.checkState();
     }

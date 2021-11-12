@@ -1,11 +1,11 @@
 // ? HTMLCreatorJS repository
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 
 /**
  * * Div creates an excellent <div>.
  * @export
  * @class Div
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class Div extends Html {
@@ -33,19 +33,19 @@ export default class Div extends Html {
         super({
             props: {
                 ...Div.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...Div.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...Div.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, children: [
                 ...Div.children,
-                ...((data && data.hasOwnProperty('children')) ? data.children : [])
+                ...(data && data.hasOwnProperty('children')) ? data.children : [],
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
-        this.createHTML(this.props.nodeName);
+        // this.createHTML(this.props.nodeName);
     }
 
     /**

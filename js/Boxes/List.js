@@ -1,12 +1,12 @@
 // ? HTMLCreatorJS repository
-import Html from '../Html.js';
+import Html from '../Core/Html.js';
 import Item from './Item.js';
 
 /**
  * * List creates an excellent <ul> or <ol>.
  * @export
  * @class List
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
 export default class List extends Html {
@@ -36,20 +36,16 @@ export default class List extends Html {
         super({
             props: {
                 ...List.props,
-                ...((data && data.hasOwnProperty('props')) ? data.props : {}),
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
                 ...List.state,
-                ...((data && data.hasOwnProperty('state')) ? data.state : {})
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
                 ...List.callbacks,
-                ...((data && data.hasOwnProperty('callbacks')) ? data.callbacks : {})
-            }, children: [
-                ...List.children,
-                ...((data && data.hasOwnProperty('children')) ? data.children : [])
-            ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
+                ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
+            }, parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
-        this.createHTML(this.props.nodeName);
-        this.setItems(items);
+        this.setItems((data && data.hasOwnProperty('items')) ? data.items : []);
     }
 
     /**
@@ -64,12 +60,18 @@ export default class List extends Html {
         for (const key in items) {
             if (Object.hasOwnProperty.call(items, key)) {
                 let data = items[key];
+                if (!data) {
+                    data = {};
+                }
+                if (!data.hasOwnProperty('props')) {
+                    data.props = {};
+                }
+                data.props.id = `${ this.props.id }-item-${ parseInt(key) + 1 }`;
                 let item = new Item({
                     ...data,
-                    id: `${ this.props.id }-item-${ parseInt(key) + 1 }`,
                 });
                 this.items.push(item);
-                this.appendChild(item.html);
+                this.html.appendChild(item.html);
             }
         }
     }
@@ -168,11 +170,4 @@ export default class List extends Html {
     static callbacks = {
         // 
     }
-
-    /**
-     * @static
-     * @var {Item} Item Item class child.
-     * @memberof List
-     */
-    static Item = Item;
 }

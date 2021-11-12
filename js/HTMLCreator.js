@@ -13,6 +13,7 @@ import Item from './Boxes/Item.js';
 import Label from './Boxes/Label.js';
 import List from './Boxes/List.js';
 import Main from './Boxes/Main.js';
+import Nav from './Boxes/Nav.js';
 import Option from './Boxes/Option.js';
 import Section from './Boxes/Section.js';
 // ? Buttons
@@ -39,7 +40,7 @@ import Line from './Visuals/Line.js';
  * * HTMLCreator creates multiple HTMLElement.
  * @export
  * @class HTMLCreator
- * @author Juan Cruz Armentia <juancarmentia@gmail.com>
+ * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Class
  */
 export default class HTMLCreator extends Class {
@@ -83,6 +84,8 @@ export default class HTMLCreator extends Class {
                 return new List(data);
             case 'MAIN':
                 return new Main(data);
+            case 'NAV':
+                return new Nav(data);
             case 'OPTION':
                 return new Option(data);
             case 'SECTION':
@@ -168,6 +171,7 @@ export default class HTMLCreator extends Class {
                 return new Line(data);
         // ? CustomInput
             case 'CUSTOMINPUT':
+            case 'GALLERY':
                 return this.import(query, data);
             default:
                 console.warn(`HTMLCreatorJS does not support ${ query } yet`);
@@ -190,6 +194,9 @@ export default class HTMLCreator extends Class {
         // ? CustomInput
             case 'CUSTOMINPUT':
                 file = './CustomInput/js/CustomInput.js';
+                break;
+            case 'GALLERY':
+                file = './Gallery/js/Gallery.js';
                 break;
             default:
                 console.warn(`HTMLCreatorJS extension ${ query } does not exist yet`);
@@ -287,6 +294,13 @@ export default class HTMLCreator extends Class {
      * @memberof HTMLCreator
      */
     static Main = Main;
+
+    /**
+     * @static
+     * @var {Nav} Nav Nav class child.
+     * @memberof HTMLCreator
+     */
+    static Nav = Nav;
 
     /**
      * @static

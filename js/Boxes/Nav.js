@@ -2,28 +2,28 @@
 import Html from '../Core/Html.js';
 
 /**
- * * Italic creates an excellent <i>.
+ * * Nav creates an excellent <nav>.
  * @export
- * @class Italic
+ * @class Nav
  * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Html
  */
-export default class Italic extends Html {
+export default class Nav extends Html {
     /**
-     * * Creates an instance of Italic.
+     * * Creates an instance of Nav.
      * @param {object} [data]
      * @param {object} [data.props]
-     * @param {string} [data.props.id='italic-1'] Primary key.
+     * @param {string} [data.props.id='nav-1'] Primary key.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {array|false} [data.children=false] HTML Element childrens.
      * @param {HTMLElement} [data.parentNode] Html Element parent.
-     * @memberof Italic
+     * @memberof Nav
      */
     constructor (data = {
         props: {
-            id: 'italic-1',
+            id: 'nav-1',
             classList: [],
         }, state: {
             id: false,
@@ -32,16 +32,16 @@ export default class Italic extends Html {
     }) {
         super({
             props: {
-                ...Italic.props,
+                ...Nav.props,
                 ...(data && data.hasOwnProperty('props')) ? data.props : {},
             }, state: {
-                ...Italic.state,
+                ...Nav.state,
                 ...(data && data.hasOwnProperty('state')) ? data.state : {},
             }, callbacks: {
-                ...Italic.callbacks,
+                ...Nav.callbacks,
                 ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
             }, children: [
-                ...Italic.children,
+                ...Nav.children,
                 ...(data && data.hasOwnProperty('children')) ? data.children : [],
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
@@ -50,18 +50,18 @@ export default class Italic extends Html {
     /**
      * @static
      * @var {object} props Default properties.
-     * @memberof Italic
+     * @memberof Nav
      */
     static props = {
-        id: 'italic-1',
+        id: 'nav-1',
         classList: [],
-        nodeName: 'I',
+        nodeName: 'NAV',
     }
 
     /**
      * @static
      * @var {object} state Default state.
-     * @memberof Italic
+     * @memberof Nav
      */
     static state = {
         id: false,
@@ -70,7 +70,7 @@ export default class Italic extends Html {
     /**
      * @static
      * @var {object} callbacks Default callbacks.
-     * @memberof Italic
+     * @memberof Nav
      */
     static callbacks = {
         // 
@@ -79,7 +79,7 @@ export default class Italic extends Html {
     /**
      * @static
      * @var {array} children Default children.
-     * @memberof Italic
+     * @memberof Nav
      */
     static children = [
         // 
