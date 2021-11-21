@@ -1,7 +1,7 @@
-// ? JuanCruzAGB | HTMLCreator repository
+// ? JuanCruzAGB | HTMLCreatorJS repository
 import Creator from "./js/Creator";
 
-// ? JuanCruzAGB | Boxes
+// ? Boxes
 import Aside from "juancruzagb/HTMLCreatorJS/js/Boxes/Aside";
 import Div from "juancruzagb/HTMLCreatorJS/js/Boxes/Div";
 import Figure from "juancruzagb/HTMLCreatorJS/js/Boxes/Figure";
@@ -16,25 +16,25 @@ import Nav from "juancruzagb/HTMLCreatorJS/js/Boxes/Nav";
 import Option from "juancruzagb/HTMLCreatorJS/js/Boxes/Option";
 import Section from "juancruzagb/HTMLCreatorJS/js/Boxes/Section";
 
-// ? JuanCruzAGB | Buttons
+// ? Buttons
 import Button from "juancruzagb/HTMLCreatorJS/js/Buttons/Button";
 import Input from "juancruzagb/HTMLCreatorJS/js/Buttons/Input";
 import Link from "juancruzagb/HTMLCreatorJS/js/Buttons/Link";
 
-// ? JuanCruzAGB | Table
+// ? Table
 import Table from "juancruzagb/HTMLCreatorJS/js/Table/Table";
 import TPart from "juancruzagb/HTMLCreatorJS/js/Table/TPart";
 import Row from "juancruzagb/HTMLCreatorJS/js/Table/Row";
 import Cell from "juancruzagb/HTMLCreatorJS/js/Table/Cell";
 
-// ? JuanCruzAGB | Texts
+// ? Texts
 import Italic from "juancruzagb/HTMLCreatorJS/js/Texts/Italic";
 import LineBreak from "juancruzagb/HTMLCreatorJS/js/Texts/LineBreak";
 import Paragraph from "juancruzagb/HTMLCreatorJS/js/Texts/Paragraph";
 import Span from "juancruzagb/HTMLCreatorJS/js/Texts/Span";
 import Title from "juancruzagb/HTMLCreatorJS/js/Texts/Title";
 
-// ? JuanCruzAGB | Visuals
+// ? Visuals
 import Icon from "juancruzagb/HTMLCreatorJS/js/Visuals/Icon";
 import Image from "juancruzagb/HTMLCreatorJS/js/Visuals/Image";
 import Line from "juancruzagb/HTMLCreatorJS/js/Visuals/Line";
