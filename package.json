@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JuanCruzAGB/HTMLCreatorJS.git"
+    "url": "git+https://github.com/JuanCruzAGB/HTMLCreator.git"
   },
   "keywords": [
     "JuanCruzAGB",
@@ -19,7 +19,7 @@
   "author": "JuanCruzAGB",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JuanCruzAGB/HTMLCreatorJS/issues"
+    "url": "https://github.com/JuanCruzAGB/HTMLCreator/issues"
   },
-  "homepage": "https://github.com/JuanCruzAGB/HTMLCreatorJS#readme"
+  "homepage": "https://github.com/JuanCruzAGB/HTMLCreator#readme"
 }

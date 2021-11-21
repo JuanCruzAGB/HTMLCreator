@@ -1,4 +1,4 @@
-// ? JuanCruzAGB | HTMLCreatorJS repository
+// ? JuanCruzAGB | HTMLCreator repository
 import Creator from "juancruzagb/htmlcreator/js/Creator";
 
 // ? Boxes
@@ -40,7 +40,7 @@ import Image from "juancruzagb/htmlcreator/js/Visuals/Image";
 import Line from "juancruzagb/htmlcreator/js/Visuals/Line";
 
 /**
- * @module HTMLCreatorJS
+ * @module HTMLCreator
  */
 export { Aside, Button, Cell, Creator, Div, Figure, Footer, Form, Header, Icon, Image, Input, Italic, Item, Label, Line, LineBreak, Link, List, Main, Nav, Option, Paragraph, Row, Section, Span, Table, Title, TPart };
 export default Creator;

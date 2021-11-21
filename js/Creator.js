@@ -1,7 +1,7 @@
 // ? JuanCruzAGB repository
 import Class from "juancruzagb/src/js/Class";
 
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 
 // ? Boxes
 import Aside from "juancruzagb/htmlcreator/js/Boxes/Aside";
@@ -179,7 +179,7 @@ export default class Creator extends Class {
             case 'GALLERY':
                 return this.import(query, data);
             default:
-                console.warn(`HTMLCreatorJS does not support ${ query } yet`);
+                console.warn(`HTMLCreator does not support ${ query } yet`);
                 break;
         }
     }
@@ -198,13 +198,13 @@ export default class Creator extends Class {
         switch (query.toUpperCase()) {
         // ? CustomInput
             case 'CUSTOMINPUT':
-                file = "juancruzagb/CustomInputJS/js/CustomInput";
+                file = "juancruzagb/CustomInput/js/CustomInput";
                 break;
             case 'GALLERY':
                 file = "juancruzagb/gallery/js/Gallery";
                 break;
             default:
-                console.warn(`HTMLCreatorJS extension ${ query } does not exist yet`);
+                console.warn(`HTMLCreator extension ${ query } does not exist yet`);
                 break;
         }
 

@@ -1,4 +1,4 @@
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 import Html from "juancruzagb/htmlcreator/js/Core/Html";
 
 /**
@@ -15,7 +15,7 @@ export default class Image extends Html {
      * @param {object} [data.data.props]
      * @param {string} [data.props.id='image-1'] Primary key.
      * @param {string|false} [data.props.src=false] File src.
-     * @param {string} [data.props.name='Image genereted with HTMLCreatorJS']
+     * @param {string} [data.props.name='Image genereted with HTMLCreator']
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
      * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
@@ -26,7 +26,7 @@ export default class Image extends Html {
         props: {
             id: 'image-1',
             src: false,
-            name: 'Image genereted with HTMLCreatorJS',
+            name: 'Image genereted with HTMLCreator',
             classList: [],
         }, state: {
             id: false,
@@ -78,7 +78,7 @@ export default class Image extends Html {
     static props = {
         id: 'image-1',
         src: false,
-        name: 'Image genereted with HTMLCreatorJS',
+        name: 'Image genereted with HTMLCreator',
         classList: [],
         nodeName: 'IMG',
     }

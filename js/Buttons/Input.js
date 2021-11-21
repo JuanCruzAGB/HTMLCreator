@@ -1,4 +1,4 @@
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 import Option from "juancruzagb/htmlcreator/js/Boxes/Option";
 
 // ? Core

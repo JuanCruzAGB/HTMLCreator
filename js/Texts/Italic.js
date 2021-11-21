@@ -1,4 +1,4 @@
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 import Html from "juancruzagb/htmlcreator/js/Core/Html";
 
 /**

@@ -2,24 +2,24 @@
 # JuanCruzAGB repository
 > by [JuanCruzAGB](https://github.com/JuanCruzAGB)
 
-HTMLCreatorJS can create an excelent `<main>`.
+HTMLCreator can create an excelent `<main>`.
 
 ## Configuración
 Import **HTMLCreator** into your script to generate the logic.
 ```
-Import { HTMLCreator as HTMLCreatorJS } from 'submodules/HTMLCreatorJS/js/HTMLCreator.js';
+Import { HTMLCreator as HTMLCreator } from 'submodules/HTMLCreator/js/HTMLCreator.js';
 ```
 And create the `<main>`.
 ```
-let main = new HTMLCreatorJS({props}, {innerHTML});
+let main = new HTMLCreator({props}, {innerHTML});
 ```
 The **properties** are:
 - {string} **id:** Main HTMLElement Id. Default = `main-1`
 - {string[]} **classes:** Main HTMLElement classList. Default = empty array.
 
-The **innerHTML** can be a `string` or another HTMLElement, but you could send an array to generate new HTMLElements with **HTMLCreatorJS**. For example:
+The **innerHTML** can be a `string` or another HTMLElement, but you could send an array to generate new HTMLElements with **HTMLCreator**. For example:
 ```
-let main = new HTMLCreatorJS({
+let main = new HTMLCreator({
 	id: 'main-perfect',
 	classes: ['container', 'text-center'],
 }, [

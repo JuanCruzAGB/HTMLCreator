@@ -1,4 +1,4 @@
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 import Item from "juancruzagb/htmlcreator/js/Boxes/Item";
 
 // ? Core

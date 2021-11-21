@@ -2,24 +2,24 @@
 # JuanCruzAGB repository
 > by [JuanCruzAGB](https://github.com/JuanCruzAGB)
 
-HTMLCreatorJS can create an excelent `<div>`.
+HTMLCreator can create an excelent `<div>`.
 
 ## Configuración
 Import **HTMLCreator** into your script to generate the logic.
 ```
-Import { HTMLCreator as HTMLCreatorJS } from 'submodules/HTMLCreatorJS/js/HTMLCreator.js';
+Import { HTMLCreator as HTMLCreator } from 'submodules/HTMLCreator/js/HTMLCreator.js';
 ```
 And create the `<div>`.
 ```
-let div = new HTMLCreatorJS({props}, {innerHTML});
+let div = new HTMLCreator({props}, {innerHTML});
 ```
 The **properties** are:
 - {string} **id:** Div HTMLElement Id. Default = `div-1`
 - {string[]} **classes:** Div HTMLElement classList. Default = empty array.
 
-The **innerHTML** can be a `string` or another HTMLElement, but you could send an array to generate new HTMLElements with **HTMLCreatorJS**. For example:
+The **innerHTML** can be a `string` or another HTMLElement, but you could send an array to generate new HTMLElements with **HTMLCreator**. For example:
 ```
-let div = new HTMLCreatorJS({
+let div = new HTMLCreator({
 	id: 'div-perfect',
 	classes: ['container', 'text-center'],
 }, [

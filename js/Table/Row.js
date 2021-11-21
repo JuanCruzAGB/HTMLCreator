@@ -1,4 +1,4 @@
-// ? HTMLCreatorJS repository
+// ? HTMLCreator repository
 import Cell from "juancruzagb/htmlcreator/js/Table/Cell";
 
 // ? Core

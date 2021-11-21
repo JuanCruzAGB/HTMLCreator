@@ -2,24 +2,24 @@
 # JuanCruzAGB repository
 > by [JuanCruzAGB](https://github.com/JuanCruzAGB)
 
-HTMLCreatorJS puede crea un excelente `<footer>`.
+HTMLCreator puede crea un excelente `<footer>`.
 
 ## Configuración
 Importe **HTMLCreator** en tu javascript para generar la lógica.
 ```
-Import { HTMLCreator as HTMLCreatorJS } from 'submodules/HTMLCreatorJS/js/HTMLCreator.js';
+Import { HTMLCreator as HTMLCreator } from 'submodules/HTMLCreator/js/HTMLCreator.js';
 ```
 Y cree el `<footer>`.
 ```
-let footer = new HTMLCreatorJS({props}, {innerHTML});
+let footer = new HTMLCreator({props}, {innerHTML});
 ```
 Las **propiedades** existentes son:
 - {string} **id:** Id de la etiqueta HTML. Por defecto viene en `footer-1`
 - {string[]} **classes:** Las clases de la etiqueta HTML. Por defecto viene un array vacío.
 
-El **contenido** de la etiqueta puede ser tanto un `string` como un elemento HTML, pero también se puede pasar un array para insertar múltiples elementos creados con **HTMLCreatorJS**. Por ejemplo:
+El **contenido** de la etiqueta puede ser tanto un `string` como un elemento HTML, pero también se puede pasar un array para insertar múltiples elementos creados con **HTMLCreator**. Por ejemplo:
 ```
-let footer = new HTMLCreatorJS({
+let footer = new HTMLCreator({
 	id: 'footer-perfecto',
 	classes: ['container', 'text-center'],
 }, [
