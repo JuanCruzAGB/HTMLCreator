@@ -1,5 +1,5 @@
 // ? JuanCruzAGB | HTMLCreatorJS repository
-import Creator from "./js/Creator";
+import Creator from "juancruzagb/htmlcreator/js/Creator";
 
 // ? Boxes
 import Aside from "juancruzagb/htmlcreator/js/Boxes/Aside";
