@@ -1,0 +1,25 @@
+{
+  "name": "@juancruzagb/htmlcreator",
+  "version": "1.0.0",
+  "description": "Creates the Html elements with custom properties",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanCruzAGB/HTMLCreatorJS.git"
+  },
+  "keywords": [
+    "JuanCruzAGB",
+    "Javascript",
+    "Html"
+  ],
+  "author": "JuanCruzAGB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanCruzAGB/HTMLCreatorJS/issues"
+  },
+  "homepage": "https://github.com/JuanCruzAGB/HTMLCreatorJS#readme"
+}

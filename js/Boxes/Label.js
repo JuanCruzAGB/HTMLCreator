@@ -1,6 +1,5 @@
 // ? HTMLCreatorJS repository
-import Html from '../Core/Html.js';
-import HTMLCreator from '../HTMLCreator.js';
+import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
 
 /**
  * * Label creates an excellent <label>.

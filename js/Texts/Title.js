@@ -1,5 +1,5 @@
 // ? HTMLCreatorJS repository
-import Html from '../Core/Html.js';
+import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
 
 /**
  * * Title creates an excellent <h1>, <h2>...

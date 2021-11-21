@@ -1,8 +1,10 @@
 // ? HTMLCreatorJS repository
-import Cell from './Cell.js';
-import Html from '../Core/Html.js';
-import Row from './Row.js';
-import TPart from './TPart.js';
+import Cell from "juancruzagb/HTMLCreatorJS/js/Table/Cell";
+import Row from "juancruzagb/HTMLCreatorJS/js/Table/Row";
+import TPart from "juancruzagb/HTMLCreatorJS/js/Table/TPart";
+
+// ? Core
+import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
 
 /**
  * * Table creates an excellent <table>.

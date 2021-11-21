@@ -1,5 +1,5 @@
-// ? External repository
-import Class from '../../../JuanCruzAGB/js/Class.js';
+// ? JuanCruzAGB repository
+import Class from "juancruzagb/src/js/Class";
 
 /**
  * * Dataset controls the Html datasets.

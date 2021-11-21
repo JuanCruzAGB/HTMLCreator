@@ -1,5 +1,5 @@
-// ? External repository
-import Class from '../../../JuanCruzAGB/js/Class.js';
+// ? JuanCruzAGB repository
+import Class from "juancruzagb/src/js/Class";
 
 /**
  * * style controls the Html styles.

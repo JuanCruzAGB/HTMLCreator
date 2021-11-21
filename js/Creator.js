@@ -1,54 +1,59 @@
 // ? JuanCruzAGB repository
-import Class from '../../JuanCruzAGB/js/Class.js';
+import Class from "juancruzagb/src/js/Class";
 
 // ? HTMLCreatorJS repository
+
 // ? Boxes
-import Aside from './Boxes/Aside.js';
-import Div from './Boxes/Div.js';
-import Figure from './Boxes/Figure.js';
-import Footer from './Boxes/Footer.js';
-import Form from './Boxes/Form.js';
-import Header from './Boxes/Header.js';
-import Item from './Boxes/Item.js';
-import Label from './Boxes/Label.js';
-import List from './Boxes/List.js';
-import Main from './Boxes/Main.js';
-import Nav from './Boxes/Nav.js';
-import Option from './Boxes/Option.js';
-import Section from './Boxes/Section.js';
+import Aside from "juancruzagb/HTMLCreatorJS/js/Boxes/Aside";
+import Div from "juancruzagb/HTMLCreatorJS/js/Boxes/Div";
+import Figure from "juancruzagb/HTMLCreatorJS/js/Boxes/Figure";
+import Footer from "juancruzagb/HTMLCreatorJS/js/Boxes/Footer";
+import Form from "juancruzagb/HTMLCreatorJS/js/Boxes/Form";
+import Header from "juancruzagb/HTMLCreatorJS/js/Boxes/Header";
+import Item from "juancruzagb/HTMLCreatorJS/js/Boxes/Item";
+import Label from "juancruzagb/HTMLCreatorJS/js/Boxes/Label";
+import List from "juancruzagb/HTMLCreatorJS/js/Boxes/List";
+import Main from "juancruzagb/HTMLCreatorJS/js/Boxes/Main";
+import Nav from "juancruzagb/HTMLCreatorJS/js/Boxes/Nav";
+import Option from "juancruzagb/HTMLCreatorJS/js/Boxes/Option";
+import Section from "juancruzagb/HTMLCreatorJS/js/Boxes/Section";
+
 // ? Buttons
-import Button from './Buttons/Button.js';
-import Input from './Buttons/Input.js';
-import Link from './Buttons/Link.js';
+import Button from "juancruzagb/HTMLCreatorJS/js/Buttons/Button";
+import Input from "juancruzagb/HTMLCreatorJS/js/Buttons/Input";
+import Link from "juancruzagb/HTMLCreatorJS/js/Buttons/Link";
+
 // ? Table
-import Table from './Table/Table.js';
-import TPart from './Table/TPart.js';
-import Row from './Table/Row.js';
-import Cell from './Table/Cell.js';
+import Table from "juancruzagb/HTMLCreatorJS/js/Table/Table";
+import TPart from "juancruzagb/HTMLCreatorJS/js/Table/TPart";
+import Row from "juancruzagb/HTMLCreatorJS/js/Table/Row";
+import Cell from "juancruzagb/HTMLCreatorJS/js/Table/Cell";
+
 // ? Texts
-import Italic from './Texts/Italic.js';
-import LineBreak from './Texts/LineBreak.js';
-import Paragraph from './Texts/Paragraph.js';
-import Span from './Texts/Span.js';
-import Title from './Texts/Title.js';
+import Italic from "juancruzagb/HTMLCreatorJS/js/Texts/Italic";
+import LineBreak from "juancruzagb/HTMLCreatorJS/js/Texts/LineBreak";
+import Paragraph from "juancruzagb/HTMLCreatorJS/js/Texts/Paragraph";
+import Span from "juancruzagb/HTMLCreatorJS/js/Texts/Span";
+import Title from "juancruzagb/HTMLCreatorJS/js/Texts/Title";
+
 // ? Visuals
-import Icon from './Visuals/Icon.js';
-import Image from './Visuals/Image.js';
-import Line from './Visuals/Line.js';
+import Icon from "juancruzagb/HTMLCreatorJS/js/Visuals/Icon";
+import Image from "juancruzagb/HTMLCreatorJS/js/Visuals/Image";
+import Line from "juancruzagb/HTMLCreatorJS/js/Visuals/Line";
 
 /**
- * * HTMLCreator creates multiple HTMLElement.
+ * * Creator creates multiple HTMLElement.
  * @export
- * @class HTMLCreator
+ * @class Creator
  * @author Juan Cruz Armentia <juan.cruz.armentia@gmail.com>
  * @extends Class
  */
-export default class HTMLCreator extends Class {
+export default class Creator extends Class {
     /**
-     * * Creates an instance of HTMLCreator.
+     * * Creates an instance of Creator.
      * @param {string} [query]
      * @param {object} [data]
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     constructor (query = 'DIV', data = {}) {
         super();
@@ -180,12 +185,12 @@ export default class HTMLCreator extends Class {
     }
 
     /**
-     * * Import the HTMLCreator extensions.
+     * * Import the Creator extensions.
      * @async
      * @param {string} [query='DIV']
      * @param {object} [data={}]
      * @returns {class}
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     async import (query = 'DIV', data = {}) {
         let file = false;
@@ -193,10 +198,10 @@ export default class HTMLCreator extends Class {
         switch (query.toUpperCase()) {
         // ? CustomInput
             case 'CUSTOMINPUT':
-                file = './CustomInput/js/CustomInput.js';
+                file = "juancruzagb/CustomInputJS/js/CustomInput";
                 break;
             case 'GALLERY':
-                file = './Gallery/js/Gallery.js';
+                file = "juancruzagb/GalleryJS/js/Gallery";
                 break;
             default:
                 console.warn(`HTMLCreatorJS extension ${ query } does not exist yet`);
@@ -214,7 +219,7 @@ export default class HTMLCreator extends Class {
      * * Returns all node element that match selectors.
      * @param {string} [query='DIV']
      * @returns {NodeList}
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     query (query = 'DIV') {
         let nodeList = [];
@@ -229,181 +234,181 @@ export default class HTMLCreator extends Class {
     /**
      * @static
      * @var {Aside} Aside Aside class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Aside = Aside;
     /**
      * @static
      * @var {Div} Div Div class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Div = Div;
 
     /**
      * @static
      * @var {Figure} Figure Figure class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Figure = Figure;
 
     /**
      * @static
      * @var {Footer} Footer Footer class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Footer = Footer;
 
     /**
      * @static
      * @var {Form} Form Form class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Form = Form;
 
     /**
      * @static
      * @var {Header} Header Header class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Header = Header;
 
     /**
      * @static
      * @var {Item} Item Item class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Item = Item;
 
     /**
      * @static
      * @var {Label} Label Label class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Label = Label;
 
     /**
      * @static
      * @var {List} List List class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static List = List;
 
     /**
      * @static
      * @var {Main} Main Main class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Main = Main;
 
     /**
      * @static
      * @var {Nav} Nav Nav class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Nav = Nav;
 
     /**
      * @static
      * @var {Section} Section Section class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Section = Section;
     
     /**
      * @static
      * @var {Button} Button Button class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Button = Button;
 
     /**
      * @static
      * @var {Input} Input Input class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Input = Input;
 
     /**
      * @static
      * @var {Link} Link Link class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Link = Link;
     
     /**
      * @static
      * @var {Table} Table Table class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Table = Table;
 
     /**
      * @static
      * @var {TPart} TPart TPart class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static TPart = TPart;
 
     /**
      * @static
      * @var {Row} Row Row class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Row = Row;
 
     /**
      * @static
      * @var {Cell} Cell Cell class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Cell = Cell;
     
     /**
      * @static
      * @var {Paragraph} Paragraph Paragraph class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Paragraph = Paragraph;
 
     /**
      * @static
      * @var {Span} Span Span class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Span = Span;
 
     /**
      * @static
      * @var {Title} Title Title class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Title = Title;
 
     /**
      * @static
      * @var {LineBreak} LineBreak LineBreak class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static LineBreak = LineBreak;
     
     /**
      * @static
      * @var {Icon} Icon Icon class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Icon = Icon;
 
     /**
      * @static
      * @var {Image} Image Image class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Image = Image;
 
     /**
      * @static
      * @var {Line} Line Line class child.
-     * @memberof HTMLCreator
+     * @memberof Creator
      */
     static Line = Line;
 }

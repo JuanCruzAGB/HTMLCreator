@@ -1,12 +1,14 @@
 // ? JuanCruzAGB repository
-import Class from '../../../JuanCruzAGB/js/Class.js';
+import Class from "juancruzagb/src/js/Class";
 
 // ? HTMLCreator repository
-import Attribute from './Attribute.js';
-import ClassName from './ClassName.js';
-import Dataset from './Dataset.js';
-import Style from './Style.js';
-import HTMLCreator from '../HTMLCreator.js';
+import Creator from "juancruzagb/HTMLCreatorJS/js/Creator";
+
+// ? Core
+import Attribute from "juancruzagb/HTMLCreatorJS/js/Core/Attribute";
+import ClassName from "juancruzagb/HTMLCreatorJS/js/Core/ClassName";
+import Dataset from "juancruzagb/HTMLCreatorJS/js/Core/Dataset";
+import Style from "juancruzagb/HTMLCreatorJS/js/Core/Style";
 
 /**
  * * Html controls a class object.
@@ -98,10 +100,10 @@ import HTMLCreator from '../HTMLCreator.js';
             }
         }
         if (name == undefined) {
-            console.error('HTML Element attribute name is required');
+            console.error('Html Element attribute name is required');
         }
         if (value == undefined) {
-            console.error(`HTML Element attribute value is required`);
+            console.error(`Html Element attribute value is required`);
         }
     }
 
@@ -128,7 +130,7 @@ import HTMLCreator from '../HTMLCreator.js';
             return false;
         }
         if (name == undefined) {
-            console.error('HTML Element attribute name is required');
+            console.error('Html Element attribute name is required');
         }
     }
 
@@ -146,7 +148,7 @@ import HTMLCreator from '../HTMLCreator.js';
             }
         }
         if (name == undefined) {
-            console.error('HTML Element attribute name is required');
+            console.error('Html Element attribute name is required');
         }
     }
 
@@ -176,7 +178,7 @@ import HTMLCreator from '../HTMLCreator.js';
                 this.classList[className.props.value] = className;
             }
         } else {
-            console.error('HTML Element class name is required');
+            console.error('Html Element class name is required');
         }
     }
 
@@ -199,7 +201,7 @@ import HTMLCreator from '../HTMLCreator.js';
             }
         }
         if (value == undefined) {
-            console.error('HTML Element class name value is required');
+            console.error('Html Element class name value is required');
         }
     }
 
@@ -250,10 +252,10 @@ import HTMLCreator from '../HTMLCreator.js';
             }
         }
         if (name == undefined) {
-            console.error('HTML Element data name is required');
+            console.error('Html Element data name is required');
         }
         if (value == undefined) {
-            console.error(`HTML Element data value is required`);
+            console.error(`Html Element data value is required`);
         }
     }
 
@@ -308,15 +310,15 @@ import HTMLCreator from '../HTMLCreator.js';
             }
         }
         if (name == undefined) {
-            console.error('HTML Element style name is required');
+            console.error('Html Element style name is required');
         }
         if (value == undefined) {
-            console.error(`HTML Element style value is required`);
+            console.error(`Html Element style value is required`);
         }
     }
 
     /**
-     * * Creates the HTML Element.
+     * * Creates the Html Element.
      * @memberof Html
      */
     create () {
@@ -341,7 +343,7 @@ import HTMLCreator from '../HTMLCreator.js';
     }
 
     /**
-     * * Removes the HTML Element.
+     * * Removes the Html Element.
      * @memberof Html
      */
     remove () {
@@ -349,7 +351,7 @@ import HTMLCreator from '../HTMLCreator.js';
     }
 
     /**
-     * * Append an HTML Element.
+     * * Append an Html Element.
      * @param {string|HTMLElement} HTML New child.
      * @memberof Html
      */
@@ -376,7 +378,7 @@ import HTMLCreator from '../HTMLCreator.js';
             if (!child[1].hasOwnProperty('parentNode')) {
                 child[1].parentNode = this.html;
             }
-            child = new HTMLCreator(...child);
+            child = new Creator(...child);
         }
         if (child instanceof Html) {
             this.html.appendChild(child.html);
@@ -385,22 +387,24 @@ import HTMLCreator from '../HTMLCreator.js';
     }
 
     /**
-     * * Insert an HTML Element before another.
+     * * Insert an Html Element before another.
      * @param {HTMLElement} newChild New child.
      * @param {HTMLElement} oldChild New child.
      * @memberof Html
      */
-    insertBefore(newChild = false, oldChild = false) {
+    insertBefore (newChild = false, oldChild = false) {
         // TODO
+        console.warn('Insert before is not supported yet.');
     }
 
     /**
-     * * Removes an HTML Element.
+     * * Removes an Html Element.
      * @param {HTMLElement} child Child.
      * @memberof Html
      */
     removeChild (child = false) {
         // TODO
+        console.warn('Remoce child is not supported yet.');
     }
 
     /**
