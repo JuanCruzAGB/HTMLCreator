@@ -1,5 +1,5 @@
 // ? HTMLCreatorJS repository
-import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
+import Html from "juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Footer creates an excellent <footer>.

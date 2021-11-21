@@ -1,9 +1,9 @@
 // ? HTMLCreatorJS repository
-import Cell from "juancruzagb/HTMLCreatorJS/js/Table/Cell";
-import Row from "juancruzagb/HTMLCreatorJS/js/Table/Row";
+import Cell from "juancruzagb/htmlcreator/js/Table/Cell";
+import Row from "juancruzagb/htmlcreator/js/Table/Row";
 
 // ? Core
-import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
+import Html from "juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * TPart creates an excellent <tbody> or <thead>.

@@ -1,8 +1,8 @@
 // ? HTMLCreatorJS repository
-import Option from "juancruzagb/HTMLCreatorJS/js/Boxes/Option";
+import Option from "juancruzagb/htmlcreator/js/Boxes/Option";
 
 // ? Core
-import Html from "juancruzagb/HTMLCreatorJS/js/Core/Html";
+import Html from "juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Input creates an excellent <input>.
