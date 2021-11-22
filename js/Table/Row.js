@@ -1,8 +1,8 @@
 // ? HTMLCreator repository
-import Cell from "juancruzagb/htmlcreator/js/Table/Cell";
+import Cell from "@juancruzagb/htmlcreator/js/Table/Cell";
 
 // ? Core
-import Html from "juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Row creates an excellent <tr>.

@@ -1,5 +1,5 @@
 // ? HTMLCreator repository
-import Html from "juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Image creates an excellent <img>.

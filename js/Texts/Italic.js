@@ -1,5 +1,5 @@
 // ? HTMLCreator repository
-import Html from "juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Italic creates an excellent <i>.

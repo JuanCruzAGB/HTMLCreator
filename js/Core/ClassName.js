@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Class from "juancruzagb/src/js/Class";
+import Class from "@juancruzagb/src/js/Class";
 
 /**
  * * ClassName controls the Html class names.

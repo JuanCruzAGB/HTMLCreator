@@ -1,5 +1,5 @@
 // ? HTMLCreator repository
-import Html from "juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * Option creates an excellent <option>.

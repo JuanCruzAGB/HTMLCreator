@@ -1,14 +1,14 @@
 // ? JuanCruzAGB repository
-import Class from "juancruzagb/src/js/Class";
+import Class from "@juancruzagb/src/js/Class";
 
 // ? HTMLCreator repository
-import Creator from "juancruzagb/htmlcreator/js/Creator";
+import Creator from "@juancruzagb/htmlcreator/js/Creator";
 
 // ? Core
-import Attribute from "juancruzagb/htmlcreator/js/Core/Attribute";
-import ClassName from "juancruzagb/htmlcreator/js/Core/ClassName";
-import Dataset from "juancruzagb/htmlcreator/js/Core/Dataset";
-import Style from "juancruzagb/htmlcreator/js/Core/Style";
+import Attribute from "@juancruzagb/htmlcreator/js/Core/Attribute";
+import ClassName from "@juancruzagb/htmlcreator/js/Core/ClassName";
+import Dataset from "@juancruzagb/htmlcreator/js/Core/Dataset";
+import Style from "@juancruzagb/htmlcreator/js/Core/Style";
 
 /**
  * * Html controls a class object.

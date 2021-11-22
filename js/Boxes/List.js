@@ -1,8 +1,8 @@
 // ? HTMLCreator repository
-import Item from "juancruzagb/htmlcreator/js/Boxes/Item";
+import Item from "@juancruzagb/htmlcreator/js/Boxes/Item";
 
 // ? Core
-import Html from "juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html";
 
 /**
  * * List creates an excellent <ul> or <ol>.
