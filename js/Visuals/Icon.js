@@ -1,5 +1,5 @@
 // ? HTMLCreator repository
-import Html from "@juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html.js";
 
 /**
  * * Icon creates an excellent <icon>.

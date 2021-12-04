@@ -1,43 +1,43 @@
 // ? JuanCruzAGB | HTMLCreator repository
-import Creator from "@juancruzagb/htmlcreator/js/Creator";
+import Creator from "@juancruzagb/htmlcreator/js/Creator.js";
 
 // ? Boxes
-import Aside from "@juancruzagb/htmlcreator/js/Boxes/Aside";
-import Div from "@juancruzagb/htmlcreator/js/Boxes/Div";
-import Figure from "@juancruzagb/htmlcreator/js/Boxes/Figure";
-import Footer from "@juancruzagb/htmlcreator/js/Boxes/Footer";
-import Form from "@juancruzagb/htmlcreator/js/Boxes/Form";
-import Header from "@juancruzagb/htmlcreator/js/Boxes/Header";
-import Item from "@juancruzagb/htmlcreator/js/Boxes/Item";
-import Label from "@juancruzagb/htmlcreator/js/Boxes/Label";
-import List from "@juancruzagb/htmlcreator/js/Boxes/List";
-import Main from "@juancruzagb/htmlcreator/js/Boxes/Main";
-import Nav from "@juancruzagb/htmlcreator/js/Boxes/Nav";
-import Option from "@juancruzagb/htmlcreator/js/Boxes/Option";
-import Section from "@juancruzagb/htmlcreator/js/Boxes/Section";
+import Aside from "@juancruzagb/htmlcreator/js/Boxes/Aside.js";
+import Div from "@juancruzagb/htmlcreator/js/Boxes/Div.js";
+import Figure from "@juancruzagb/htmlcreator/js/Boxes/Figure.js";
+import Footer from "@juancruzagb/htmlcreator/js/Boxes/Footer.js";
+import Form from "@juancruzagb/htmlcreator/js/Boxes/Form.js";
+import Header from "@juancruzagb/htmlcreator/js/Boxes/Header.js";
+import Item from "@juancruzagb/htmlcreator/js/Boxes/Item.js";
+import Label from "@juancruzagb/htmlcreator/js/Boxes/Label.js";
+import List from "@juancruzagb/htmlcreator/js/Boxes/List.js";
+import Main from "@juancruzagb/htmlcreator/js/Boxes/Main.js";
+import Nav from "@juancruzagb/htmlcreator/js/Boxes/Nav.js";
+import Option from "@juancruzagb/htmlcreator/js/Boxes/Option.js";
+import Section from "@juancruzagb/htmlcreator/js/Boxes/Section.js";
 
 // ? Buttons
-import Button from "@juancruzagb/htmlcreator/js/Buttons/Button";
-import Input from "@juancruzagb/htmlcreator/js/Buttons/Input";
-import Link from "@juancruzagb/htmlcreator/js/Buttons/Link";
+import Button from "@juancruzagb/htmlcreator/js/Buttons/Button.js";
+import Input from "@juancruzagb/htmlcreator/js/Buttons/Input.js";
+import Link from "@juancruzagb/htmlcreator/js/Buttons/Link.js";
 
 // ? Table
-import Table from "@juancruzagb/htmlcreator/js/Table/Table";
-import TPart from "@juancruzagb/htmlcreator/js/Table/TPart";
-import Row from "@juancruzagb/htmlcreator/js/Table/Row";
-import Cell from "@juancruzagb/htmlcreator/js/Table/Cell";
+import Table from "@juancruzagb/htmlcreator/js/Table/Table.js";
+import TPart from "@juancruzagb/htmlcreator/js/Table/TPart.js";
+import Row from "@juancruzagb/htmlcreator/js/Table/Row.js";
+import Cell from "@juancruzagb/htmlcreator/js/Table/Cell.js";
 
 // ? Texts
-import Italic from "@juancruzagb/htmlcreator/js/Texts/Italic";
-import LineBreak from "@juancruzagb/htmlcreator/js/Texts/LineBreak";
-import Paragraph from "@juancruzagb/htmlcreator/js/Texts/Paragraph";
-import Span from "@juancruzagb/htmlcreator/js/Texts/Span";
-import Title from "@juancruzagb/htmlcreator/js/Texts/Title";
+import Italic from "@juancruzagb/htmlcreator/js/Texts/Italic.js";
+import LineBreak from "@juancruzagb/htmlcreator/js/Texts/LineBreak.js";
+import Paragraph from "@juancruzagb/htmlcreator/js/Texts/Paragraph.js";
+import Span from "@juancruzagb/htmlcreator/js/Texts/Span.js";
+import Title from "@juancruzagb/htmlcreator/js/Texts/Title.js";
 
 // ? Visuals
-import Icon from "@juancruzagb/htmlcreator/js/Visuals/Icon";
-import Image from "@juancruzagb/htmlcreator/js/Visuals/Image";
-import Line from "@juancruzagb/htmlcreator/js/Visuals/Line";
+import Icon from "@juancruzagb/htmlcreator/js/Visuals/Icon.js";
+import Image from "@juancruzagb/htmlcreator/js/Visuals/Image.js";
+import Line from "@juancruzagb/htmlcreator/js/Visuals/Line.js";
 
 /**
  * @module HTMLCreator

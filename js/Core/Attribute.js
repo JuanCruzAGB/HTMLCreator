@@ -1,5 +1,5 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class";
+import Class from "@juancruzagb/src/js/Class.js";
 
 /**
  * * Attribute controls the Html attributes.

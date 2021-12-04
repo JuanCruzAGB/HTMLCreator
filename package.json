@@ -1,6 +1,6 @@
 {
   "name": "@juancruzagb/htmlcreator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Creates the Html elements with custom properties",
   "main": "index.js",
   "type": "module",

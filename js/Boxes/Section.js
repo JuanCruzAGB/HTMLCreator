@@ -1,5 +1,5 @@
 // ? HTMLCreatorository
-import Html from "@juancruzagb/htmlcreator/js/Core/Html";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html.js";
 
 /**
  * * Section creates an excellent <section>.
