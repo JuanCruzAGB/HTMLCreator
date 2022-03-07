@@ -85,17 +85,15 @@ export default class List extends Html {
      * @memberof List
      */
     getItem (id_item = false) {
-        if (id_item) {
-            for (const item of this.items) {
-                if (item.props.id == id_item) {
-                    return item;
-                }
-            }
-            return false;
-        }
         if (!id_item) {
-            console.error('Item primary key is required');
+            throw new Error('Item primary key is required');
         }
+        for (const item of this.items) {
+            if (item.props.id == id_item) {
+                return item;
+            }
+        }
+        return false;
     }
 
     /**
@@ -105,17 +103,15 @@ export default class List extends Html {
      * @memberof List
      */
     hasItem (id_item = false) {
-        if (id_item) {
-            for (const item of this.items) {
-                if (item.props.id == id_item) {
-                    return true;
-                }
-            }
-            return false;
-        }
         if (!id_item) {
-            console.error('Item primary key is required');
+            throw new Error('Item primary key is required');
         }
+        for (const item of this.items) {
+            if (item.props.id == id_item) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -125,22 +121,20 @@ export default class List extends Html {
      * @memberof List
      */
     removeItem (id_item = false) {
-        if (id_item) {
-            for (const key in [...this.items]) {
-                if (Object.hasOwnProperty.call(this.items, key)) {
-                    const item = this.items[key];
-                    if (item.props.id == id_item) {
-                        item.removeHTML();
-                        delete this.items[key];
-                        return item;
-                    }
+        if (!id_item) {
+            throw new Error('Item primary key is required');
+        }
+        for (const key in [...this.items]) {
+            if (Object.hasOwnProperty.call(this.items, key)) {
+                const item = this.items[key];
+                if (item.props.id == id_item) {
+                    item.removeHTML();
+                    delete this.items[key];
+                    return item;
                 }
             }
-            return false;
         }
-        if (!id_item) {
-            console.error('Item primary key is required');
-        }
+        return false;
     }
 
     /**

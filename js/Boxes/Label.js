@@ -48,6 +48,7 @@ export default class Label extends Html {
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
         this.setHTMLAttributes();
+        // TODO: Get the <input>
     }
 
     /**

@@ -20,7 +20,7 @@ export default class Form extends Html {
      * @param {string[]} [data.props.classList] Class list.
      * @param {array|false} [data.children=false] HTML Element childrens.
      * @param {object} [data.state]
-     * @param {boolean} [data.state.submit=true] If the HTML Element should be submited.
+     * @param {boolean} [data.state.submit=true] If the Html the submit callback function should be executed.
      * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
      * @param {object} [data.callbacks]
      * @param {function} [data.callbacks.submit]
@@ -41,7 +41,7 @@ export default class Form extends Html {
             submit: true,
         }, callbacks: {
             submit: {
-                function: (params) => { /* console.log('params') */ },
+                function: params => { /* console.log('params') */ },
                 params: {}
             },
         }, children: false,
@@ -63,6 +63,7 @@ export default class Form extends Html {
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
         this.setHTMLAttributes();
+        // TODO: Get the <inputs> & <submit>
     }
 
     /**
@@ -108,7 +109,7 @@ export default class Form extends Html {
      */
     static callbacks = {
         submit: {
-            function: (params) => { /* console.log('params') */ },
+            function: params => { /* console.log('params') */ },
             params: {}
         },
     }

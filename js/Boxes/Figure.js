@@ -45,6 +45,7 @@ export default class Figure extends Html {
                 ...(data && data.hasOwnProperty('children')) ? data.children : [],
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
+        // TODO: Get the <img>
     }
 
     /**

@@ -24,19 +24,56 @@ export default class Input extends Html {
      * @param {string[]} [data.props.accept] Mimetype of files accepted.
      * @param {string[]} [data.props.classList] Class list.
      * @param {object} [data.state]
+     * @param {boolean} [data.state.blur=true] If the Html the blur callback function should be executed.
+     * @param {boolean} [data.state.change=true] If the Html the change callback function should be executed.
      * @param {boolean} [data.state.checked=false] If the HTML Element should be checked.
+     * @param {boolean} [data.state.click=true] If the Html the click callback function should be executed.
+     * @param {boolean} [data.state.dblclick=true] If the Html the dblclick callback function should be executed.
      * @param {boolean} [data.state.disabled=false] If the HTML Element should be disabled.
+     * @param {boolean} [data.state.focusin=true] If the Html the focusin callback function should be executed.
+     * @param {boolean} [data.state.focusout=true] If the Html the focusout callback function should be executed.
      * @param {boolean} [data.state.hidden=false] If the HTML Element should be hidden.
-     * @param {boolean} [data.state.multiple=false] If the HTML Element should accepts multiple files.
      * @param {boolean} [data.state.id=false] If the Html should print the id attribute.
+     * @param {boolean} [data.state.multiple=false] If the HTML Element should accepts multiple files.
+     * @param {boolean} [data.state.preventDefault=false] If the Html events should prevent default.
      * @param {number|false} [data.state.selectedIndex=false] Input select selected Option index.
      * @param {object} [data.callbacks]
-     * @param {object} [data.callbacks.change]
+     * @param {function} [data.callbacks.blur]
+     * @param {function} [data.callbacks.blur.function]
+     * @param {object} [data.callbacks.blur.params]
+     * @param {function} [data.callbacks.change]
      * @param {function} [data.callbacks.change.function]
-     * @param {*} [data.callbacks.change.params]
-     * @param {object} [data.callbacks.focusout]
+     * @param {object} [data.callbacks.change.params]
+     * @param {function} [data.callbacks.check]
+     * @param {function} [data.callbacks.check.function]
+     * @param {object} [data.callbacks.check.params]
+     * @param {function} [data.callbacks.click]
+     * @param {function} [data.callbacks.click.function]
+     * @param {object} [data.callbacks.click.params]
+     * @param {function} [data.callbacks.dblclick]
+     * @param {function} [data.callbacks.dblclick.function]
+     * @param {object} [data.callbacks.dblclick.params]
+     * @param {function} [data.callbacks.disable]
+     * @param {function} [data.callbacks.disable.function]
+     * @param {object} [data.callbacks.disable.params]
+     * @param {function} [data.callbacks.enable]
+     * @param {function} [data.callbacks.enable.function]
+     * @param {object} [data.callbacks.enable.params]
+     * @param {function} [data.callbacks.focusin]
+     * @param {function} [data.callbacks.focusin.function]
+     * @param {object} [data.callbacks.focusin.params]
+     * @param {function} [data.callbacks.focusout]
      * @param {function} [data.callbacks.focusout.function]
-     * @param {*} [data.callbacks.focusout.params]
+     * @param {object} [data.callbacks.focusout.params]
+     * @param {function} [data.callbacks.select]
+     * @param {function} [data.callbacks.select.function]
+     * @param {object} [data.callbacks.select.params]
+     * @param {function} [data.callbacks.uncheck]
+     * @param {function} [data.callbacks.uncheck.function]
+     * @param {object} [data.callbacks.uncheck.params]
+     * @param {function} [data.callbacks.unselect]
+     * @param {function} [data.callbacks.unselect.function]
+     * @param {object} [data.callbacks.unselect.params]
      * @param {array} [data.options] Array of <options>
      * @param {HTMLElement} [data.parentNode] Html Element parent.
      * @memberof Input
@@ -51,21 +88,55 @@ export default class Input extends Html {
             accept: [],
             classList: [],
         }, state: {
+            blur: true,
+            change: true,
             checked: false,
+            click: true,
+            dblclick: true,
             disabled: false,
+            focusin: true,
+            focusout: true,
             hidden: false,
-            multiple: false,
             id: false,
+            multiple: false,
+            preventDefault: false,
             selectedIndex: false,
         }, callbacks: {
-            change: {
-                function: (params) => { /* console.log(params) */ },
+            blur: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, change: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, check: {
+                function: params => { /* console.log(params) */ },
                 params: {},
             }, click: {
-                function: (params) => { /* console.log(params) */ },
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, dblclick: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, disable: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, enable: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, focusin: {
+                function: params => { /* console.log(params) */ },
                 params: {},
             }, focusout: {
-                function: (params) => { /* console.log(params) */ },
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, select: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, uncheck: {
+                function: params => { /* console.log(params) */ },
+                params: {},
+            }, unselect: {
+                function: params => { /* console.log(params) */ },
                 params: {},
             },
         }, options: [],
@@ -142,9 +213,13 @@ export default class Input extends Html {
      * @memberof Input
      */
     setOptions (options = []) {
-        this.options = Option.generate(options);
-        for (const option of this.options) {
+        if (!this.options) {
+            this.options = [];
+        }
+        for (const data of options) {
+            let option = new Option(data);
             this.appendChild(option.html);
+            this.options.push(option);
         }
     }
 
@@ -166,7 +241,9 @@ export default class Input extends Html {
      */
     checkCheckedState () {
         if (this.state.checked) {
-            this.setAttribute('checked', true);
+            this.check();
+        } else {
+            this.uncheck();
         }
     }
 
@@ -176,7 +253,9 @@ export default class Input extends Html {
      */
     checkDisabledState () {
         if (this.state.disabled) {
-            this.setAttribute('disabled', true);
+            this.disable();
+        } else {
+            this.enable();
         }
     }
 
@@ -187,6 +266,8 @@ export default class Input extends Html {
     checkHiddenState () {
         if (this.state.hidden) {
             this.setAttribute('hidden', true);
+        } else {
+            // TODO: Remove hidden attribute.
         }
     }
 
@@ -197,6 +278,8 @@ export default class Input extends Html {
     checkMultipleState () {
         if (this.state.multiple) {
             this.setAttribute('multiple', true);
+        } else {
+            // TODO: Remove multiple attribute.
         }
     }
 
@@ -224,17 +307,6 @@ export default class Input extends Html {
                 }
             }
         }
-    }
-
-    /**
-     * * Check the Input.
-     * @param {boolean} [check=true] New Input checked state
-     * @returns {boolean}
-     * @memberof Input
-     */
-    check (check = true) {
-        this.setState('checked', check);
-        this.checkCheckedState();
     }
 
     /**
@@ -277,11 +349,18 @@ export default class Input extends Html {
      * @memberof Input
      */
     static state = {
+        blur: true,
+        change: true,
         checked: false,
+        click: true,
+        dblclick: true,
         disabled: false,
+        focusin: true,
+        focusout: true,
         hidden: false,
-        multiple: false,
         id: false,
+        multiple: false,
+        preventDefault: false,
         selectedIndex: false,
     }
 
@@ -291,14 +370,41 @@ export default class Input extends Html {
      * @memberof Input
      */
     static callbacks = {
-        change: {
-            function: (params) => { /* console.log(params) */ },
+        blur: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, change: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, check: {
+            function: params => { /* console.log(params) */ },
             params: {},
         }, click: {
-            function: (params) => { /* console.log(params) */ },
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, dblclick: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, disable: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, enable: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, focusin: {
+            function: params => { /* console.log(params) */ },
             params: {},
         }, focusout: {
-            function: (params) => { /* console.log(params) */ },
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, select: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, uncheck: {
+            function: params => { /* console.log(params) */ },
+            params: {},
+        }, unselect: {
+            function: params => { /* console.log(params) */ },
             params: {},
         },
     }

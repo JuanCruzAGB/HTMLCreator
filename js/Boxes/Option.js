@@ -72,7 +72,9 @@ export default class Option extends Html {
      */
     checkDisabledState () {
         if (this.state.disabled) {
-            this.setAttribute('disabled', true);
+            this.disable();
+        } else {
+            this.enable();
         }
     }
 
@@ -82,34 +84,9 @@ export default class Option extends Html {
      */
     checkSelectedState () {
         if (this.state.selected) {
-            this.setAttribute('selected', true);
-        }
-        if (!this.state.selected) {
-            this.removeAttribute('selected');
-        }
-    }
-
-    /**
-     * * Select the <option>.
-     * @returns {boolean}
-     * @memberof Option
-     */
-    select () {
-        if (!this.state.selected) {
-            this.setState('selected', true);
-            this.checkSelectedState();
-        }
-    }
-
-    /**
-     * * Unselect the <option>.
-     * @returns {boolean}
-     * @memberof Option
-     */
-    unselect () {
-        if (this.state.selected) {
-            this.setState('selected', false);
-            this.checkSelectedState();
+            this.select();
+        } else {
+            this.unselect();
         }
     }
 

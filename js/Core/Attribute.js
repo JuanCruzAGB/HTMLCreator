@@ -45,13 +45,6 @@ export default class Attribute extends Class {
         }
     }
 
-    set value (value) {
-        this.setProps('value', value);
-        if (this.state.visible) {
-            this.set();
-        }
-    }
-
     /**
      * * Remove the Attribute from the DOM.
      * @memberof Attribute
@@ -91,6 +84,27 @@ export default class Attribute extends Class {
                         this.html[this.props.name] = this.props.value;
                         this.setState('visible', true);
                     }
+                    break;
+            }
+        }
+    }
+
+    /**
+     * * Switch the Attribute value.
+     * @memberof Attribute
+     */
+    switch () {
+        if (typeof this.props.value != 'boolean') {
+            throw new Error(`Attribute ${ this.props.name } type is not boolean`);
+        }
+        this.setProps('value', !this.props.value);
+        if (this.hasOwnProperty('html')) {
+            switch (this.props.value) {
+                case true:
+                    this.set();
+                    break;
+                case false:
+                    this.remove();
                     break;
             }
         }
