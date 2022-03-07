@@ -35,11 +35,12 @@ export default class Link extends Html {
             target: false,
             url: '#',
         }, state: {
+            active: false,
             id: false,
             preventDefault: false,
         }, callbacks: {
             click: {
-                function: (params) => { /* console.log(params) */ },
+                function: params => { /* console.log(params) */ },
                 params: {},
             },
         }, children: false,
@@ -61,6 +62,7 @@ export default class Link extends Html {
             ], parentNode: (data && data.hasOwnProperty('parentNode')) ? data.parentNode : false,
         });
         this.setHTMLAttributes();
+        this.checkState();
     }
 
     /**
@@ -71,6 +73,29 @@ export default class Link extends Html {
         this.setAttribute('href', this.props.url);
         if (this.props.target) {
             this.setAttribute('target', this.props.target);
+        }
+    }
+
+    /**
+     * * Check the Link state values.
+     * @memberof Link
+     */
+    checkState () {
+        this.checkActiveState();
+    }
+
+    /**
+     * * Check the Link active state value.
+     * @memberof Link
+     */
+    checkActiveState () {
+        switch (this.state.active) {
+            case true:
+                this.active();
+                break;
+            case false:
+                this.inactive();
+                break;
         }
     }
 
@@ -92,6 +117,7 @@ export default class Link extends Html {
      * @memberof Link
      */
     static state = {
+        active: false,
         id: false,
         preventDefault: false,
     }
@@ -103,7 +129,7 @@ export default class Link extends Html {
      */
     static callbacks = {
         click: {
-            function: (params) => { /* console.log(params) */ },
+            function: params => { /* console.log(params) */ },
             params: {},
         },
     }
