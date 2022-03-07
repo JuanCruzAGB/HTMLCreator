@@ -91,7 +91,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error('Cell primary key is required');
+            throw new Error('Cell primary key is required');
         }
     }
 
@@ -111,7 +111,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error('Row primary key is required');
+            throw new Error('Row primary key is required');
         }
     }
 
@@ -131,7 +131,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error('Cell primary key is required');
+            throw new Error('Cell primary key is required');
         }
     }
 
@@ -151,7 +151,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error('Row primary key is required');
+            throw new Error('Row primary key is required');
         }
     }
 
@@ -169,7 +169,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_cell) {
-            console.error('Cell primary key is required');
+            throw new Error('Cell primary key is required');
         }
     }
 
@@ -194,7 +194,7 @@ export default class TPart extends Html {
             return false;
         }
         if (!id_row) {
-            console.error('Row primary key is required');
+            throw new Error('Row primary key is required');
         }
     }
 
