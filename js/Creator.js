@@ -59,6 +59,7 @@ export default class Creator extends Class {
         super();
         if (/#/.exec(query) || / /.exec(query)) {
             console.log(this.query(query));
+            throw new Error('Query type is supported yet');
         }
         switch (query.toUpperCase()) {
         // ? Boxes
@@ -177,6 +178,7 @@ export default class Creator extends Class {
         // ? CustomInput
             case 'CUSTOMINPUT':
             case 'GALLERY':
+            case 'MENU':
                 return this.import(query, data);
             default:
                 console.warn(`HTMLCreator does not support ${ query } yet`);
@@ -198,10 +200,13 @@ export default class Creator extends Class {
         switch (query.toUpperCase()) {
         // ? CustomInput
             case 'CUSTOMINPUT':
-                file = "@juancruzagb/CustomInput/js/CustomInput.js";
+                file = "@juancruzagb/custominput/js/CustomInput.js";
                 break;
             case 'GALLERY':
                 file = "@juancruzagb/gallery/js/Gallery.js";
+                break;
+            case 'MENU':
+                file = "@juancruzagb/menu/js/Menu.js";
                 break;
             default:
                 console.warn(`HTMLCreator extension ${ query } does not exist yet`);
