@@ -1,93 +1,131 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class.js";
+import Class from "@juancruzagb/src";
 
 /**
- * * Dataset controls the Html datasets.
+ * * Controls a Data object.
  * @export
  * @class Dataset
- * @extends {Class}
+ * @extends Class
  * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
  */
-export default class Dataset extends Class {
+export class Dataset extends Class {
     /**
      * * Creates an instance of Dataset.
      * @param {object} [data]
+     * @param {object} [data.nodeElement=null]
      * @param {object} [data.props]
-     * @param {string} [data.props.id='data-1'] Primary key.
-     * @param {string} [data.props.name='id']
-     * @param {*} [data.props.value='data-1']
-     * @param {object} [data.state]
-     * @param {boolean} [data.state.visible=false] If the Dataset should be visible.
-     * @param {HTMLElement|false} [data.html] Dataset HTML Element.
+     * @param {string} [data.props.id='data-1']
+     * @param {string} [data.props.name='data']
+     * @param {*} [data.props.value=false]
      * @memberof Dataset
      */
     constructor (data = {
+        nodeElement: null,
         props: {
             id: 'data-1',
-            name: 'id',
-            value: 'data-1',
-        }, state: {
-            visible: false,
-        }, html: false,
+            name: 'data',
+            value: false,
+        },
     }) {
         super({
             props: {
-                ...Dataset.props,
-                ...(data && data.hasOwnProperty('props')) ? data.props: {},
-            }, state: {
-                ...Dataset.state,
-                ...(data && data.hasOwnProperty('state')) ? data.state: {},
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
-        if (data && data.hasOwnProperty('html')) {
-            this.setHTML(data.html);
-            this.set();
-        }
+
+        this.nodeElement = (data && data.hasOwnProperty('nodeElement')) ? data.nodeElement : null;
     }
 
     /**
-     * * Remove the Dataset from the DOM.
+     * * Remove the Data.
      * @memberof Dataset
      */
     remove () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.dataset[this.props.name]) {
-                delete this.html.dataset[this.props.name];
-                this.setState('visible', false);
-            }
+        if (this.nodeElement) {
+            if (this.nodeElement.dataset.hasOwnProperty(this.props.name)) delete this.nodeElement.dataset[this.props.name];
+
+            this.state.set('visible', false);
         }
     }
 
     /**
-     * * Set the Dataset in the DOM.
+     * * Set the Data.
      * @memberof Dataset
      */
     set () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.dataset[this.props.name]) {
-                this.html.dataset[this.props.name] = this.props.value;
-                this.setState('visible', true);
-            }
+        if (this.nodeElement) {
+            this.nodeElement.dataset[this.props.name] = this.props.value;
+
+            this.state.set('visible', true);
         }
     }
-
-    /**
-     * @static
-     * @var {object} props Default properties.
-     * @memberof Dataset
-     */
-    static props = {
-        id: 'data-1',
-        name: 'id',
-        value: 'data-1',
-    }
-
-    /**
-     * @static
-     * @var {object} state Default state.
-     * @memberof Dataset
-     */
-    static state = {
-        visible: false,
-    }
 }
+
+/**
+ * * Controls the Data methods.
+ * @export
+ * @class Methods
+ * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
+ */
+export default class Methods {
+    /**
+     * * Check if there is a Data.
+     * @param {string} name
+     * @throws {Error}
+     * @returns {boolean}
+     * @memberof Methods
+     */
+    has (name) {
+        if (name == undefined) throw new Error('Dataset name is required');
+
+        if (typeof name != 'string') throw new Error('Dataset name must be a string');
+
+        return this.hasOwnProperty(name);
+    }
+
+    /**
+     * * Remove a Data.
+     * @param {string} name
+     * @throws {Error}
+     * @memberof Methods
+     */
+    remove (name) {
+        if (name == undefined) throw new Error('Dataset name is required');
+
+        if (this.has(name)) throw new Error('Dataset does not exist');
+
+        this[name].remove();
+    }
+
+    /**
+     * * Set a Data.
+     * @param {object|string} name
+     * @param {*} [value=null]
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    set (name = {}, value = null, nodeElement = false) {
+        if (nodeElement) this.nodeElement = nodeElement;
+
+        if (!name) throw new Error('Dataset name is required');
+
+        if (name instanceof Object) {
+            for (const dataName in name) {
+                if (Object.hasOwnProperty.call(name, dataName)) this.set(dataName, name[dataName]);
+            }
+
+            return;
+        }
+
+        this[name] = new Dataset({
+            nodeElement: this.nodeElement,
+            props: {
+                id: `data-${ Object.keys(this).length }`,
+                name: name,
+                value: value,
+            },
+        });
+        this[name].set();
+    }
+};

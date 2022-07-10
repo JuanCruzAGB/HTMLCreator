@@ -5,6 +5,3 @@ HTMLCreator creates all the HTML elements knowns, it was created for my personal
 
  - [English](https://github.com/JuanCruzAGB/HTMLCreator/blob/master/doc/en.md)
  - [Español](https://github.com/JuanCruzAGB/HTMLCreator/blob/master/doc/es.md)
-
-# To do list
- - [ ] Last optimized file Button.js

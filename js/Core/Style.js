@@ -1,93 +1,131 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class.js";
+import Class from "@juancruzagb/src";
 
 /**
- * * style controls the Html styles.
+ * * Controls a Style object.
  * @export
- * @class style
- * @extends {Class}
+ * @class Style
  * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
  */
-export default class style extends Class {
+export class Style extends Class {
     /**
-     * * Creates an instance of style.
+     * * Creates an instance of Style.
      * @param {object} [data]
-     * @param {object} [data.props]
-     * @param {string} [data.props.id='style-1'] Primary key.
-     * @param {string} [data.props.name='id']
-     * @param {*} [data.props.value='style-1']
-     * @param {object} [data.state]
-     * @param {boolean} [data.state.visible=false] If the style should be visible.
-     * @param {HTMLElement|false} [data.html] style HTML Element.
-     * @memberof style
+     * @param {object} [data.nodeElement=null]
+     * @param {string} [data.props]
+     * @param {string} [data.props.id='style-1']
+     * @param {string} [data.props.name='style']
+     * @param {*} [data.props.value=false]
+     * @memberof Style
      */
     constructor (data = {
+        nodeElement: null,
         props: {
             id: 'style-1',
-            name: 'id',
-            value: 'style-1',
-        }, state: {
-            visible: false,
-        }, html: false,
+            name: 'style',
+            value: false,
+        },
     }) {
         super({
             props: {
-                ...style.props,
-                ...(data && data.hasOwnProperty('props')) ? data.props: {},
-            }, state: {
-                ...style.state,
-                ...(data && data.hasOwnProperty('state')) ? data.state: {},
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
-        if (data && data.hasOwnProperty('html')) {
-            this.setHTML(data.html);
-            this.set();
-        }
+
+        this.nodeElement = (data && data.hasOwnProperty('nodeElement')) ? data.nodeElement : null;
     }
 
     /**
-     * * Remove the style from the DOM.
-     * @memberof style
+     * * Remove the Style.
+     * @memberof Style
      */
     remove () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.style[this.props.name]) {
-                this.html.style[this.props.name] = null;
-                this.setState('visible', false);
-            }
+        if (this.nodeElement) {
+            if (this.nodeElement.style.hasOwnProperty(this.props.name)) delete this.nodeElement.style[this.props.name];
+
+            this.state.set('visible', false);
         }
     }
 
     /**
-     * * Set the style in the DOM.
-     * @memberof style
+     * * Set the Style.
+     * @memberof Style
      */
     set () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.style[this.props.name]) {
-                this.html.style[this.props.name] = this.props.value;
-                this.setState('visible', true);
-            }
+        if (this.nodeElement) {
+            this.nodeElement.style[this.props.name] = this.props.value;
+
+            this.state.set('visible', true);
         }
     }
-
-    /**
-     * @static
-     * @var {object} props Default properties.
-     * @memberof style
-     */
-    static props = {
-        id: 'style-1',
-        name: 'id',
-        value: 'style-1',
-    }
-
-    /**
-     * @static
-     * @var {object} state Default state.
-     * @memberof style
-     */
-    static state = {
-        visible: false,
-    }
 }
+
+/**
+ * * Controls the Style methods.
+ * @export
+ * @class Methods
+ * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
+ */
+export default class Methods {
+    /**
+     * * Check if there is a Style.
+     * @param {string} name
+     * @throws {Error}
+     * @returns {boolean}
+     * @memberof Methods
+     */
+    has (name) {
+        if (name == undefined) throw new Error('Style name is required');
+
+        if (typeof name != 'string') throw new Error('Style name must be a string');
+
+        return this.hasOwnProperty(name);
+    }
+
+    /**
+     * * Remove a Style.
+     * @param {string} name
+     * @throws {Error}
+     * @memberof Methods
+     */
+    remove (name) {
+        if (name == undefined) throw new Error('Style name is required');
+
+        if (this.has(name)) throw new Error('Style does not exist');
+
+        this[name].remove();
+        delete this[name];
+    }
+
+    /**
+     * * Set a Style.
+     * @param {object|string} name
+     * @param {*} [value=null]
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    set (name = {}, value = null, nodeElement = false) {
+        if (nodeElement) this.nodeElement = nodeElement;
+
+        if (!name) throw new Error('Style name is required');
+
+        if (name instanceof Object) {
+            for (const styleName in name) {
+                if (Object.hasOwnProperty.call(name, styleName)) this.set(styleName, name[styleName]);
+            }
+
+            return;
+        }
+
+        this[name] = new Style({
+            nodeElement: this.nodeElement,
+            props: {
+                id: `style-${ Object.keys(this).length }`,
+                name: name,
+                value: value,
+            },
+        });
+        this[name].set();
+    }
+};

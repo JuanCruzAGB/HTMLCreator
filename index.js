@@ -1,6 +1,13 @@
 // ? JuanCruzAGB | HTMLCreator repository
 import Creator from "@juancruzagb/htmlcreator/js/Creator.js";
 
+// ? Core
+import Attribute from "@juancruzagb/htmlcreator/js/Core/Attribute.js";
+import ClassName from "@juancruzagb/htmlcreator/js/Core/ClassName.js";
+import Dataset from "@juancruzagb/htmlcreator/js/Core/Dataset.js";
+import Html from "@juancruzagb/htmlcreator/js/Core/Html.js";
+import Style from "@juancruzagb/htmlcreator/js/Core/Style.js";
+
 // ? Boxes
 import Aside from "@juancruzagb/htmlcreator/js/Boxes/Aside.js";
 import Div from "@juancruzagb/htmlcreator/js/Boxes/Div.js";
@@ -42,5 +49,5 @@ import Line from "@juancruzagb/htmlcreator/js/Visuals/Line.js";
 /**
  * @module HTMLCreator
  */
-export { Aside, Button, Cell, Creator, Div, Figure, Footer, Form, Header, Icon, Image, Input, Italic, Item, Label, Line, LineBreak, Link, List, Main, Nav, Option, Paragraph, Row, Section, Span, Table, Title, TPart };
+export { Aside, Attribute, Button, ClassName, Cell, Creator, Dataset, Div, Figure, Footer, Form, Header, Html, Icon, Image, Input, Italic, Item, Label, Line, LineBreak, Link, List, Main, Nav, Option, Paragraph, Row, Section, Span, Style, Table, Title, TPart };
 export default Creator;

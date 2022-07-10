@@ -1,89 +1,78 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class.js";
+import Class from "@juancruzagb/src";
 
 /**
- * * Attribute controls the Html attributes.
+ * * Controls an Attribute object.
  * @export
  * @class Attribute
- * @extends {Class}
+ * @extends Class
  * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
  */
-export default class Attribute extends Class {
+export class Attribute extends Class {
     /**
      * * Creates an instance of Attribute.
      * @param {object} [data]
+     * @param {object} [data.nodeElement=null]
      * @param {object} [data.props]
-     * @param {string} [data.props.id='attribute-1'] Primary key.
-     * @param {string} [data.props.name='id']
-     * @param {*} [data.props.value='attribute-1']
-     * @param {object} [data.state]
-     * @param {boolean} [data.state.visible=false] If the Attribute should be visible.
-     * @param {HTMLElement|false} [data.html] Attribute HTML Element.
+     * @param {string} [data.props.id='attribute-1']
+     * @param {string} [data.props.name='attribute']
+     * @param {*} [data.props.value=false]
      * @memberof Attribute
      */
     constructor (data = {
+        nodeElement: null,
         props: {
             id: 'attribute-1',
-            name: 'id',
-            value: 'attribute-1',
-        }, state: {
-            visible: false,
-        }, html: false,
+            name: 'attribute',
+            value: false,
+        },
     }) {
         super({
             props: {
-                ...Attribute.props,
-                ...(data && data.hasOwnProperty('props')) ? data.props: {},
-            }, state: {
-                ...Attribute.state,
-                ...(data && data.hasOwnProperty('state')) ? data.state: {},
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
-        if (data && data.hasOwnProperty('html')) {
-            this.setHTML(data.html);
-            this.set();
-        }
+
+        this.nodeElement = (data && data.hasOwnProperty('nodeElement')) ? data.nodeElement : null;
     }
 
     /**
-     * * Remove the Attribute from the DOM.
+     * * Remove the Attribute.
      * @memberof Attribute
      */
     remove () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.hasAttribute(this.props.name)) {
-                this.html.removeAttribute(this.props.name);
-                this.setState('visible', false);
-            }
+        if (this.nodeElement) {
+            if (this.nodeElement.hasAttribute(this.props.name)) this.nodeElement.removeAttribute(this.props.name);
+
+            this.state.set('visible', false);
         }
     }
 
     /**
-     * * Set the Attribute in the DOM.
+     * * Set the Attribute.
      * @memberof Attribute
      */
     set () {
-        if (this.hasOwnProperty('html')) {
+        if (this.nodeElement) {
             switch (typeof this.props.value) {
                 case 'boolean':
                     if (this.props.value) {
-                        if (!this.html.hasAttribute(this.props.name)) {
-                            this.html.setAttribute(this.props.name, '');
-                            this.setState('visible', true);
-                        } else {
-                            this.html[this.props.name] = true;
-                            this.setState('visible', true);
-                        }
+                        if (!this.nodeElement.hasAttribute(this.props.name)) this.nodeElement.setAttribute(this.props.name, '');
+
+                        this.state.set('visible', true);
+                    } else {
+                        this.remove();
                     }
                     break;
+
                 default:
-                    if (!this.html.hasAttribute(this.props.name)) {
-                        this.html.setAttribute(this.props.name, this.props.value);
-                        this.setState('visible', true);
+                    if (!this.nodeElement.hasAttribute(this.props.name)) {
+                        this.nodeElement.setAttribute(this.props.name, this.props.value);
                     } else {
-                        this.html[this.props.name] = this.props.value;
-                        this.setState('visible', true);
+                        this.nodeElement[this.props.name] = this.props.value;
                     }
+
+                    this.state.set('visible', true);
                     break;
             }
         }
@@ -94,39 +83,95 @@ export default class Attribute extends Class {
      * @memberof Attribute
      */
     switch () {
-        if (typeof this.props.value != 'boolean') {
-            throw new Error(`Attribute ${ this.props.name } type is not boolean`);
-        }
-        this.setProps('value', !this.props.value);
-        if (this.hasOwnProperty('html')) {
-            switch (this.props.value) {
-                case true:
-                    this.set();
-                    break;
-                case false:
-                    this.remove();
-                    break;
-            }
-        }
-    }
+        if (typeof this.props.value != 'boolean') throw new Error(`Attribute ${ this.props.name } type is not boolean`);
 
-    /**
-     * @static
-     * @var {object} props Default properties.
-     * @memberof Attribute
-     */
-    static props = {
-        id: 'attribute-1',
-        name: 'id',
-        value: 'attribute-1',
-    }
-
-    /**
-     * @static
-     * @var {object} state Default state.
-     * @memberof Attribute
-     */
-    static state = {
-        visible: false,
+        this.props.value = !this.props.value;
+        this.set();
     }
 }
+
+/**
+ * * Controls the Attribute methods.
+ * @export
+ * @class Methods
+ * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
+ */
+export default class Methods {
+    /**
+     * * Check if there is an Attribute.
+     * @param {string} name
+     * @throws {Error}
+     * @returns {boolean}
+     * @memberof Methods
+     */
+    has (name) {
+        if (name == undefined) throw new Error('Attribute name is required');
+
+        if (typeof name != 'string') throw new Error('Attribute name must be a string');
+
+        return this.hasOwnProperty(name);
+    }
+
+    /**
+     * * Remove an Attribute.
+     * @param {string} name
+     * @throws {Error}
+     * @memberof Methods
+     */
+    remove (name) {
+        if (name == undefined) throw new Error('Attribute name is required');
+
+        if (this.has(name)) throw new Error('Attribute does not exist');
+
+        this[name].remove();
+        delete this[name];
+    }
+
+    /**
+     * * Set an Attribute.
+     * @param {object|string} name
+     * @param {*} [value=null]
+     * @param {HTMLElement|false} [nodeElement=false]
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    set (name = {}, value = null, nodeElement = false) {
+        if (nodeElement) this.nodeElement = nodeElement;
+
+        if (!name) throw new Error('Attribute name is required');
+
+        if (name instanceof Object) {
+            for (const attributeName in name) {
+                if (Object.hasOwnProperty.call(name, attributeName)) this.set(attributeName, name[attributeName]);
+            }
+
+            return;
+        }
+
+        this[name] = new Attribute({
+            nodeElement: this.nodeElement,
+            props: {
+                id: `attribute-${ Object.keys(this).length }`,
+                name: name,
+                value: value,
+            },
+        });
+        this[name].set();
+    }
+
+    /**
+     * * Switch the Attribute value.
+     * @param {string} name
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    switch (name) {
+        if (!name) throw new Error('Attribute name is required');
+
+        if (this.has(name)) return this[name].switch();
+
+        return null;
+    }
+};

@@ -1,101 +1,158 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class.js";
+import Class from "@juancruzagb/src";
 
 /**
- * * ClassName controls the Html class names.
+ * * Controls a ClassName object.
  * @export
  * @class ClassName
- * @extends {Class}
+ * @extends Class
  * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
  */
-export default class ClassName extends Class {
+export class ClassName extends Class {
     /**
      * * Creates an instance of ClassName.
      * @param {object} [data]
+     * @param {object} [data.nodeElement=null]
      * @param {object} [data.props]
-     * @param {string} [data.props.id='className-1'] Primary key.
-     * @param {*} [data.props.value='something']
-     * @param {object} [data.state]
-     * @param {boolean} [data.state.visible=false] If the ClassName should be visible.
-     * @param {HTMLElement|false} [data.html] ClassName HTML Element.
+     * @param {string} [data.props.id='class-1']
+     * @param {string} [data.props.name='class']
      * @memberof ClassName
      */
     constructor (data = {
+        nodeElement: null,
         props: {
-            id: 'className-1',
-            value: 'something',
-        }, state: {
-            visible: false,
-        }, html: false,
+            id: 'class-1',
+            name: 'class',
+        },
     }) {
         super({
             props: {
-                ...ClassName.props,
-                ...(data && data.hasOwnProperty('props')) ? data.props: {},
-            }, state: {
-                ...ClassName.state,
-                ...(data && data.hasOwnProperty('state')) ? data.state: {},
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
-        if (data && data.hasOwnProperty('html')) {
-            this.setHTML(data.html);
-            this.set();
-        }
+
+        this.nodeElement = (data && data.hasOwnProperty('nodeElement')) ? data.nodeElement : null;
     }
 
     /**
-     * * Add the ClassName in the DOM.
+     * * Add the ClassName.
      * @memberof ClassName
      */
-    set () {
-        if (this.hasOwnProperty('html')) {
-            if (!this.html.classList.contains(this.props.value)) {
-                this.html.classList.add(this.props.value);
-            }
-            this.setState('visible', true);
+    add () {
+        if (this.nodeElement) {
+            if (!this.nodeElement.classList.contains(this.props.name)) this.nodeElement.classList.add(this.props.name);
+
+            this.state.set('visible', true);
         }
     }
 
     /**
-     * * Remove the ClassName from the DOM.
+     * * Remove the ClassName.
      * @memberof ClassName
      */
     remove () {
-        if (this.hasOwnProperty('html')) {
-            if (this.html.classList.contains(this.props.value)) {
-                this.html.classList.remove(this.props.value);
-            }
-            this.setState('visible', false);
+        if (this.nodeElement) {
+            if (this.nodeElement.classList.contains(this.props.name)) this.nodeElement.classList.remove(this.props.name);
+
+            this.state.set('visible', false);
         }
     }
 
     /**
-     * * Toogle the ClassName from the DOM.
+     * * Toggle the ClassName.
      * @memberof ClassName
      */
     toggle () {
-        if (this.hasOwnProperty('html')) {
-            this.html.classList.toggle(this.props.value);
-            this.setState('visible', this.html.classList.contains(this.props.value));
+        if (this.nodeElement) {
+            if (this.state.visible) {
+                this.remove();
+            } else {
+                this.add();
+            }
         }
     }
-
-    /**
-     * @static
-     * @var {object} props Default properties.
-     * @memberof ClassName
-     */
-    static props = {
-        id: 'className-1',
-        value: 'something',
-    }
-
-    /**
-     * @static
-     * @var {object} state Default state.
-     * @memberof ClassName
-     */
-    static state = {
-        visible: false,
-    }
 }
+
+/**
+ * * Controls the ClassName methods.
+ * @export
+ * @class Methods
+ * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
+ */
+export default class Methods {
+    /**
+     * * Add a ClassName.
+     * @param {object|string} name
+     * @param {HTMLElement|false} [nodeElement=false]
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    add (name = {}, nodeElement = false) {
+        if (nodeElement) this.nodeElement = nodeElement;
+
+        if (!name) throw new Error('ClassName name is required');
+
+        if (name instanceof Object) {
+            for (const classNameName in name) {
+                if (Object.hasOwnProperty.call(name, classNameName)) this.add(classNameName);
+            }
+
+            return;
+        }
+
+        this[name] = new ClassName({
+            nodeElement: this.nodeElement,
+            props: {
+                id: `class-${ Object.keys(this).length }`,
+                name: name,
+            },
+        });
+        this[name].add();
+    }
+
+    /**
+     * * Check if there is a ClassName.
+     * @param {string} name
+     * @throws {Error}
+     * @returns {boolean}
+     * @memberof Methods
+     */
+    has (name) {
+        if (name == undefined) throw new Error('ClassName name is required');
+
+        if (typeof name != 'string') throw new Error('ClassName name must be a string');
+
+        return this.hasOwnProperty(name);
+    }
+
+    /**
+     * * Remove a ClassName.
+     * @param {string} name
+     * @throws {Error}
+     * @memberof Methods
+     */
+    remove (name) {
+        if (name == undefined) throw new Error('ClassName name is required');
+
+        if (this.has(name)) throw new Error('ClassName does not exist');
+
+        this[name].remove();
+        delete this[name];
+    }
+
+    /**
+     * * Toggle the ClassName.
+     * @param {string} name
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    toggle (name) {
+        if (!name) throw new Error('ClassName name is required');
+
+        if (this.has(name)) return this[name].toggle();
+
+        return null;
+    }
+};

@@ -1,45 +1,22 @@
 // ? JuanCruzAGB repository
-import Class from "@juancruzagb/src/js/Class.js";
+import Class from "@juancruzagb/src";
 
 // ? HTMLCreator repository
 
 // ? Boxes
-import Aside from "@juancruzagb/htmlcreator/js/Boxes/Aside.js";
-import Div from "@juancruzagb/htmlcreator/js/Boxes/Div.js";
-import Figure from "@juancruzagb/htmlcreator/js/Boxes/Figure.js";
-import Footer from "@juancruzagb/htmlcreator/js/Boxes/Footer.js";
-import Form from "@juancruzagb/htmlcreator/js/Boxes/Form.js";
-import Header from "@juancruzagb/htmlcreator/js/Boxes/Header.js";
-import Item from "@juancruzagb/htmlcreator/js/Boxes/Item.js";
-import Label from "@juancruzagb/htmlcreator/js/Boxes/Label.js";
-import List from "@juancruzagb/htmlcreator/js/Boxes/List.js";
-import Main from "@juancruzagb/htmlcreator/js/Boxes/Main.js";
-import Nav from "@juancruzagb/htmlcreator/js/Boxes/Nav.js";
-import Option from "@juancruzagb/htmlcreator/js/Boxes/Option.js";
-import Section from "@juancruzagb/htmlcreator/js/Boxes/Section.js";
+import { Aside, Div, Figure, Footer, Form, Header, Item, Label, List, Main, Nav, Option, Section, } from "@juancruzagb/htmlcreator";
 
 // ? Buttons
-import Button from "@juancruzagb/htmlcreator/js/Buttons/Button.js";
-import Input from "@juancruzagb/htmlcreator/js/Buttons/Input.js";
-import Link from "@juancruzagb/htmlcreator/js/Buttons/Link.js";
+import { Button, Input, Link, } from "@juancruzagb/htmlcreator";
 
 // ? Table
-import Table from "@juancruzagb/htmlcreator/js/Table/Table.js";
-import TPart from "@juancruzagb/htmlcreator/js/Table/TPart.js";
-import Row from "@juancruzagb/htmlcreator/js/Table/Row.js";
-import Cell from "@juancruzagb/htmlcreator/js/Table/Cell.js";
+import { Table, TPart, Row, Cell, } from "@juancruzagb/htmlcreator";
 
 // ? Texts
-import Italic from "@juancruzagb/htmlcreator/js/Texts/Italic.js";
-import LineBreak from "@juancruzagb/htmlcreator/js/Texts/LineBreak.js";
-import Paragraph from "@juancruzagb/htmlcreator/js/Texts/Paragraph.js";
-import Span from "@juancruzagb/htmlcreator/js/Texts/Span.js";
-import Title from "@juancruzagb/htmlcreator/js/Texts/Title.js";
+import { Italic, LineBreak, Paragraph, Span, Title, } from "@juancruzagb/htmlcreator";
 
 // ? Visuals
-import Icon from "@juancruzagb/htmlcreator/js/Visuals/Icon.js";
-import Image from "@juancruzagb/htmlcreator/js/Visuals/Image.js";
-import Line from "@juancruzagb/htmlcreator/js/Visuals/Line.js";
+import { Icon, Image, Line, } from "@juancruzagb/htmlcreator";
 
 /**
  * * Creator creates multiple HTMLElement.
@@ -57,10 +34,12 @@ export default class Creator extends Class {
      */
     constructor (query = 'DIV', data = {}) {
         super();
+
         if (/#/.exec(query) || / /.exec(query)) {
             console.log(this.query(query));
             throw new Error('Query type is supported yet');
         }
+
         switch (query.toUpperCase()) {
         // ? Boxes
             case 'ASIDE':
@@ -80,13 +59,10 @@ export default class Creator extends Class {
             case 'LABEL':
                 return new Label(data);
             case 'OL':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'ordered';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'ordered';
             case 'UL':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'unordered';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'unordered';
+
                 return new List(data);
             case 'MAIN':
                 return new Main(data);
@@ -96,44 +72,37 @@ export default class Creator extends Class {
                 return new Option(data);
             case 'SECTION':
                 return new Section(data);
+
         // ? Buttons
             case 'BUTTON':
                 return new Button(data);
             case 'SELECT':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'select';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'select';
             case 'TEXTAREA':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'textarea';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'textarea';
             case 'INPUT':
                 return new Input(data);
             case 'A':
                 return new Link(data);
+
         // ? Table
             case 'TABLE':
                 return new Table(data);
             case 'TBODY':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'body';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'body';
             case 'THEAD':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'head';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'head';
+
                 return new TPart(data);
             case 'TR':
                 return new Row(data);
             case 'TD':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'normal';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'normal';
             case 'TH':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) {
-                    data.props.type = 'header';
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('type')) data.props.type = 'header';
+
                 return new Cell(data);
+
         // ? Texts
             case 'BR':
                 return new LineBreak(data);
@@ -144,30 +113,20 @@ export default class Creator extends Class {
             case 'SPAN':
                 return new Span(data);
             case 'H1':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 1;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 1;
             case 'H2':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 2;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 2;
             case 'H3':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 3;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 3;
             case 'H4':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 4;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 4;
             case 'H5':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 5;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 5;
             case 'H6':
-                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) {
-                    data.props.level = 6;
-                }
+                if (data.hasOwnProperty('props') && !data.props.hasOwnProperty('level')) data.props.level = 6;
+
                 return new Title(data);
+
         // ? Visuals
             case 'ICON':
                 return new Icon(data);
@@ -175,6 +134,7 @@ export default class Creator extends Class {
                 return new Image(data);
             case 'HR':
                 return new Line(data);
+
         // ? CustomInput
             case 'CUSTOMINPUT':
             case 'GALLERY':
@@ -215,7 +175,6 @@ export default class Creator extends Class {
 
         if (file) {
             const Module = await import(file);
-            
             return new Module.default(data);
         }
     }
@@ -238,181 +197,182 @@ export default class Creator extends Class {
 
     /**
      * @static
-     * @var {Aside} Aside Aside class child.
+     * @var {Aside} Aside
      * @memberof Creator
      */
     static Aside = Aside;
+
     /**
      * @static
-     * @var {Div} Div Div class child.
+     * @var {Div} Div
      * @memberof Creator
      */
     static Div = Div;
 
     /**
      * @static
-     * @var {Figure} Figure Figure class child.
+     * @var {Figure} Figure
      * @memberof Creator
      */
     static Figure = Figure;
 
     /**
      * @static
-     * @var {Footer} Footer Footer class child.
+     * @var {Footer} Footer
      * @memberof Creator
      */
     static Footer = Footer;
 
     /**
      * @static
-     * @var {Form} Form Form class child.
+     * @var {Form} Form
      * @memberof Creator
      */
     static Form = Form;
 
     /**
      * @static
-     * @var {Header} Header Header class child.
+     * @var {Header} Header
      * @memberof Creator
      */
     static Header = Header;
 
     /**
      * @static
-     * @var {Item} Item Item class child.
+     * @var {Item} Item
      * @memberof Creator
      */
     static Item = Item;
 
     /**
      * @static
-     * @var {Label} Label Label class child.
+     * @var {Label} Label
      * @memberof Creator
      */
     static Label = Label;
 
     /**
      * @static
-     * @var {List} List List class child.
+     * @var {List} List
      * @memberof Creator
      */
     static List = List;
 
     /**
      * @static
-     * @var {Main} Main Main class child.
+     * @var {Main} Main
      * @memberof Creator
      */
     static Main = Main;
 
     /**
      * @static
-     * @var {Nav} Nav Nav class child.
+     * @var {Nav} Nav
      * @memberof Creator
      */
     static Nav = Nav;
 
     /**
      * @static
-     * @var {Section} Section Section class child.
+     * @var {Section} Section
      * @memberof Creator
      */
     static Section = Section;
     
     /**
      * @static
-     * @var {Button} Button Button class child.
+     * @var {Button} Button
      * @memberof Creator
      */
     static Button = Button;
 
     /**
      * @static
-     * @var {Input} Input Input class child.
+     * @var {Input} Input
      * @memberof Creator
      */
     static Input = Input;
 
     /**
      * @static
-     * @var {Link} Link Link class child.
+     * @var {Link} Link
      * @memberof Creator
      */
     static Link = Link;
     
     /**
      * @static
-     * @var {Table} Table Table class child.
+     * @var {Table} Table
      * @memberof Creator
      */
     static Table = Table;
 
     /**
      * @static
-     * @var {TPart} TPart TPart class child.
+     * @var {TPart} TPart
      * @memberof Creator
      */
     static TPart = TPart;
 
     /**
      * @static
-     * @var {Row} Row Row class child.
+     * @var {Row} Row
      * @memberof Creator
      */
     static Row = Row;
 
     /**
      * @static
-     * @var {Cell} Cell Cell class child.
+     * @var {Cell} Cell
      * @memberof Creator
      */
     static Cell = Cell;
     
     /**
      * @static
-     * @var {Paragraph} Paragraph Paragraph class child.
+     * @var {Paragraph} Paragraph
      * @memberof Creator
      */
     static Paragraph = Paragraph;
 
     /**
      * @static
-     * @var {Span} Span Span class child.
+     * @var {Span} Span
      * @memberof Creator
      */
     static Span = Span;
 
     /**
      * @static
-     * @var {Title} Title Title class child.
+     * @var {Title} Title
      * @memberof Creator
      */
     static Title = Title;
 
     /**
      * @static
-     * @var {LineBreak} LineBreak LineBreak class child.
+     * @var {LineBreak} LineBreak
      * @memberof Creator
      */
     static LineBreak = LineBreak;
     
     /**
      * @static
-     * @var {Icon} Icon Icon class child.
+     * @var {Icon} Icon
      * @memberof Creator
      */
     static Icon = Icon;
 
     /**
      * @static
-     * @var {Image} Image Image class child.
+     * @var {Image} Image
      * @memberof Creator
      */
     static Image = Image;
 
     /**
      * @static
-     * @var {Line} Line Line class child.
+     * @var {Line} Line
      * @memberof Creator
      */
     static Line = Line;
