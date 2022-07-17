@@ -29,6 +29,7 @@ export class Attribute extends Class {
     }) {
         super({
             props: {
+                ...Attribute.props,
                 ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
@@ -88,6 +89,21 @@ export class Attribute extends Class {
         this.props.value = !this.props.value;
         this.set();
     }
+
+    /**
+     * * Default properties.
+     * @static
+     * @var {object} props
+     * @param {string} props.id
+     * @param {string} props.name
+     * @param {*} props.value
+     * @memberof Attribute
+     */
+    static props = {
+        id: 'attribute-1',
+        name: 'attribute',
+        value: false,
+    }
 }
 
 /**
@@ -99,15 +115,30 @@ export class Attribute extends Class {
 export default class Methods {
     /**
      * * Check if there is an Attribute.
-     * @param {string} name
+     * @param {array|string} name
+     * @param {*} [value]
      * @throws {Error}
      * @returns {boolean}
      * @memberof Methods
      */
-    has (name) {
+    has (name, value) {
         if (name == undefined) throw new Error('Attribute name is required');
 
-        if (typeof name != 'string') throw new Error('Attribute name must be a string');
+        if (Array.isArray(name)) {
+            for (const attribute of name) {
+                if (!attribute instanceof String) {
+                    if (!this.has(...attribute)) return false;
+                } else {
+                    if (!this.has(attribute)) return false;
+                }
+            }
+
+            return true;
+        }
+
+        if (name instanceof String) throw new Error('Attribute name must be a string');
+
+        if (value != undefined) return this.hasOwnProperty(name) && this[name] == value;
 
         return this.hasOwnProperty(name);
     }
@@ -121,6 +152,16 @@ export default class Methods {
     remove (name) {
         if (name == undefined) throw new Error('Attribute name is required');
 
+        if (Array.isArray(name)) {
+            for (const attribute of name) {
+                this.remove(attribute);
+            }
+
+            return;
+        }
+
+        if (name instanceof String) throw new Error('Attribute name must be a string');
+
         if (this.has(name)) throw new Error('Attribute does not exist');
 
         this[name].remove();
@@ -129,19 +170,29 @@ export default class Methods {
 
     /**
      * * Set an Attribute.
-     * @param {object|string} name
+     * @param {array|object|string} name
      * @param {*} [value=null]
      * @param {HTMLElement|false} [nodeElement=false]
      * @throws {Error}
      * @returns
      * @memberof Methods
      */
-    set (name = {}, value = null, nodeElement = false) {
+    set (name, value = null, nodeElement = false) {
         if (nodeElement) this.nodeElement = nodeElement;
 
         if (!name) throw new Error('Attribute name is required');
 
-        if (name instanceof Object) {
+        if (Array.isArray(name)) {
+            for (const attribute of name) {
+                if (!attribute instanceof String) {
+                    if (!this.set(...attribute)) return false;
+                } else {
+                    if (!this.set(attribute)) return false;
+                }
+            }
+
+            return;
+        } else if (name instanceof Object) {
             for (const attributeName in name) {
                 if (Object.hasOwnProperty.call(name, attributeName)) this.set(attributeName, name[attributeName]);
             }
@@ -174,4 +225,4 @@ export default class Methods {
 
         return null;
     }
-};
+}

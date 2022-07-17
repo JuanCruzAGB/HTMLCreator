@@ -1,11 +1,8 @@
 // ? JuanCruzAGB repository
 import Class from "@juancruzagb/src";
 
-// ? HTMLCreator repository
-import Creator from "@juancruzagb/htmlcreator";
-
 // ? Core
-import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator";
+import { Attribute, ClassName, Children, Dataset, Style, } from "@juancruzagb/htmlcreator";
 
 /**
  * * Html controls a class object.
@@ -18,6 +15,7 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     /**
      * * Creates an instance of Html.
      * @param {object} [data]
+     * @param {object} [data.attributes]
      * @param {object} [data.callbacks]
      * @param {function} [data.callbacks.active]
      * @param {function} [data.callbacks.active.function]
@@ -141,8 +139,8 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
         dataset: {},
         parentNode: false,
         props: {
-            nodeName: 'DIV',
             id: 'html-1',
+            nodeName: 'DIV',
         },
         state: {
             blur: false,
@@ -159,20 +157,26 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
         styles: {},
     }) {
         super({
-            props: {
-                ...(data && data.hasOwnProperty('props')) ? data.props : {},
-            }, state: {
-                ...(data && data.hasOwnProperty('state')) ? data.state : {},
-            }, callbacks: {
+            callbacks: {
+                ...Html.callbacks,
                 ...(data && data.hasOwnProperty('callbacks')) ? data.callbacks : {},
+            },
+            props: {
+                ...Html.props,
+                ...(data && data.hasOwnProperty('props')) ? data.props : {},
+            },
+            state: {
+                ...Html.state,
+                ...(data && data.hasOwnProperty('state')) ? data.state : {},
             },
         });
 
         this.create();
         this.attributes.set((data && data.hasOwnProperty('attributes')) ? data.attributes : [], null, this.nodeElement);
-        this.classList.add((data && data.hasOwnProperty('classList')) ? data.classList : [], null, this.nodeElement);
-        this.children.append((data && data.hasOwnProperty('children')) ? data.children : [], null, this);
-        this.styles.add((data && data.hasOwnProperty('styles')) ? data.styles : []);
+        this.classList.add((data && data.hasOwnProperty('classList')) ? data.classList : [], this.nodeElement);
+        this.children.append((data && data.hasOwnProperty('children')) ? data.children : [], this);
+        this.dataset.add((data && data.hasOwnProperty('dataset')) ? data.dataset : [], null, this.nodeElement);
+        this.styles.add((data && data.hasOwnProperty('styles')) ? data.styles : [], null, this.nodeElement);
     }
 
     /**
@@ -188,65 +192,10 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     classList = ClassName
 
     /**
-     * * Html children methods.
+     * * Children.
      * @memberof Html
      */
-    children = {
-        /**
-         * * Html children list.
-         * @memberof Html.children
-         */
-        list: [],
-        /**
-         * * Append an Html Element.
-         * @param {object|string|Html|HTMLElement} child
-         * @param {Html|false} [nodeElement=false]
-         * @throws {Error}
-         * @returns
-         * @memberof Html.children
-         */
-        append (child = false, data = {}, parentNode = false) {
-            if (parentNode) this.parentNode = parentNode;
-
-            if (Array.isArray(child)) {
-                for (const childNodeName in child) {
-                    if (Object.hasOwnProperty.call(child, childNodeName)) this.append(childNodeName, child[childNodeName]);
-                }
-
-                return;
-            } else if (child instanceof HTMLElement) {
-                this.parentNode.nodeElement.appendChild(child);
-            } else if (child instanceof Html) {
-                this.parentNode.nodeElement.appendChild(child.nodeElement);
-            } else if (typeof child == 'string') {
-                if (!data.hasOwnProperty('props')) data.props = {};
-
-                if (!data.props.hasOwnProperty('id')) data.props.id = `${ this.parentNode.props.id }-child-${ this.list.length + 1 }`;
-
-                child = new Creator(child, data);
-                this.parentNode.nodeElement.appendChild(child.nodeElement);
-            }
-
-            this.list.push(child);
-        },
-        /**
-         * * Insert an Html Element before another.
-         * @param {object|string|Html|HTMLElement} child
-         * @param {number} [index=0]
-         * @memberof Html.children
-         */
-        insert (child = false, index = 0) {
-            console.warn('Insert child is not supported yet.');
-        },
-        /**
-         * * Insert an Html Element before another.
-         * @param {object|string|Html|HTMLElement} child
-         * @memberof Html.children
-         */
-        remove (child = false) {
-            console.warn('Remove child is not supported yet.');
-        },
-    }
+    children = Children
 
     /**
      * * Dataset.
@@ -261,13 +210,21 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     styles = Style
 
     /**
+     * * Removes the Html Element.
+     * @memberof Html
+     */
+    append () {
+        console.warn('Remove element is not supported yet.');
+    }
+
+    /**
      * * Creates the Html Element.
      * @memberof Html
      */
     create () {
         this.nodeElement = document.createElement(this.props.nodeName.toUpperCase());
 
-        if (this.hasProp('id') && this.hasState('id') && this.state.id) this.attributes.set('id', this.props.id);
+        if (this.props.has('id') && this.state.has('id') && this.state.id) this.attributes.set('id', this.props.id);
 
         for (const name in this.callbacks) {
             if (Object.hasOwnProperty.call(this.callbacks, name)) this.setEventListener(name, this.callbacks[name]);
@@ -275,11 +232,20 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     }
 
     /**
-     * * Removes the Html Element.
+     * * Insert the Html Element before another.
+     * @param {number} [index=0]
+     * @memberof Html
+     */
+    insert (index = 0) {
+        console.warn('Insert is not supported yet.', [ index, ]);
+    }
+
+    /**
+     * * Remove the Html Element.
      * @memberof Html
      */
     remove () {
-        console.warn('Remove element is not supported yet.');
+        console.warn('Remove is not supported yet.');
     }
 
     /**
@@ -291,9 +257,9 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
         if (!this[name]) throw new Error(`${ name } callback event is not supported yet`);
 
         this.nodeElement.addEventListener(name, (e) => {
-            if ((this.hasState('preventDefault') && this.state.preventDefault) || (this.hasState(name) && !this.state[name])) e.preventDefault();
+            if ((this.state.has('preventDefault') && this.state.preventDefault) || (this.state.has(name) && !this.state[name])) e.preventDefault();
 
-            if (this.hasState('stopPropagation') && this.state.stopPropagation) e.stopPropagation();
+            if (this.state.has('stopPropagation') && this.state.stopPropagation) e.stopPropagation();
 
             this[name]();
         });
@@ -540,7 +506,7 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     switch (name) {
         if (name == undefined) throw new Error('State name is required');
 
-        if (!this.hasState(name)) throw new Error(`State ${ name } is not defined`);
+        if (!this.state.has(name)) throw new Error(`State ${ name } is not defined`);
 
         if (typeof this.state.name != 'boolean') throw new Error(`State ${ name } type is not boolean`);
 
@@ -584,22 +550,20 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
     }
 
     /**
-     * * Default state.
+     * * Default state callbacks alternatives.
      * @static
-     * @var {object} state
+     * @var {array} alternatives
+     * @param {array} alternatives.active
+     * @param {array} alternatives.checked
+     * @param {array} alternatives.disabled
+     * @param {array} alternatives.selected
      * @memberof Html
      */
-    static state = {
-        blur: true,
-        change: true,
-        click: true,
-        dblclick: true,
-        focusin: true,
-        focusout: true,
-        id: false,
-        preventDefault: false,
-        submit: true,
-        stopPropagation: false,
+    static alternatives = {
+        active: ['active', 'inactive'],
+        checked: ['check', 'uncheck'],
+        disabled: ['enable', 'disable'],
+        selected: ['select', 'unselect'],
     }
 
     /**
@@ -609,64 +573,34 @@ import { Attribute, ClassName, Dataset, Style, } from "@juancruzagb/htmlcreator"
      * @memberof Html
      */
     static callbacks = {
-        active: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, blur: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, change: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, check: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, click: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, dblclick: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, disable: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, enable: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, focusin: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, focusout: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, inactive: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, select: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, submit: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, uncheck: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        }, unselect: {
-            function: params => { /* console.log(params) */ },
-            params: {},
-        },
+        // 
     }
 
     /**
-     * * Default state callbacks alternatives.
+     * * Default properties.
      * @static
-     * @var {array} alternatives
+     * @var {object} props
+     * @param {string} props.id
+     * @param {string} props.nodeName
      * @memberof Html
      */
-    static alternatives = {
-        active: ['active', 'inactive'],
-        checked: ['check', 'uncheck'],
-        disabled: ['enable', 'disable'],
-        selected: ['select', 'unselect'],
-    };
+    static props = {
+        id: 'html-1',
+        nodeName: 'DIV',
+    }
+
+    /**
+     * * Default state.
+     * @static
+     * @var {object} state
+     * @param {boolean} state.id
+     * @param {boolean} state.preventDefault
+     * @param {boolean} state.stopPropagation
+     * @memberof Html
+     */
+    static state = {
+        id: false,
+        preventDefault: false,
+        stopPropagation: false,
+    }
 }

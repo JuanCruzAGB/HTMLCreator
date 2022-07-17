@@ -2,7 +2,7 @@
 import Class from "@juancruzagb/src";
 
 /**
- * * Controls a Data object.
+ * * Controls an Dataset object.
  * @export
  * @class Dataset
  * @extends Class
@@ -29,6 +29,7 @@ export class Dataset extends Class {
     }) {
         super({
             props: {
+                ...Dataset.props,
                 ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
@@ -49,7 +50,7 @@ export class Dataset extends Class {
     }
 
     /**
-     * * Set the Data.
+     * * Set the Dataset.
      * @memberof Dataset
      */
     set () {
@@ -59,32 +60,62 @@ export class Dataset extends Class {
             this.state.set('visible', true);
         }
     }
+
+    /**
+     * * Default properties.
+     * @static
+     * @var {object} props
+     * @param {string} props.id
+     * @param {string} props.name
+     * @param {*} props.value
+     * @memberof Dataset
+     */
+    static props = {
+        id: 'data-1',
+        name: 'data',
+        value: false,
+    }
 }
 
 /**
- * * Controls the Data methods.
+ * * Controls the Dataset methods.
  * @export
  * @class Methods
  * @author JuanCruzAGB <juan.cruz.armentia@gmail.com>
  */
 export default class Methods {
     /**
-     * * Check if there is a Data.
-     * @param {string} name
+     * * Check if there is an Dataset.
+     * @param {array|string} name
+     * @param {*} [value]
      * @throws {Error}
      * @returns {boolean}
      * @memberof Methods
      */
-    has (name) {
+    has (name, value) {
         if (name == undefined) throw new Error('Dataset name is required');
 
-        if (typeof name != 'string') throw new Error('Dataset name must be a string');
+        if (Array.isArray(name)) {
+            for (const dataset of name) {
+                if (!dataset instanceof String) {
+                    if (!this.has(...dataset)) return false;
+                } else {
+                    if (!this.has(dataset)) return false;
+                }
+            }
+
+            return true;
+        }
+
+        if (name instanceof String) throw new Error('Dataset name must be a string');
+
+        if (value != undefined) return this.hasOwnProperty(name) && this[name] == value;
 
         return this.hasOwnProperty(name);
     }
 
     /**
-     * * Remove a Data.
+     * * Remove an Dataset.
      * @param {string} name
      * @throws {Error}
      * @memberof Methods
@@ -92,27 +123,49 @@ export default class Methods {
     remove (name) {
         if (name == undefined) throw new Error('Dataset name is required');
 
+        if (Array.isArray(name)) {
+            for (const dataset of name) {
+                this.remove(dataset);
+            }
+
+            return;
+        }
+
+        if (name instanceof String) throw new Error('Dataset name must be a string');
+
         if (this.has(name)) throw new Error('Dataset does not exist');
 
         this[name].remove();
+        delete this[name];
     }
 
     /**
-     * * Set a Data.
-     * @param {object|string} name
+     * * Set an Dataset.
+     * @param {array|object|string} name
      * @param {*} [value=null]
+     * @param {HTMLElement|false} [nodeElement=false]
      * @throws {Error}
      * @returns
      * @memberof Methods
      */
-    set (name = {}, value = null, nodeElement = false) {
+    set (name, value = null, nodeElement = false) {
         if (nodeElement) this.nodeElement = nodeElement;
 
         if (!name) throw new Error('Dataset name is required');
 
-        if (name instanceof Object) {
-            for (const dataName in name) {
-                if (Object.hasOwnProperty.call(name, dataName)) this.set(dataName, name[dataName]);
+        if (Array.isArray(name)) {
+            for (const dataset of name) {
+                if (!dataset instanceof String) {
+                    if (!this.set(...dataset)) return false;
+                } else {
+                    if (!this.set(dataset)) return false;
+                }
+            }
+
+            return;
+        } else if (name instanceof Object) {
+            for (const datasetName in name) {
+                if (Object.hasOwnProperty.call(name, datasetName)) this.set(datasetName, name[datasetName]);
             }
 
             return;
@@ -128,4 +181,4 @@ export default class Methods {
         });
         this[name].set();
     }
-};
+}

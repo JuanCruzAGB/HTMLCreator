@@ -27,6 +27,7 @@ export class ClassName extends Class {
     }) {
         super({
             props: {
+                ...ClassName.props,
                 ...(data && data.hasOwnProperty('props')) ? data.props : {},
             },
         });
@@ -71,6 +72,19 @@ export class ClassName extends Class {
             }
         }
     }
+
+    /**
+     * * Default properties.
+     * @static
+     * @var {object} props
+     * @param {string} props.id
+     * @param {string} props.name
+     * @memberof ClassName
+     */
+    static props = {
+        id: 'class-1',
+        name: 'class',
+    }
 }
 
 /**
@@ -82,7 +96,7 @@ export class ClassName extends Class {
 export default class Methods {
     /**
      * * Add a ClassName.
-     * @param {object|string} name
+     * @param {array|string} name
      * @param {HTMLElement|false} [nodeElement=false]
      * @throws {Error}
      * @returns
@@ -94,8 +108,8 @@ export default class Methods {
         if (!name) throw new Error('ClassName name is required');
 
         if (name instanceof Object) {
-            for (const classNameName in name) {
-                if (Object.hasOwnProperty.call(name, classNameName)) this.add(classNameName);
+            for (const className in name) {
+                if (Object.hasOwnProperty.call(name, className)) this.add(className);
             }
 
             return;
@@ -110,32 +124,86 @@ export default class Methods {
         });
         this[name].add();
     }
+    /**
+     * * Set an ClassName.
+     * @param {array|object|string} name
+     * @param {HTMLElement|false} [nodeElement=false]
+     * @throws {Error}
+     * @returns
+     * @memberof Methods
+     */
+    add (name, nodeElement = false) {
+        if (nodeElement) this.nodeElement = nodeElement;
+
+        if (!name) throw new Error('Class name is required');
+
+        if (Array.isArray(name)) {
+            for (const attribute of name) {
+                this.add(attribute);
+            }
+
+            return;
+        } else if (name instanceof Object) {
+            for (const className of name) {
+                this.add(className);
+            }
+
+            return;
+        }
+
+        this[name] = new ClassName({
+            nodeElement: this.nodeElement,
+            props: {
+                id: `attribute-${ Object.keys(this).length }`,
+                name: name,
+            },
+        });
+        this[name].add();
+    }
 
     /**
-     * * Check if there is a ClassName.
-     * @param {string} name
+     * * Check if there is an ClassName.
+     * @param {array|string} name
      * @throws {Error}
      * @returns {boolean}
      * @memberof Methods
      */
-    has (name) {
-        if (name == undefined) throw new Error('ClassName name is required');
+    contains (name) {
+        if (name == undefined) throw new Error('Class name is required');
 
-        if (typeof name != 'string') throw new Error('ClassName name must be a string');
+        if (Array.isArray(name)) {
+            for (const className of name) {
+                if (!this.has(className)) return false;
+            }
+
+            return true;
+        }
+
+        if (name instanceof String) throw new Error('Class name must be a string');
 
         return this.hasOwnProperty(name);
     }
 
     /**
-     * * Remove a ClassName.
+     * * Remove an ClassName.
      * @param {string} name
      * @throws {Error}
      * @memberof Methods
      */
     remove (name) {
-        if (name == undefined) throw new Error('ClassName name is required');
+        if (name == undefined) throw new Error('Class name is required');
 
-        if (this.has(name)) throw new Error('ClassName does not exist');
+        if (Array.isArray(name)) {
+            for (const attribute of name) {
+                this.remove(attribute);
+            }
+
+            return;
+        }
+
+        if (name instanceof String) throw new Error('Class name must be a string');
+
+        if (this.has(name)) throw new Error('Class does not exist');
 
         this[name].remove();
         delete this[name];
@@ -155,4 +223,4 @@ export default class Methods {
 
         return null;
     }
-};
+}
